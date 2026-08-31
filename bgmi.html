@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#08000f">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+    name="theme-color"
+    content="#07000d"
+>
 
 <title>BGMI • ULTRA-iOS</title>
 
@@ -23,95 +32,188 @@ html{
 body{
     min-height:100vh;
     color:#fff;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
 
     background:
-        radial-gradient(circle at 50% -10%,rgba(190,0,255,.30),transparent 35%),
-        radial-gradient(circle at 0% 50%,rgba(100,0,255,.18),transparent 35%),
-        radial-gradient(circle at 100% 80%,rgba(255,0,220,.12),transparent 35%),
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(210,0,255,.35),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 0% 40%,
+            rgba(100,0,255,.20),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 100% 80%,
+            rgba(255,0,220,.16),
+            transparent 35%
+        ),
+
         #050008;
 
     overflow-x:hidden;
 }
 
+
 /* ================= GRID ================= */
 
 body::before{
+
     content:"";
+
     position:fixed;
+
     inset:0;
+
     pointer-events:none;
-    opacity:.15;
+
+    z-index:0;
+
+    opacity:.16;
 
     background-image:
-        linear-gradient(rgba(190,0,255,.18) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(190,0,255,.18) 1px,transparent 1px);
+
+        linear-gradient(
+            rgba(190,0,255,.22) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(190,0,255,.22) 1px,
+            transparent 1px
+        );
 
     background-size:45px 45px;
 
-    animation:gridMove 12s linear infinite;
+    animation:gridMove 10s linear infinite;
 }
 
 @keyframes gridMove{
-    from{transform:translateY(0)}
-    to{transform:translateY(45px)}
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(45px);
+    }
+
 }
 
-/* ================= GLOW ================= */
+
+/* ================= GLOWS ================= */
 
 .glow{
+
     position:fixed;
-    width:360px;
-    height:360px;
+
+    width:400px;
+    height:400px;
+
     border-radius:50%;
-    background:rgba(180,0,255,.14);
-    filter:blur(100px);
+
+    filter:blur(110px);
+
     pointer-events:none;
+
     z-index:0;
-    animation:glowMove 7s ease-in-out infinite alternate;
+
+    animation:ambient 8s ease-in-out infinite alternate;
+
 }
 
 .glow.one{
-    top:-140px;
-    left:-100px;
+
+    left:-160px;
+    top:-150px;
+
+    background:
+        rgba(170,0,255,.22);
+
 }
 
 .glow.two{
-    right:-130px;
-    bottom:-120px;
+
+    right:-180px;
+    bottom:-150px;
+
+    background:
+        rgba(255,0,220,.16);
+
     animation-delay:2s;
+
 }
 
-@keyframes glowMove{
-    from{transform:translate(0,0) scale(1)}
-    to{transform:translate(60px,40px) scale(1.2)}
+@keyframes ambient{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(80px,50px) scale(1.25);
+    }
+
 }
+
 
 /* ================= PARTICLES ================= */
 
 .particles{
+
     position:fixed;
+
     inset:0;
+
     overflow:hidden;
+
     pointer-events:none;
+
     z-index:1;
+
 }
 
 .particle{
+
     position:absolute;
-    width:3px;
-    height:3px;
+
+    width:2px;
+    height:2px;
+
     border-radius:50%;
+
     background:#fff;
-    box-shadow:0 0 10px #d000ff;
-    animation:particleMove linear infinite;
+
+    box-shadow:
+        0 0 6px #fff,
+        0 0 15px #d000ff;
+
+    animation:
+        starFall linear infinite;
+
 }
 
-@keyframes particleMove{
+@keyframes starFall{
 
     0%{
-        transform:translateY(110vh);
+
+        transform:
+            translate3d(0,110vh,0)
+            scale(.3);
+
         opacity:0;
+
     }
 
     15%{
@@ -123,195 +225,202 @@ body::before{
     }
 
     100%{
-        transform:translateY(-10vh);
+
+        transform:
+            translate3d(40px,-10vh,0)
+            scale(1.2);
+
         opacity:0;
+
     }
+
 }
 
-/* ================= ROCKET ================= */
 
-.rocket-launch{
+/* ================= GLOBAL SCAN ================= */
+
+.scanline{
+
     position:fixed;
-    left:-140px;
-    bottom:12%;
-    width:80px;
-    height:80px;
-    font-size:50px;
 
-    z-index:99999;
+    left:0;
+    right:0;
+
+    top:-5%;
+
+    height:2px;
+
+    z-index:3;
+
     pointer-events:none;
-
-    opacity:0;
-
-    filter:
-        drop-shadow(0 0 8px #fff)
-        drop-shadow(0 0 20px #d000ff)
-        drop-shadow(0 0 40px #8b00ff);
-}
-
-.rocket-launch.active{
-    animation:rocketLaunch 1.25s cubic-bezier(.25,.7,.2,1) forwards;
-}
-
-.rocket-launch::after{
-    content:"";
-
-    position:absolute;
-
-    left:22px;
-    top:42px;
-
-    width:13px;
-    height:75px;
-
-    border-radius:50%;
 
     background:
         linear-gradient(
-            to bottom,
+            90deg,
+            transparent,
+            #ff00ff,
             #fff,
-            #ffe45c,
-            #ff4d00,
             #ff00ff,
             transparent
         );
 
-    filter:blur(4px);
+    box-shadow:
+        0 0 12px #ff00ff,
+        0 0 30px #b000ff;
 
-    animation:flame .10s infinite alternate;
+    opacity:.45;
+
+    animation:
+        globalScan 7s linear infinite;
+
 }
 
-@keyframes rocketLaunch{
-
-    0%{
-        left:-120px;
-        bottom:10%;
-        opacity:0;
-        transform:rotate(-20deg) scale(.65);
-    }
-
-    10%{
-        opacity:1;
-    }
-
-    45%{
-        left:38%;
-        bottom:45%;
-        transform:rotate(-20deg) scale(1);
-    }
-
-    75%{
-        left:72%;
-        bottom:70%;
-        transform:rotate(-20deg) scale(.9);
-    }
-
-    100%{
-        left:115%;
-        bottom:105%;
-        opacity:0;
-        transform:rotate(-20deg) scale(.65);
-    }
-}
-
-@keyframes flame{
+@keyframes globalScan{
 
     from{
-        height:45px;
-        opacity:.6;
+        top:-5%;
     }
 
     to{
-        height:85px;
-        opacity:1;
+        top:105%;
     }
+
 }
+
 
 /* ================= PAGE ================= */
 
 .page{
+
     position:relative;
+
     z-index:5;
 
     width:min(900px,94%);
+
     margin:auto;
 
     padding:28px 0 70px;
+
 }
+
 
 /* ================= BACK ================= */
 
 .back{
+
     display:inline-flex;
+
     align-items:center;
+
     gap:8px;
 
     padding:11px 18px;
+
     margin-bottom:20px;
 
     color:#e9b5ff;
+
     text-decoration:none;
 
-    border:1px solid rgba(210,0,255,.55);
+    border:
+        1px solid
+        rgba(210,0,255,.55);
+
     border-radius:30px;
 
-    background:rgba(70,0,90,.22);
+    background:
+        rgba(70,0,90,.22);
 
-    box-shadow:0 0 18px rgba(190,0,255,.18);
+    box-shadow:
+        0 0 18px
+        rgba(190,0,255,.18);
 
     transition:.3s;
+
 }
 
 .back:hover,
 .back:active{
-    transform:translateX(-4px);
-    box-shadow:0 0 30px rgba(220,0,255,.5);
+
+    transform:
+        translateX(-5px);
+
+    box-shadow:
+        0 0 30px
+        rgba(220,0,255,.5);
+
 }
+
 
 /* ================= MAIN CARD ================= */
 
 .card{
+
     position:relative;
+
     overflow:hidden;
 
     padding:42px 28px;
 
     border-radius:32px;
 
-    border:1px solid rgba(220,0,255,.55);
+    border:
+        1px solid
+        rgba(220,0,255,.55);
 
     background:
+
         linear-gradient(
             145deg,
             rgba(40,0,55,.82),
-            rgba(8,0,15,.94)
+            rgba(8,0,15,.95)
         );
 
     box-shadow:
-        0 0 35px rgba(180,0,255,.18),
-        inset 0 0 35px rgba(150,0,255,.07);
+
+        0 0 35px
+        rgba(180,0,255,.18),
+
+        inset 0 0 35px
+        rgba(150,0,255,.07);
 
     backdrop-filter:blur(20px);
 
-    animation:cardIn .9s ease both;
+    animation:
+        cardIn .9s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+
 }
 
 @keyframes cardIn{
 
     from{
+
         opacity:0;
-        transform:translateY(35px) scale(.97);
+
+        transform:
+            translateY(40px)
+            scale(.96);
+
     }
 
     to{
+
         opacity:1;
+
         transform:none;
+
     }
+
 }
 
-/* scanning line */
+
+/* ================= CARD SCANNER ================= */
 
 .card::before{
+
     content:"";
 
     position:absolute;
@@ -324,6 +433,7 @@ body::before{
     height:2px;
 
     background:
+
         linear-gradient(
             90deg,
             transparent,
@@ -333,12 +443,15 @@ body::before{
             transparent
         );
 
-    box-shadow:0 0 15px #ff00ff;
+    box-shadow:
+        0 0 15px #ff00ff;
 
-    animation:scan 5s linear infinite;
+    animation:
+        scanCard 5s linear infinite;
+
 }
 
-@keyframes scan{
+@keyframes scanCard{
 
     from{
         top:-100px;
@@ -347,29 +460,112 @@ body::before{
     to{
         top:110%;
     }
+
 }
+
 
 /* ================= ICON ================= */
 
+.icon-wrap{
+
+    position:relative;
+
+    width:130px;
+    height:130px;
+
+    margin:
+        0 auto 23px;
+
+}
+
+.icon-wrap::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-12px;
+
+    border-radius:36px;
+
+    border:
+        1px solid
+        rgba(220,0,255,.45);
+
+    box-shadow:
+        0 0 25px
+        rgba(210,0,255,.3);
+
+    animation:
+        iconRing 3s ease-in-out infinite;
+
+}
+
+.icon-wrap::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-23px;
+
+    border:
+        1px dashed
+        rgba(190,0,255,.25);
+
+    border-radius:50%;
+
+    animation:
+        orbit 8s linear infinite;
+
+}
+
+@keyframes iconRing{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+}
+
+@keyframes orbit{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
 .app-icon{
-    width:125px;
-    height:125px;
+
+    width:130px;
+    height:130px;
 
     display:block;
 
-    margin:0 auto 23px;
-
     object-fit:cover;
 
-    border-radius:29px;
+    border-radius:30px;
 
-    border:2px solid rgba(255,255,255,.25);
+    border:
+        2px solid
+        rgba(255,255,255,.3);
 
     box-shadow:
-        0 0 20px rgba(180,0,255,.55),
-        0 0 55px rgba(180,0,255,.25);
 
-    animation:iconFloat 3s ease-in-out infinite;
+        0 0 20px
+        rgba(180,0,255,.55),
+
+        0 0 55px
+        rgba(180,0,255,.25);
+
+    animation:
+        iconFloat 4s ease-in-out infinite;
+
 }
 
 @keyframes iconFloat{
@@ -379,22 +575,27 @@ body::before{
     }
 
     50%{
-        transform:translateY(-9px) rotate(1deg);
+        transform:
+            translateY(-9px)
+            rotate(1deg);
     }
+
 }
+
 
 /* ================= TITLE ================= */
 
 h1{
-    margin:0;
 
     text-align:center;
 
-    font-size:clamp(29px,7vw,55px);
+    font-size:
+        clamp(29px,7vw,55px);
 
-    font-weight:900;
+    font-weight:950;
 
     background:
+
         linear-gradient(
             90deg,
             #fff,
@@ -406,20 +607,26 @@ h1{
     background-size:250%;
 
     -webkit-background-clip:text;
+
     background-clip:text;
 
     color:transparent;
 
-    animation:titleShine 4s linear infinite;
+    animation:
+        titleShine 4s linear infinite;
+
 }
 
 @keyframes titleShine{
+
     to{
         background-position:250%;
     }
+
 }
 
 .subtitle{
+
     text-align:center;
 
     margin-top:9px;
@@ -429,14 +636,18 @@ h1{
     font-size:14px;
 
     letter-spacing:3px;
+
 }
+
 
 /* ================= STATUS ================= */
 
 .status{
+
     width:max-content;
 
-    margin:21px auto 28px;
+    margin:
+        21px auto 28px;
 
     padding:9px 18px;
 
@@ -444,20 +655,27 @@ h1{
 
     color:#cfff76;
 
-    border:1px solid #9dff00;
+    border:
+        1px solid
+        #9dff00;
 
-    background:rgba(100,255,0,.06);
+    background:
+        rgba(100,255,0,.06);
 
-    box-shadow:0 0 20px rgba(150,255,0,.18);
+    box-shadow:
+        0 0 20px
+        rgba(150,255,0,.18);
 
     font-size:12px;
 
-    font-weight:800;
+    font-weight:900;
 
     letter-spacing:1.5px;
+
 }
 
 .status span{
+
     display:inline-block;
 
     width:8px;
@@ -469,32 +687,45 @@ h1{
 
     background:#aaff00;
 
-    box-shadow:0 0 12px #aaff00;
+    box-shadow:
+        0 0 12px #aaff00;
 
-    animation:statusPulse 1s infinite;
+    animation:
+        statusPulse 1s infinite;
+
 }
 
 @keyframes statusPulse{
 
     50%{
+
         opacity:.3;
+
         transform:scale(.7);
+
     }
+
 }
+
 
 /* ================= BUTTONS ================= */
 
 .buttons{
+
     display:grid;
+
     gap:14px;
+
 }
 
 .btn{
+
     position:relative;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     min-height:63px;
@@ -510,35 +741,48 @@ h1{
     overflow:hidden;
 
     transition:.3s;
+
 }
 
 .btn-install{
+
     color:#fff;
 
     background:
+
         linear-gradient(
             90deg,
-            #7b00ff,
+            #7200ff,
             #e000ff,
+            #ff00cc,
             #8200ff
         );
 
-    background-size:200%;
+    background-size:300%;
 
     box-shadow:
-        0 0 25px rgba(210,0,255,.45),
-        0 0 55px rgba(150,0,255,.18);
 
-    animation:buttonGradient 3s linear infinite;
+        0 0 25px
+        rgba(210,0,255,.45),
+
+        0 0 60px
+        rgba(150,0,255,.18);
+
+    animation:
+        buttonGradient 4s linear infinite;
+
 }
 
 @keyframes buttonGradient{
-    50%{
-        background-position:100%;
+
+    to{
+        background-position:300%;
     }
+
 }
 
 .btn-install::before{
+
     content:"";
 
     position:absolute;
@@ -550,53 +794,75 @@ h1{
     height:100%;
 
     background:
+
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.35),
+            rgba(255,255,255,.4),
             transparent
         );
 
     transform:skewX(-20deg);
 
-    animation:buttonShine 3s infinite;
+    animation:
+        buttonShine 3s infinite;
+
 }
 
 @keyframes buttonShine{
 
-    0%{left:-100%}
+    0%{
+        left:-100%;
+    }
 
-    50%,100%{left:150%}
+    50%,100%{
+        left:150%;
+    }
+
 }
 
 .btn-download{
+
     color:#ead5f2;
 
-    border:1px solid rgba(210,60,255,.45);
+    border:
+        1px solid
+        rgba(210,60,255,.45);
 
-    background:rgba(75,0,100,.22);
+    background:
+        rgba(75,0,100,.22);
+
 }
 
-.btn:hover,
 .btn:active{
-    transform:translateY(-3px) scale(.99);
+
+    transform:
+        scale(.97);
+
 }
+
 
 /* ================= INFO ================= */
 
 .info{
+
     margin-top:24px;
 
     padding:8px 18px;
 
     border-radius:22px;
 
-    border:1px solid rgba(210,0,255,.3);
+    border:
+        1px solid
+        rgba(210,0,255,.3);
 
-    background:rgba(20,0,28,.6);
+    background:
+        rgba(20,0,28,.6);
+
 }
 
 .row{
+
     min-height:55px;
 
     display:flex;
@@ -607,58 +873,502 @@ h1{
 
     gap:20px;
 
-    border-bottom:1px solid rgba(255,255,255,.08);
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
 
     color:#bda9c8;
+
 }
 
 .row:last-child{
+
     border-bottom:0;
+
 }
 
 .value{
+
     color:#fff;
-    font-weight:800;
+
+    font-weight:850;
+
     text-align:right;
+
 }
+
 
 /* ================= GUIDE ================= */
 
 .instructions{
+
     margin-top:24px;
 
     padding:24px;
 
     border-radius:22px;
 
-    border:1px solid rgba(210,0,255,.3);
+    border:
+        1px solid
+        rgba(210,0,255,.3);
 
-    background:rgba(20,0,28,.55);
+    background:
+        rgba(20,0,28,.55);
+
 }
 
 .instructions h2{
+
     margin-bottom:16px;
 
     color:#efb3ff;
 
     font-size:18px;
+
 }
 
 .instructions ol{
+
     padding-left:23px;
+
 }
 
 .instructions li{
+
     margin:12px 0;
 
     color:#d7cadc;
 
     line-height:1.6;
+
 }
+
+
+/* ================= RIPPLE ================= */
+
+.ripple{
+
+    position:fixed;
+
+    width:20px;
+    height:20px;
+
+    border:
+        2px solid
+        #ff00ff;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:99990;
+
+    transform:
+        translate(-50%,-50%);
+
+    animation:
+        ripple 1s ease-out forwards;
+
+    box-shadow:
+        0 0 15px #ff00ff,
+        0 0 35px #9c00ff;
+
+}
+
+@keyframes ripple{
+
+    from{
+
+        width:20px;
+        height:20px;
+
+        opacity:1;
+
+    }
+
+    to{
+
+        width:450px;
+        height:450px;
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* ================= ROCKET ================= */
+
+.rocket-launch{
+
+    position:fixed;
+
+    left:-160px;
+
+    bottom:8%;
+
+    width:105px;
+    height:105px;
+
+    z-index:99999;
+
+    pointer-events:none;
+
+    opacity:0;
+
+}
+
+.rocket-launch.active{
+
+    animation:
+        rocketFly
+        1.35s
+        cubic-bezier(.2,.7,.15,1)
+        forwards;
+
+}
+
+.rocket-body{
+
+    position:absolute;
+
+    left:28px;
+    top:15px;
+
+    width:45px;
+    height:70px;
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #aaaab8,
+            #fff,
+            #888895
+        );
+
+    border:
+        2px solid #fff;
+
+    box-shadow:
+
+        0 0 10px #fff,
+
+        0 0 25px #d000ff,
+
+        0 0 50px
+        rgba(170,0,255,.8);
+
+    transform:
+        rotate(-42deg);
+
+}
+
+.rocket-window{
+
+    position:absolute;
+
+    width:19px;
+    height:19px;
+
+    left:11px;
+    top:12px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 30%,
+            #fff,
+            #72d9ff 35%,
+            #170044 70%
+        );
+
+    border:
+        2px solid #ddd;
+
+    box-shadow:
+        0 0 12px #6bdcff;
+
+}
+
+.rocket-fin-left,
+.rocket-fin-right{
+
+    position:absolute;
+
+    width:17px;
+    height:28px;
+
+    bottom:7px;
+
+    background:#7c00ff;
+
+    box-shadow:
+        0 0 15px #b000ff;
+
+}
+
+.rocket-fin-left{
+
+    left:-8px;
+
+    transform:
+        skewY(25deg);
+
+}
+
+.rocket-fin-right{
+
+    right:-8px;
+
+    transform:
+        skewY(-25deg);
+
+}
+
+.rocket-flame{
+
+    position:absolute;
+
+    left:40px;
+    top:72px;
+
+    width:20px;
+    height:55px;
+
+    border-radius:50%;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            #fff,
+            #ffe600 20%,
+            #ff7200 48%,
+            #ff00c8 72%,
+            transparent
+        );
+
+    filter:blur(3px);
+
+    transform:
+        rotate(-42deg);
+
+    animation:
+        rocketFlame .08s infinite alternate;
+
+}
+
+@keyframes rocketFlame{
+
+    from{
+        height:42px;
+        opacity:.7;
+    }
+
+    to{
+        height:70px;
+        opacity:1;
+    }
+
+}
+
+@keyframes rocketFly{
+
+    0%{
+
+        left:-150px;
+        bottom:8%;
+
+        opacity:0;
+
+        transform:
+            scale(.55)
+            rotate(-10deg);
+
+    }
+
+    8%{
+        opacity:1;
+    }
+
+    30%{
+
+        left:18%;
+        bottom:28%;
+
+        transform:
+            scale(.9)
+            rotate(-10deg);
+
+    }
+
+    60%{
+
+        left:53%;
+        bottom:57%;
+
+        transform:
+            scale(1.05)
+            rotate(-10deg);
+
+    }
+
+    82%{
+
+        left:78%;
+        bottom:78%;
+
+        transform:
+            scale(.85)
+            rotate(-10deg);
+
+    }
+
+    100%{
+
+        left:115%;
+        bottom:112%;
+
+        opacity:0;
+
+        transform:
+            scale(.55)
+            rotate(-10deg);
+
+    }
+
+}
+
+
+/* ================= ROCKET EXHAUST ================= */
+
+.exhaust{
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#ff00ff;
+
+    box-shadow:
+        0 0 15px #ff00ff;
+
+    animation:
+        exhaustFly .7s linear infinite;
+
+}
+
+.exhaust:nth-child(1){
+
+    left:35px;
+    top:75px;
+
+}
+
+.exhaust:nth-child(2){
+
+    left:50px;
+    top:82px;
+
+    animation-delay:.15s;
+
+}
+
+.exhaust:nth-child(3){
+
+    left:28px;
+    top:88px;
+
+    animation-delay:.3s;
+
+}
+
+@keyframes exhaustFly{
+
+    from{
+
+        transform:
+            translate(0,0)
+            scale(1);
+
+        opacity:1;
+
+    }
+
+    to{
+
+        transform:
+            translate(-35px,70px)
+            scale(0);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* ================= FLASH ================= */
+
+.launch-flash{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:99980;
+
+    pointer-events:none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,0,255,.18),
+            transparent 55%
+        );
+
+    opacity:0;
+
+}
+
+.launch-flash.active{
+
+    animation:
+        flash .6s ease-out;
+
+}
+
+@keyframes flash{
+
+    0%{
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+    }
+
+}
+
 
 /* ================= FOOTER ================= */
 
 .footer{
+
     text-align:center;
 
     margin-top:28px;
@@ -668,189 +1378,310 @@ h1{
     font-size:12px;
 
     letter-spacing:2px;
+
 }
+
 
 /* ================= MOBILE ================= */
 
 @media(max-width:600px){
 
     .page{
+
         width:92%;
+
         padding-top:18px;
+
     }
 
     .card{
+
         padding:32px 18px;
+
         border-radius:26px;
+
+    }
+
+    .icon-wrap{
+
+        width:110px;
+        height:110px;
+
     }
 
     .app-icon{
-        width:105px;
-        height:105px;
-        border-radius:24px;
+
+        width:110px;
+        height:110px;
+
+        border-radius:25px;
+
     }
 
     h1{
+
         font-size:31px;
+
     }
 
     .subtitle{
+
         font-size:11px;
+
     }
 
     .btn{
+
         min-height:60px;
+
         font-size:17px;
+
     }
 
     .row{
+
         font-size:14px;
+
     }
 
     .rocket-launch{
-        font-size:36px;
+
+        transform:scale(.75);
+
     }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="glow one"></div>
+
 <div class="glow two"></div>
+
+<div class="scanline"></div>
 
 <div class="particles"></div>
 
-<!-- ROCKET -->
-<div id="rocketLaunch" class="rocket-launch">🚀</div>
+<div
+    class="launch-flash"
+    id="launchFlash"
+></div>
+
+
+<!-- REAL CSS ROCKET — NO EMOJI -->
+
+<div
+    class="rocket-launch"
+    id="rocketLaunch"
+>
+
+    <div class="rocket-body">
+
+        <div class="rocket-window"></div>
+
+        <div class="rocket-fin-left"></div>
+
+        <div class="rocket-fin-right"></div>
+
+    </div>
+
+    <div class="rocket-flame"></div>
+
+    <div class="exhaust"></div>
+
+    <div class="exhaust"></div>
+
+    <div class="exhaust"></div>
+
+</div>
+
 
 <main class="page">
 
-    <a href="index.html" class="back">
-        ← Back to ULTRA-iOS
-    </a>
 
-    <section class="card">
-
-        <img
-            src="bgmi-icon.png"
-            class="app-icon"
-            alt="BATTLEGROUNDS MOBILE"
-        >
-
-        <h1>
-            BATTLEGROUNDS MOBILE
-        </h1>
-
-        <div class="subtitle">
-            🇮🇳 INDIA &nbsp; • &nbsp; ULTRA-iOS
-        </div>
-
-        <div class="status">
-            <span></span>
-            AVAILABLE
-        </div>
+<a
+    href="index.html"
+    class="back"
+>
+    ← Back to ULTRA-iOS
+</a>
 
 
-        <!-- ================= BUTTONS ================= -->
-
-        <div class="buttons">
-
-            <!--
-                REPLACE YOUR_BGMI_INSTALL_LINK_HERE
-                WITH YOUR REAL INSTALL LINK.
-            -->
-
-            <a
-                href="YOUR_BGMI_INSTALL_LINK_HERE"
-                class="btn btn-install install-trigger"
-            >
-                🚀 Install
-            </a>
+<section class="card">
 
 
-            <!--
-                REPLACE YOUR_BGMI_IPA_LINK_HERE
-                WITH YOUR REAL IPA URL.
-            -->
+<div class="icon-wrap">
 
-            <a
-                href="YOUR_BGMI_IPA_LINK_HERE"
-                class="btn btn-download"
-            >
-                ↓ Download IPA
-            </a>
+    <img
+        src="bgmi-icon.png"
+        class="app-icon"
+        alt="BATTLEGROUNDS MOBILE"
+    >
 
-        </div>
+</div>
 
 
-        <!-- ================= APP INFO ================= -->
-
-        <div class="info">
-
-            <div class="row">
-                <span>Region</span>
-                <span class="value">🇮🇳 India</span>
-            </div>
-
-            <div class="row">
-                <span>Platform</span>
-                <span class="value">iOS / iPadOS</span>
-            </div>
-
-            <div class="row">
-                <span>Publisher</span>
-                <span class="value">ULTRA-iOS</span>
-            </div>
-
-            <div class="row">
-                <span>Status</span>
-                <span class="value">Available</span>
-            </div>
-
-        </div>
+<h1>
+    BATTLEGROUNDS MOBILE
+</h1>
 
 
-        <!-- ================= GUIDE ================= -->
-
-        <div class="instructions">
-
-            <h2>
-                ⚡ AFTER YOU TAP INSTALL
-            </h2>
-
-            <ol>
-
-                <li>
-                    Tap <strong>Install</strong>.
-                </li>
-
-                <li>
-                    Wait for the installation process to finish.
-                </li>
-
-                <li>
-                    If iOS displays a developer/profile trust
-                    prompt, only trust a developer or profile
-                    you know and expect.
-                </li>
-
-                <li>
-                    Once installed, launch the application
-                    from your Home Screen.
-                </li>
-
-            </ol>
-
-        </div>
-
-    </section>
+<div class="subtitle">
+    🇮🇳 INDIA &nbsp; • &nbsp; ULTRA-iOS
+</div>
 
 
-    <div class="footer">
-        🚀 ULTRA-iOS • FUTURE IS NOW
-    </div>
+<div class="status">
+
+    <span></span>
+
+    AVAILABLE
+
+</div>
+
+
+<div class="buttons">
+
+
+<!--
+==================================================
+PUT YOUR REAL BGMI INSTALL LINK HERE
+==================================================
+-->
+
+<a
+    href="YOUR_BGMI_INSTALL_LINK_HERE"
+    class="btn btn-install install-trigger"
+>
+    Install
+</a>
+
+
+<!--
+==================================================
+PUT YOUR REAL IPA DOWNLOAD LINK HERE
+==================================================
+-->
+
+<a
+    href="YOUR_BGMI_IPA_LINK_HERE"
+    class="btn btn-download"
+>
+    ↓ Download IPA
+</a>
+
+
+</div>
+
+
+<div class="info">
+
+
+<div class="row">
+
+    <span>
+        Region
+    </span>
+
+    <span class="value">
+        🇮🇳 India
+    </span>
+
+</div>
+
+
+<div class="row">
+
+    <span>
+        Platform
+    </span>
+
+    <span class="value">
+        iOS / iPadOS
+    </span>
+
+</div>
+
+
+<div class="row">
+
+    <span>
+        Publisher
+    </span>
+
+    <span class="value">
+        ULTRA-iOS
+    </span>
+
+</div>
+
+
+<div class="row">
+
+    <span>
+        Status
+    </span>
+
+    <span class="value">
+        Available
+    </span>
+
+</div>
+
+
+</div>
+
+
+<div class="instructions">
+
+<h2>
+    ⚡ AFTER YOU TAP INSTALL
+</h2>
+
+
+<ol>
+
+<li>
+    Tap <strong>Install</strong> when the
+    installation prompt appears.
+</li>
+
+<li>
+    Wait for the application to finish
+    installing on your Home Screen.
+</li>
+
+<li>
+    If iOS displays a developer or profile
+    trust prompt, only trust a developer or
+    profile you know and expect.
+</li>
+
+<li>
+    Once installed, launch the application
+    from your Home Screen.
+</li>
+
+</ol>
+
+</div>
+
+
+</section>
+
+
+<div class="footer">
+
+    ULTRA-iOS • FUTURE IS NOW
+
+</div>
+
 
 </main>
 
@@ -862,102 +1693,184 @@ h1{
 const particleContainer =
     document.querySelector(".particles");
 
-for(let i=0;i<35;i++){
+for(let i=0;i<45;i++){
 
-    const particle =
+    const p=
         document.createElement("div");
 
-    particle.className="particle";
+    p.className="particle";
 
-    particle.style.left =
+    p.style.left=
         Math.random()*100+"%";
 
-    particle.style.animationDuration =
-        (6+Math.random()*10)+"s";
+    p.style.animationDuration=
+        (5+Math.random()*12)+"s";
 
-    particle.style.animationDelay =
-        (-Math.random()*12)+"s";
+    p.style.animationDelay=
+        (-Math.random()*15)+"s";
 
-    const size =
+    const size=
         1+Math.random()*3;
 
-    particle.style.width=size+"px";
-    particle.style.height=size+"px";
+    p.style.width=
+        size+"px";
 
-    particleContainer.appendChild(particle);
+    p.style.height=
+        size+"px";
+
+    particleContainer.appendChild(p);
+
 }
 
 
-/* ================= ROCKET ON INSTALL ================= */
+/* ================= ROCKET ================= */
 
-const rocket =
-    document.getElementById("rocketLaunch");
+const rocket=
+    document.getElementById(
+        "rocketLaunch"
+    );
 
-const installButtons =
-    document.querySelectorAll(".install-trigger");
-
-installButtons.forEach(button => {
-
-    button.addEventListener("click", function(event){
-
-        /*
-            Prevent immediate navigation so
-            the rocket can actually be seen.
-        */
-
-        event.preventDefault();
-
-        const destination =
-            this.getAttribute("href");
-
-        /*
-            Restart rocket animation.
-        */
-
-        rocket.classList.remove("active");
-
-        void rocket.offsetWidth;
-
-        rocket.classList.add("active");
-
-        /*
-            Small button press effect.
-        */
-
-        this.style.transform="scale(.96)";
-
-        setTimeout(()=>{
-            this.style.transform="";
-        },180);
+const flash=
+    document.getElementById(
+        "launchFlash"
+    );
 
 
-        /*
-            Navigate after the rocket launches.
-        */
+function launchRocket(){
 
-        setTimeout(()=>{
+    rocket.classList.remove("active");
+
+    flash.classList.remove("active");
+
+    void rocket.offsetWidth;
+
+    void flash.offsetWidth;
+
+    rocket.classList.add("active");
+
+    flash.classList.add("active");
+
+}
+
+
+/* ================= INSTALL ================= */
+
+document
+.querySelectorAll(".install-trigger")
+.forEach(button=>{
+
+    button.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            const destination=
+                this.getAttribute("href");
+
 
             if(
-                destination &&
-                destination !== "#" &&
-                destination !== "YOUR_BGMI_INSTALL_LINK_HERE"
+                !destination ||
+                destination ===
+                "YOUR_BGMI_INSTALL_LINK_HERE"
             ){
-                window.location.href=destination;
-            }else{
 
-                alert(
-                    "BGMI installation link is not configured yet."
-                );
+                launchRocket();
+
+                setTimeout(()=>{
+
+                    alert(
+                        "BGMI installation link is not configured yet."
+                    );
+
+                },650);
+
+                return;
 
             }
 
-        },1000);
 
-    });
+            launchRocket();
+
+
+            this.animate(
+
+                [
+                    {
+                        transform:"scale(1)"
+                    },
+
+                    {
+                        transform:"scale(.96)"
+                    },
+
+                    {
+                        transform:"scale(1)"
+                    }
+
+                ],
+
+                {
+                    duration:300
+                }
+
+            );
+
+
+            setTimeout(()=>{
+
+                window.location.href=
+                    destination;
+
+            },1050);
+
+        }
+    );
 
 });
 
+
+/* ================= TOUCH RIPPLE ================= */
+
+document.addEventListener(
+    "pointerdown",
+    function(e){
+
+        const target=
+            e.target.closest(
+                ".btn,.back"
+            );
+
+        if(!target) return;
+
+
+        const ripple=
+            document.createElement("div");
+
+        ripple.className="ripple";
+
+        ripple.style.left=
+            e.clientX+"px";
+
+        ripple.style.top=
+            e.clientY+"px";
+
+        document.body.appendChild(
+            ripple
+        );
+
+
+        setTimeout(()=>{
+
+            ripple.remove();
+
+        },1000);
+
+    }
+);
+
 </script>
+
 
 </body>
 </html>
