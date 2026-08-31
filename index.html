@@ -2,483 +2,574 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#09000f">
-<title>ULTRA-iOS | Installation Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08000f">
+
+<title>ULTRA-iOS</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    min-height: 100vh;
+body{
+    min-height:100vh;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
     background:
-        radial-gradient(circle at 50% 0%, #5d008f 0%, transparent 35%),
-        radial-gradient(circle at 0% 50%, #250044 0%, transparent 35%),
+        radial-gradient(circle at 50% -10%,rgba(190,0,255,.30),transparent 35%),
+        radial-gradient(circle at 0% 50%,rgba(100,0,255,.18),transparent 35%),
         #050008;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                 "Segoe UI", sans-serif;
-    overflow-x: hidden;
+    overflow-x:hidden;
 }
 
-/* Animated background */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
+/* ================= BACKGROUND ================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.15;
+    background-image:
+        linear-gradient(rgba(190,0,255,.18) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(190,0,255,.18) 1px,transparent 1px);
+    background-size:45px 45px;
+    animation:gridMove 12s linear infinite;
+    z-index:0;
+}
+
+@keyframes gridMove{
+    from{transform:translateY(0)}
+    to{transform:translateY(45px)}
+}
+
+.glow{
+    position:fixed;
+    width:380px;
+    height:380px;
+    border-radius:50%;
+    background:rgba(190,0,255,.14);
+    filter:blur(100px);
+    pointer-events:none;
+    z-index:0;
+    animation:glowMove 7s ease-in-out infinite alternate;
+}
+
+.glow.one{
+    top:-150px;
+    left:-100px;
+}
+
+.glow.two{
+    right:-150px;
+    bottom:-120px;
+    animation-delay:2s;
+}
+
+@keyframes glowMove{
+    from{transform:translate(0,0) scale(1)}
+    to{transform:translate(60px,40px) scale(1.2)}
+}
+
+/* ================= PARTICLES ================= */
+
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:1;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 10px #d000ff;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+    0%{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    15%{opacity:1}
+    85%{opacity:1}
+    100%{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* ================= ROCKET LAUNCH ================= */
+
+.rocket-launch{
+    position:fixed;
+    left:-140px;
+    bottom:15%;
+    width:80px;
+    height:80px;
+    font-size:50px;
+    z-index:99999;
+    pointer-events:none;
+    opacity:0;
+    filter:
+        drop-shadow(0 0 8px #fff)
+        drop-shadow(0 0 20px #d000ff)
+        drop-shadow(0 0 40px #8b00ff);
+}
+
+.rocket-launch.active{
+    animation:rocketLaunch 1.25s cubic-bezier(.25,.7,.2,1) forwards;
+}
+
+.rocket-launch::after{
+    content:"";
+    position:absolute;
+    left:22px;
+    top:42px;
+    width:13px;
+    height:75px;
+    border-radius:50%;
+    background:linear-gradient(
+        to bottom,
+        #fff,
+        #ffe45c,
+        #ff4d00,
+        #ff00ff,
+        transparent
+    );
+    filter:blur(4px);
+    animation:flame .10s infinite alternate;
+}
+
+@keyframes rocketLaunch{
+    0%{
+        left:-120px;
+        bottom:12%;
+        opacity:0;
+        transform:rotate(-20deg) scale(.65);
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    45%{
+        left:38%;
+        bottom:45%;
+        transform:rotate(-20deg) scale(1);
+    }
+
+    75%{
+        left:72%;
+        bottom:70%;
+        transform:rotate(-20deg) scale(.9);
+    }
+
+    100%{
+        left:115%;
+        bottom:105%;
+        opacity:0;
+        transform:rotate(-20deg) scale(.65);
+    }
+}
+
+@keyframes flame{
+    from{height:45px;opacity:.6}
+    to{height:85px;opacity:1}
+}
+
+/* ================= PAGE ================= */
+
+.page{
+    position:relative;
+    z-index:5;
+    width:min(950px,94%);
+    margin:auto;
+    padding:35px 0 65px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    text-align:center;
+    padding:20px 10px 40px;
+    animation:heroIn .9s ease;
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(-25px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.logo{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:29px;
+    border:2px solid rgba(220,60,255,.7);
+    box-shadow:
+        0 0 20px #a000ff,
+        0 0 50px rgba(190,0,255,.4);
+    animation:logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-9px);
+    }
+}
+
+.title{
+    margin-top:20px;
+    font-size:clamp(40px,9vw,70px);
+    font-weight:900;
+    letter-spacing:3px;
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #db65ff,
+        #ff00e6,
+        #fff
+    );
+    background-size:250%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:titleShine 4s linear infinite;
+}
+
+@keyframes titleShine{
+    to{background-position:250%}
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#c4accb;
+    font-size:16px;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    margin-top:20px;
+    padding:10px 19px;
+    border-radius:30px;
+    border:1px solid rgba(220,0,255,.6);
+    background:rgba(90,0,120,.25);
+    box-shadow:0 0 20px rgba(190,0,255,.25);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#d900ff;
+    box-shadow:0 0 12px #d900ff;
+    animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.7);
+        opacity:.35;
+    }
+}
+
+/* ================= SECTION ================= */
+
+.section{
+    position:relative;
+    overflow:hidden;
+    margin-top:22px;
+    padding:28px;
+    border-radius:29px;
+    border:1px solid rgba(205,45,255,.5);
     background:
-        linear-gradient(120deg, transparent 45%, rgba(208,0,255,.08) 50%, transparent 55%);
-    background-size: 300% 300%;
-    animation: scan 8s linear infinite;
-    z-index: -2;
-}
-
-@keyframes scan {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 300% 300%; }
-}
-
-/* Stars */
-.stars,
-.stars2,
-.stars3 {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-    background-repeat: repeat;
-}
-
-.stars {
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px);
-    background-size: 90px 90px;
-    animation: starsMove 18s linear infinite;
-    opacity: .35;
-}
-
-.stars2 {
-    background-image:
-        radial-gradient(circle, rgba(214,60,255,.9) 1px, transparent 1px);
-    background-size: 150px 150px;
-    animation: starsMove 28s linear infinite reverse;
-    opacity: .25;
-}
-
-.stars3 {
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px);
-    background-size: 230px 230px;
-    animation: starsMove 40s linear infinite;
-    opacity: .2;
-}
-
-@keyframes starsMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(230px); }
-}
-
-.container {
-    width: min(1050px, 94%);
-    margin: auto;
-    padding: 35px 0 60px;
-}
-
-/* Header */
-.hero {
-    text-align: center;
-    padding: 30px 10px 45px;
-    animation: fadeDown 1s ease;
-}
-
-@keyframes fadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.logo {
-    width: 125px;
-    height: 125px;
-    object-fit: cover;
-    border-radius: 30px;
-    border: 2px solid rgba(220,80,255,.8);
+        linear-gradient(
+            145deg,
+            rgba(36,0,52,.78),
+            rgba(8,0,14,.92)
+        );
     box-shadow:
-        0 0 20px #a900ff,
-        0 0 55px rgba(190,0,255,.55);
-    animation: logoFloat 4s ease-in-out infinite;
+        0 0 35px rgba(170,0,255,.14),
+        inset 0 0 30px rgba(150,0,255,.05);
+    backdrop-filter:blur(18px);
+    animation:sectionIn .8s ease both;
 }
 
-@keyframes logoFloat {
-    0%,100% {
-        transform: translateY(0) rotate(0deg);
+@keyframes sectionIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
     }
-    50% {
-        transform: translateY(-10px) rotate(1deg);
-    }
-}
-
-.title {
-    margin-top: 22px;
-    font-size: clamp(38px, 8vw, 70px);
-    font-weight: 900;
-    letter-spacing: 4px;
-    background: linear-gradient(90deg,#fff,#dc54ff,#fff);
-    background-size: 200%;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: shine 3s linear infinite;
-}
-
-@keyframes shine {
-    to { background-position: 200%; }
-}
-
-.subtitle {
-    margin-top: 8px;
-    color: #cbb7d3;
-    font-size: 17px;
-}
-
-/* Online badge */
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 22px;
-    padding: 12px 24px;
-    border: 1px solid #bd29ff;
-    border-radius: 999px;
-    background: rgba(80,0,120,.35);
-    box-shadow: 0 0 25px rgba(196,0,255,.5);
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #d900ff;
-    box-shadow: 0 0 15px #d900ff;
-    animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-    50% {
-        transform: scale(1.7);
-        opacity: .4;
+    to{
+        opacity:1;
+        transform:none;
     }
 }
 
-/* Cards */
-.section {
-    margin-top: 30px;
-    padding: 30px;
-    border: 1px solid rgba(213,43,255,.65);
-    border-radius: 30px;
-    background: rgba(13,0,23,.78);
-    box-shadow:
-        0 0 35px rgba(153,0,255,.18),
-        inset 0 0 35px rgba(135,0,255,.06);
-    backdrop-filter: blur(15px);
-    animation: sectionIn .9s ease both;
+.section h2{
+    font-size:28px;
+    font-weight:900;
 }
 
-@keyframes sectionIn {
-    from {
-        opacity: 0;
-        transform: translateY(35px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.description{
+    margin-top:8px;
+    margin-bottom:22px;
+    color:#ae9ab5;
 }
 
-.section-title {
-    font-size: 30px;
-    font-weight: 900;
+/* ================= PROFILE ================= */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
 }
 
-.section-description {
-    color: #b9a7c0;
-    margin-top: 8px;
-    margin-bottom: 24px;
+.info-box{
+    padding:19px;
+    border-radius:19px;
+    border:1px solid rgba(200,50,255,.3);
+    background:rgba(5,0,10,.6);
 }
 
-/* Profile */
-.profile-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.info-label{
+    color:#8d7795;
+    font-size:11px;
+    letter-spacing:2px;
 }
 
-.info-box {
-    padding: 22px;
-    border-radius: 20px;
-    border: 1px solid rgba(181,44,255,.4);
-    background: rgba(4,0,8,.7);
+.info-value{
+    margin-top:8px;
+    font-weight:800;
+    font-size:18px;
 }
 
-.info-label {
-    color: #9d89a8;
-    font-size: 13px;
-    letter-spacing: 2px;
+/* ================= BUTTONS ================= */
+
+.button{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    min-height:62px;
+    margin-top:16px;
+    border-radius:19px;
+    color:#fff;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:900;
+    overflow:hidden;
+    transition:.25s;
 }
 
-.info-value {
-    margin-top: 8px;
-    font-size: 20px;
-    font-weight: 800;
-}
-
-/* Buttons */
-.button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 64px;
-    margin-top: 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    color: white;
-    font-size: 19px;
-    font-weight: 900;
-    border: 1px solid #d43cff;
-    transition: .25s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
+.button::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:55%;
+    height:100%;
+    background:linear-gradient(
         90deg,
         transparent,
         rgba(255,255,255,.35),
         transparent
     );
-    transform: skewX(-20deg);
-    animation: buttonShine 3s infinite;
+    transform:skewX(-20deg);
+    animation:shineButton 3s infinite;
 }
 
-@keyframes buttonShine {
-    0% { left: -100%; }
-    50%,100% { left: 150%; }
+@keyframes shineButton{
+    0%{left:-100%}
+    50%,100%{left:150%}
 }
 
-.primary {
-    background: linear-gradient(90deg,#dc00ff,#7800ff);
+.primary{
+    background:linear-gradient(
+        90deg,
+        #7b00ff,
+        #e000ff,
+        #8200ff
+    );
+    background-size:200%;
     box-shadow:
-        0 0 25px rgba(216,0,255,.6),
-        0 0 60px rgba(122,0,255,.25);
+        0 0 25px rgba(210,0,255,.45),
+        0 0 55px rgba(140,0,255,.18);
+    animation:buttonGradient 3s linear infinite;
 }
 
-.secondary {
-    background: rgba(60,0,85,.35);
+@keyframes buttonGradient{
+    50%{background-position:100%}
+}
+
+.secondary{
+    background:rgba(75,0,100,.25);
+    border:1px solid rgba(210,60,255,.45);
 }
 
 .button:hover,
-.button:active {
-    transform: scale(.98);
-    box-shadow: 0 0 35px rgba(221,0,255,.7);
+.button:active{
+    transform:scale(.985);
 }
 
-/* Apps */
-.apps {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+/* ================= APPS ================= */
+
+.apps{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
 }
 
-.app-card {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 16px;
-    min-height: 120px;
-    border-radius: 24px;
-    border: 1px solid rgba(188,34,255,.55);
-    background:
-        linear-gradient(110deg,
-        rgba(35,0,52,.9),
-        rgba(7,0,13,.9));
-    text-decoration: none;
-    color: white;
-    transition: .3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.app-card::after {
-    content: "";
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    right: -70px;
-    top: -70px;
-    border-radius: 50%;
-    background: #c400ff;
-    filter: blur(60px);
-    opacity: .15;
+.app-card{
+    display:flex;
+    align-items:center;
+    gap:17px;
+    min-height:110px;
+    padding:13px;
+    border-radius:22px;
+    border:1px solid rgba(195,35,255,.45);
+    background:rgba(12,0,20,.72);
+    color:#fff;
+    text-decoration:none;
+    transition:.3s;
+    overflow:hidden;
 }
 
 .app-card:hover,
-.app-card:active {
-    transform: translateY(-5px) scale(1.01);
-    border-color: #e34cff;
-    box-shadow: 0 0 30px rgba(191,0,255,.35);
+.app-card:active{
+    transform:translateY(-4px);
+    border-color:#e04cff;
+    box-shadow:0 0 30px rgba(200,0,255,.28);
 }
 
-.app-icon {
-    width: 90px;
-    height: 90px;
-    flex: 0 0 90px;
-    object-fit: cover;
-    border-radius: 22px;
-    box-shadow: 0 0 22px rgba(190,0,255,.4);
+.app-icon{
+    width:82px;
+    height:82px;
+    flex:0 0 82px;
+    object-fit:cover;
+    border-radius:20px;
+    box-shadow:0 0 22px rgba(180,0,255,.35);
 }
 
-.app-info {
-    flex: 1;
-    min-width: 0;
+.app-info{
+    flex:1;
+    min-width:0;
 }
 
-.app-name {
-    font-size: 22px;
-    font-weight: 900;
+.app-name{
+    font-size:20px;
+    font-weight:900;
 }
 
-.app-region {
-    margin-top: 7px;
-    color: #a99aae;
+.app-region{
+    margin-top:6px;
+    color:#a896af;
+    font-size:14px;
 }
 
 .install-small,
-.coming {
-    flex-shrink: 0;
-    padding: 13px 22px;
-    border-radius: 16px;
-    font-weight: 900;
+.coming{
+    flex-shrink:0;
+    padding:11px 15px;
+    border-radius:14px;
+    font-size:12px;
+    font-weight:900;
 }
 
-.install-small {
-    color: #66ff9b;
-    border: 1px solid #28c96b;
-    background: rgba(0,100,45,.12);
+.install-small{
+    color:#78ff9d;
+    border:1px solid #31c86b;
+    background:rgba(0,100,45,.12);
 }
 
-.coming {
-    color: #cf8cff;
-    border: 1px solid #a92cff;
-    background: rgba(140,0,255,.12);
-    box-shadow: 0 0 20px rgba(170,0,255,.18);
+.coming{
+    color:#d493ff;
+    border:1px solid #9c2cff;
+    background:rgba(140,0,255,.1);
 }
 
-/* Rocket */
-.rocket {
-    position: fixed;
-    right: 20px;
-    bottom: 30px;
-    font-size: 42px;
-    z-index: 5;
-    animation: rocketFloat 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px #d400ff);
-    pointer-events: none;
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    margin-top:30px;
+    color:#715d78;
+    font-size:12px;
+    letter-spacing:2px;
 }
 
-@keyframes rocketFloat {
-    0%,100% {
-        transform: translateY(0) rotate(-8deg);
-    }
-    50% {
-        transform: translateY(-18px) rotate(8deg);
-    }
-}
+/* ================= MOBILE ================= */
 
-/* Footer */
-footer {
-    text-align: center;
-    margin-top: 35px;
-    color: #806f89;
-}
+@media(max-width:650px){
 
-/* Mobile */
-@media(max-width:700px) {
-    .container {
-        width: 94%;
+    .page{
+        width:93%;
+        padding-top:20px;
     }
 
-    .section {
-        padding: 20px;
-        border-radius: 24px;
+    .section{
+        padding:20px;
+        border-radius:24px;
     }
 
-    .profile-grid {
-        grid-template-columns: 1fr;
+    .profile-grid{
+        grid-template-columns:1fr;
     }
 
-    .app-card {
-        padding: 12px;
-        gap: 12px;
+    .app-card{
+        gap:11px;
     }
 
-    .app-icon {
-        width: 72px;
-        height: 72px;
-        flex-basis: 72px;
-        border-radius: 18px;
+    .app-icon{
+        width:68px;
+        height:68px;
+        flex-basis:68px;
+        border-radius:17px;
     }
 
-    .app-name {
-        font-size: 17px;
+    .app-name{
+        font-size:16px;
     }
 
-    .app-region {
-        font-size: 13px;
+    .app-region{
+        font-size:12px;
     }
 
     .install-small,
-    .coming {
-        padding: 10px 12px;
-        font-size: 12px;
-    }
-
-    .rocket {
-        font-size: 30px;
-        right: 12px;
-        bottom: 15px;
-    }
-}
-
-@media(prefers-reduced-motion:reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
+    .coming{
+        padding:9px 10px;
+        font-size:10px;
     }
 }
 </style>
@@ -486,25 +577,29 @@ footer {
 
 <body>
 
-<div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
 
-<div class="rocket">🚀</div>
+<div class="particles"></div>
 
-<div class="container">
+<!-- ROCKET THAT LAUNCHES WHEN INSTALL IS TAPPED -->
+<div id="rocketLaunch" class="rocket-launch">🚀</div>
+
+<div class="page">
 
 <header class="hero">
 
-    <img src="ultra-logo.png"
-         class="logo"
-         alt="ULTRA-iOS Logo">
+    <img
+        src="ultra-logo.png"
+        class="logo"
+        alt="ULTRA-iOS"
+    >
 
-    <h1 class="title">ULTRA-iOS</h1>
+    <div class="title">ULTRA-iOS</div>
 
-    <p class="subtitle">
+    <div class="subtitle">
         Next Generation iOS Installation Hub
-    </p>
+    </div>
 
     <div class="status">
         <span class="status-dot"></span>
@@ -514,15 +609,15 @@ footer {
 </header>
 
 
-<!-- CONFIGURATION PROFILE -->
+<!-- ================= PROFILE ================= -->
 
 <section class="section">
 
-    <h2 class="section-title">⚡ Configuration Profile</h2>
+    <h2>⚡ Configuration Profile</h2>
 
-    <p class="section-description">
-        Install the ULTRA-iOS configuration profile directly on your
-        iPhone or iPad.
+    <p class="description">
+        Install the ULTRA-iOS configuration profile directly
+        on your iPhone or iPad.
     </p>
 
     <div class="profile-grid">
@@ -539,38 +634,52 @@ footer {
 
     </div>
 
-    <!-- CHANGE THE FILENAME HERE IF YOUR MOBILECONFIG HAS A DIFFERENT NAME -->
-    <a class="button primary"
-       href="ULTRA_iOS_AntiRevoke.mobileconfig">
+    <!--
+        CHANGE THE FILE NAME BELOW ONLY IF YOUR
+        MOBILECONFIG FILE HAS A DIFFERENT NAME.
+    -->
+
+    <a
+        href="ULTRA_iOS_AntiRevoke.mobileconfig"
+        class="button primary install-trigger"
+    >
         🚀 Install Profile
     </a>
 
-    <a class="button secondary"
-       href="ULTRA_iOS_AntiRevoke.mobileconfig">
+    <a
+        href="ULTRA_iOS_AntiRevoke.mobileconfig"
+        class="button secondary"
+    >
         View Configuration Profile
     </a>
 
 </section>
 
 
-<!-- APPS -->
+<!-- ================= APPS ================= -->
 
 <section class="section">
 
-    <h2 class="section-title">📱 ULTRA Apps</h2>
+    <h2>📱 ULTRA Apps</h2>
 
-    <p class="section-description">
+    <p class="description">
         Available applications and upcoming releases.
     </p>
 
     <div class="apps">
 
         <!-- BGMI -->
-        <a href="bgmi.html" class="app-card">
 
-            <img src="bgmi-icon.png"
-                 class="app-icon"
-                 alt="BGMI">
+        <a
+            href="bgmi.html"
+            class="app-card"
+        >
+
+            <img
+                src="bgmi-icon.png"
+                class="app-icon"
+                alt="BGMI"
+            >
 
             <div class="app-info">
 
@@ -592,11 +701,14 @@ footer {
 
 
         <!-- PUBG VIETNAM -->
+
         <div class="app-card">
 
-            <img src="pubg-icon.png"
-                 class="app-icon"
-                 alt="PUBG Mobile">
+            <img
+                src="pubg-icon.png"
+                class="app-icon"
+                alt="PUBG Mobile"
+            >
 
             <div class="app-info">
 
@@ -618,11 +730,14 @@ footer {
 
 
         <!-- PUBG KOREAN -->
+
         <div class="app-card">
 
-            <img src="pubg-icon.png"
-                 class="app-icon"
-                 alt="PUBG Mobile">
+            <img
+                src="pubg-icon.png"
+                class="app-icon"
+                alt="PUBG Mobile"
+            >
 
             <div class="app-info">
 
@@ -644,11 +759,14 @@ footer {
 
 
         <!-- PUBG TAIWAN -->
+
         <div class="app-card">
 
-            <img src="pubg-icon.png"
-                 class="app-icon"
-                 alt="PUBG Mobile">
+            <img
+                src="pubg-icon.png"
+                class="app-icon"
+                alt="PUBG Mobile"
+            >
 
             <div class="app-info">
 
@@ -670,11 +788,14 @@ footer {
 
 
         <!-- PUBG GLOBAL -->
+
         <div class="app-card">
 
-            <img src="pubg-icon.png"
-                 class="app-icon"
-                 alt="PUBG Mobile">
+            <img
+                src="pubg-icon.png"
+                class="app-icon"
+                alt="PUBG Mobile"
+            >
 
             <div class="app-info">
 
@@ -700,10 +821,86 @@ footer {
 
 
 <footer>
-    © 2026 ULTRA-iOS
+    ULTRA-iOS • FUTURE IS NOW
 </footer>
 
 </div>
+
+
+<script>
+
+/* ================= PARTICLES ================= */
+
+const particles = document.querySelector(".particles");
+
+for(let i = 0; i < 30; i++){
+
+    const p = document.createElement("div");
+
+    p.className = "particle";
+
+    p.style.left = Math.random() * 100 + "%";
+
+    p.style.animationDuration =
+        (6 + Math.random() * 10) + "s";
+
+    p.style.animationDelay =
+        (-Math.random() * 12) + "s";
+
+    const size = 1 + Math.random() * 3;
+
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+
+    particles.appendChild(p);
+}
+
+
+/* ================= ROCKET INSTALL EFFECT ================= */
+
+const rocket = document.getElementById("rocketLaunch");
+
+document.querySelectorAll(".install-trigger").forEach(button => {
+
+    button.addEventListener("click", function(event){
+
+        /*
+            Stop the browser from navigating immediately.
+            This gives the rocket enough time to be visible.
+        */
+
+        event.preventDefault();
+
+        const destination = this.href;
+
+        rocket.classList.remove("active");
+
+        /* Restart animation */
+        void rocket.offsetWidth;
+
+        rocket.classList.add("active");
+
+        this.style.transform = "scale(.96)";
+
+        setTimeout(() => {
+            this.style.transform = "";
+        },180);
+
+        /*
+            Open the installation URL after the rocket launches.
+        */
+
+        setTimeout(() => {
+
+            window.location.href = destination;
+
+        },1000);
+
+    });
+
+});
+
+</script>
 
 </body>
 </html>
