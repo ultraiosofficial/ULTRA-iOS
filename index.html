@@ -13,12 +13,17 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
                  "SF Pro Text", Arial, sans-serif;
     background:
-        radial-gradient(circle at 50% 15%, #7b00ff 0%, #3d006d 25%, #12001e 55%, #050006 100%);
-    color: white;
+        radial-gradient(circle at 50% 10%, #7800ff 0%, #400070 22%,
+        #170020 48%, #050006 100%);
+    color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -29,12 +34,17 @@ body::before {
     inset: 0;
     pointer-events: none;
     background:
-        radial-gradient(circle at 50% 30%, rgba(180, 0, 255, .18), transparent 35%),
-        radial-gradient(circle at 10% 80%, rgba(120, 0, 255, .12), transparent 30%);
+        radial-gradient(circle at 50% 25%,
+        rgba(190, 0, 255, 0.18), transparent 38%),
+        radial-gradient(circle at 0% 80%,
+        rgba(100, 0, 255, 0.15), transparent 35%),
+        radial-gradient(circle at 100% 70%,
+        rgba(200, 0, 255, 0.12), transparent 35%);
     z-index: -1;
 }
 
-/* MAIN CONTAINER */
+/* MAIN */
+
 .container {
     width: 100%;
     max-width: 900px;
@@ -43,84 +53,91 @@ body::before {
 }
 
 /* LOGO */
+
 .logo-box {
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .logo-box img {
-    width: 125px;
-    height: 125px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
-    border-radius: 28px;
-    border: 2px solid rgba(255,255,255,.25);
+    border-radius: 30px;
+    border: 2px solid rgba(255,255,255,0.22);
     box-shadow:
-        0 0 15px #b000ff,
-        0 0 35px rgba(175,0,255,.65),
-        0 0 70px rgba(120,0,255,.35);
+        0 0 15px #a800ff,
+        0 0 35px rgba(190,0,255,0.65),
+        0 0 70px rgba(100,0,255,0.35);
 }
+
+/* TITLE */
 
 .title {
     text-align: center;
-    margin-top: 22px;
-    font-size: 42px;
+    margin-top: 20px;
+    font-size: 43px;
     font-weight: 900;
     letter-spacing: 2px;
     text-shadow:
         0 0 10px #d000ff,
-        0 0 25px #8b00ff;
+        0 0 25px #9500ff,
+        0 0 45px rgba(200,0,255,0.7);
 }
 
 .subtitle {
     text-align: center;
     margin-top: 8px;
-    color: #e4c9ff;
+    color: #e7cfff;
     font-size: 16px;
 }
 
 /* STATUS */
+
 .status {
     width: fit-content;
     margin: 20px auto 35px;
     padding: 9px 22px;
     border-radius: 30px;
-    border: 1px solid #b900ff;
-    background: rgba(120,0,180,.25);
-    color: #fff;
+    border: 1px solid #bd00ff;
+    background: rgba(120,0,180,0.25);
+    color: #ffffff;
     font-weight: 700;
     box-shadow:
-        0 0 12px rgba(200,0,255,.7),
-        inset 0 0 15px rgba(180,0,255,.2);
+        0 0 12px rgba(200,0,255,0.7),
+        inset 0 0 15px rgba(180,0,255,0.2);
 }
 
 .status-dot {
     display: inline-block;
     width: 9px;
     height: 9px;
-    background: #d000ff;
+    background: #d900ff;
     border-radius: 50%;
     margin-right: 8px;
     box-shadow: 0 0 12px #e000ff;
 }
 
-/* CARDS */
+/* GENERAL CARD */
+
 .card {
-    background: rgba(25, 0, 40, .72);
-    border: 1px solid rgba(200, 70, 255, .7);
+    background: rgba(25,0,40,0.76);
+    border: 1px solid rgba(200,70,255,0.68);
     border-radius: 28px;
     padding: 26px;
     margin-bottom: 25px;
     box-shadow:
-        0 0 18px rgba(160,0,255,.3),
-        inset 0 0 25px rgba(130,0,255,.08);
+        0 0 18px rgba(160,0,255,0.30),
+        inset 0 0 25px rgba(130,0,255,0.08);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .card-title {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 800;
     margin-bottom: 8px;
 }
@@ -132,7 +149,8 @@ body::before {
     margin-bottom: 20px;
 }
 
-/* PROFILE INFO */
+/* PROFILE */
+
 .profile-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -141,8 +159,8 @@ body::before {
 }
 
 .info-box {
-    background: rgba(20,0,32,.75);
-    border: 1px solid rgba(180,70,255,.4);
+    background: rgba(20,0,32,0.78);
+    border: 1px solid rgba(180,70,255,0.4);
     border-radius: 18px;
     padding: 17px;
 }
@@ -160,6 +178,7 @@ body::before {
 }
 
 /* BUTTONS */
+
 .btn {
     display: block;
     width: 100%;
@@ -169,46 +188,49 @@ body::before {
     margin-top: 12px;
     text-align: center;
     text-decoration: none;
-    color: white;
+    color: #ffffff;
     font-size: 18px;
     font-weight: 800;
     cursor: pointer;
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 .install-btn {
-    background: linear-gradient(90deg, #8b00ff, #d000ff);
+    background: linear-gradient(90deg, #8700ff, #d000ff);
     box-shadow:
-        0 0 18px rgba(190,0,255,.75),
-        0 0 35px rgba(170,0,255,.35);
+        0 0 18px rgba(190,0,255,0.75),
+        0 0 35px rgba(170,0,255,0.35);
 }
 
 .install-btn:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 0 25px rgba(220,0,255,.9),
-        0 0 45px rgba(170,0,255,.5);
+        0 0 25px rgba(220,0,255,0.9),
+        0 0 45px rgba(170,0,255,0.5);
 }
 
 .view-btn {
-    background: rgba(100,0,160,.35);
-    border: 1px solid rgba(205,70,255,.65);
+    background: rgba(100,0,160,0.35);
+    border: 1px solid rgba(205,70,255,0.65);
 }
 
 .view-btn:hover {
-    background: rgba(150,0,220,.45);
+    background: rgba(150,0,220,0.45);
 }
 
 /* APP CARDS */
+
 .app-card {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: rgba(8, 12, 18, .88);
-    border: 1px solid rgba(150,80,255,.25);
+    background: rgba(8,12,18,0.90);
+    border: 1px solid rgba(150,80,255,0.28);
     border-radius: 22px;
     padding: 15px;
     margin-top: 14px;
+    box-shadow:
+        inset 0 0 18px rgba(130,0,255,0.04);
 }
 
 .app-icon {
@@ -235,6 +257,8 @@ body::before {
     font-size: 13px;
 }
 
+/* INSTALL BUTTON */
+
 .app-button {
     min-width: 110px;
     padding: 12px 18px;
@@ -244,36 +268,42 @@ body::before {
     text-decoration: none;
     border: 1px solid #24d66b;
     color: #45ed85;
-    background: rgba(0,90,40,.18);
+    background: rgba(0,90,40,0.18);
+    white-space: nowrap;
+    transition: 0.2s ease;
 }
 
 .app-button:hover {
-    background: rgba(0,120,50,.3);
+    background: rgba(0,120,50,0.3);
+    transform: translateY(-1px);
 }
 
 /* COMING SOON */
+
 .coming-soon {
-    border-color: rgba(160,80,255,.35);
+    border-color: rgba(160,80,255,0.35);
 }
 
 .coming-soon .app-button {
     border-color: #9b55ff;
     color: #c78aff;
-    background: rgba(100,0,180,.15);
+    background: rgba(100,0,180,0.15);
     cursor: default;
 }
 
 .coming-soon .app-button:hover {
-    background: rgba(100,0,180,.15);
+    background: rgba(100,0,180,0.15);
+    transform: none;
 }
 
 /* FEATURES */
+
 .feature {
     display: flex;
     align-items: center;
     gap: 14px;
     padding: 17px 0;
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .feature:last-child {
@@ -283,14 +313,15 @@ body::before {
 .feature-icon {
     width: 48px;
     height: 48px;
+    flex: 0 0 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: rgba(160,0,255,.25);
-    border: 1px solid rgba(210,80,255,.45);
+    background: rgba(160,0,255,0.25);
+    border: 1px solid rgba(210,80,255,0.45);
     font-size: 23px;
-    box-shadow: 0 0 12px rgba(180,0,255,.3);
+    box-shadow: 0 0 12px rgba(180,0,255,0.3);
 }
 
 .feature-title {
@@ -305,6 +336,7 @@ body::before {
 }
 
 /* FOOTER */
+
 footer {
     text-align: center;
     color: #aa91b8;
@@ -313,6 +345,7 @@ footer {
 }
 
 /* MOBILE */
+
 @media (max-width: 600px) {
 
     .container {
@@ -343,6 +376,7 @@ footer {
 
     .app-card {
         padding: 13px;
+        gap: 12px;
     }
 
     .app-icon {
@@ -353,7 +387,7 @@ footer {
     }
 
     .app-name {
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .app-meta {
@@ -361,9 +395,36 @@ footer {
     }
 
     .app-button {
-        min-width: 90px;
-        padding: 10px 12px;
-        font-size: 13px;
+        min-width: 92px;
+        padding: 10px 11px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .app-card {
+        gap: 9px;
+    }
+
+    .app-icon {
+        width: 58px;
+        height: 58px;
+        flex-basis: 58px;
+    }
+
+    .app-name {
+        font-size: 14px;
+    }
+
+    .app-meta {
+        font-size: 10px;
+    }
+
+    .app-button {
+        min-width: 82px;
+        padding: 9px 8px;
+        font-size: 11px;
     }
 }
 </style>
@@ -374,11 +435,14 @@ footer {
 <div class="container">
 
     <!-- ULTRA-iOS LOGO -->
+
     <div class="logo-box">
         <img src="ultra-logo.png" alt="ULTRA-iOS Logo">
     </div>
 
-    <div class="title">ULTRA-iOS</div>
+    <div class="title">
+        ULTRA-iOS
+    </div>
 
     <div class="subtitle">
         Next Generation iOS Installation Hub
@@ -391,6 +455,7 @@ footer {
 
 
     <!-- CONFIGURATION PROFILE -->
+
     <div class="card">
 
         <div class="card-title">
@@ -405,18 +470,30 @@ footer {
         <div class="profile-grid">
 
             <div class="info-box">
-                <div class="info-label">Profile</div>
-                <div class="info-value">ULTRA Anti-Revoke</div>
+                <div class="info-label">
+                    Profile
+                </div>
+
+                <div class="info-value">
+                    ULTRA Anti-Revoke
+                </div>
             </div>
 
             <div class="info-box">
-                <div class="info-label">Platform</div>
-                <div class="info-value">iOS / iPadOS</div>
+                <div class="info-label">
+                    Platform
+                </div>
+
+                <div class="info-value">
+                    iOS / iPadOS
+                </div>
             </div>
 
         </div>
 
+
         <!-- INSTALL PROFILE -->
+
         <a
             class="btn install-btn"
             href="ULTRA_iOS_AntiRevoke.mobileconfig"
@@ -424,7 +501,9 @@ footer {
             ⚡ Install Profile
         </a>
 
+
         <!-- VIEW PROFILE -->
+
         <a
             class="btn view-btn"
             href="ULTRA_iOS_AntiRevoke.mobileconfig"
@@ -435,7 +514,8 @@ footer {
     </div>
 
 
-    <!-- APPS -->
+    <!-- ULTRA APPS -->
+
     <div class="card">
 
         <div class="card-title">
@@ -447,101 +527,145 @@ footer {
         </div>
 
 
-        <!-- BGMI -->
+        <!-- BATTLEGROUNDS MOBILE INDIA -->
+
         <div class="app-card">
 
             <img
                 class="app-icon"
                 src="bgmi-icon.png"
-                alt="BGMI Indian App"
+                alt="BATTLEGROUNDS MOBILE India"
             >
 
             <div class="app-info">
+
                 <div class="app-name">
-                    BGMI Indian App
+                    🎮 BATTLEGROUNDS MOBILE
                 </div>
 
                 <div class="app-meta">
-                    🛡 DNS &nbsp; • &nbsp; HSBC Bank
+                    🇮🇳 India &nbsp; • &nbsp; ULTRA-iOS
                 </div>
+
             </div>
 
-            <a class="app-button" href="#">
+            <a
+                class="app-button"
+                href="#"
+            >
                 ↓ Install
             </a>
 
         </div>
 
 
-        <!-- BGMI 2 -->
-        <div class="app-card">
+        <!-- PUBG MOBILE VIETNAM -->
 
-            <img
-                class="app-icon"
-                src="bgmi-icon.png"
-                alt="BGMI Indian App"
-            >
-
-            <div class="app-info">
-                <div class="app-name">
-                    BGMI Indian App
-                </div>
-
-                <div class="app-meta">
-                    🛡 DNS &nbsp; • &nbsp; CenPower
-                </div>
-            </div>
-
-            <a class="app-button" href="#">
-                ↓ Install
-            </a>
-
-        </div>
-
-
-        <!-- BGMI 3 -->
-        <div class="app-card">
-
-            <img
-                class="app-icon"
-                src="bgmi-icon.png"
-                alt="BGMI Indian App"
-            >
-
-            <div class="app-info">
-                <div class="app-name">
-                    BGMI Indian App
-                </div>
-
-                <div class="app-meta">
-                    🛡 DNS &nbsp; • &nbsp; CenPower 2
-                </div>
-            </div>
-
-            <a class="app-button" href="#">
-                ↓ Install
-            </a>
-
-        </div>
-
-
-        <!-- PUBG MOBILE -->
         <div class="app-card coming-soon">
 
             <img
                 class="app-icon"
                 src="pubg-icon.png"
-                alt="PUBG Mobile"
+                alt="PUBG Mobile Vietnam"
             >
 
             <div class="app-info">
+
                 <div class="app-name">
-                    PUBG Mobile
+                    🎮 PUBG MOBILE
                 </div>
 
                 <div class="app-meta">
-                    🎮 PUBG MOBILE &nbsp; • &nbsp; ULTRA-iOS
+                    🇻🇳 Vietnam &nbsp; • &nbsp; ULTRA-iOS
                 </div>
+
+            </div>
+
+            <div class="app-button">
+                Coming Soon
+            </div>
+
+        </div>
+
+
+        <!-- PUBG MOBILE KOREAN -->
+
+        <div class="app-card coming-soon">
+
+            <img
+                class="app-icon"
+                src="pubg-icon.png"
+                alt="PUBG Mobile Korean"
+            >
+
+            <div class="app-info">
+
+                <div class="app-name">
+                    🎮 PUBG MOBILE
+                </div>
+
+                <div class="app-meta">
+                    🇰🇷 Korean &nbsp; • &nbsp; ULTRA-iOS
+                </div>
+
+            </div>
+
+            <div class="app-button">
+                Coming Soon
+            </div>
+
+        </div>
+
+
+        <!-- PUBG MOBILE TAIWAN -->
+
+        <div class="app-card coming-soon">
+
+            <img
+                class="app-icon"
+                src="pubg-icon.png"
+                alt="PUBG Mobile Taiwan"
+            >
+
+            <div class="app-info">
+
+                <div class="app-name">
+                    🎮 PUBG MOBILE
+                </div>
+
+                <div class="app-meta">
+                    🇹🇼 Taiwan &nbsp; • &nbsp; ULTRA-iOS
+                </div>
+
+            </div>
+
+            <div class="app-button">
+                Coming Soon
+            </div>
+
+        </div>
+
+
+        <!-- PUBG MOBILE GLOBAL -->
+
+        <div class="app-card coming-soon">
+
+            <img
+                class="app-icon"
+                src="pubg-icon.png"
+                alt="PUBG Mobile Global"
+            >
+
+            <div class="app-info">
+
+                <div class="app-name">
+                    🎮 PUBG MOBILE
+                </div>
+
+                <div class="app-meta">
+                    🌎 Global &nbsp; • &nbsp; ULTRA-iOS
+                </div>
+
             </div>
 
             <div class="app-button">
@@ -554,6 +678,7 @@ footer {
 
 
     <!-- FEATURES -->
+
     <div class="card">
 
         <div class="feature">
@@ -563,6 +688,7 @@ footer {
             </div>
 
             <div>
+
                 <div class="feature-title">
                     Secure Profile
                 </div>
@@ -570,6 +696,7 @@ footer {
                 <div class="feature-text">
                     Configuration delivered over HTTPS
                 </div>
+
             </div>
 
         </div>
@@ -582,6 +709,7 @@ footer {
             </div>
 
             <div>
+
                 <div class="feature-title">
                     One-Tap Installation
                 </div>
@@ -589,6 +717,7 @@ footer {
                 <div class="feature-text">
                     Designed for iPhone and iPad
                 </div>
+
             </div>
 
         </div>
@@ -601,6 +730,7 @@ footer {
             </div>
 
             <div>
+
                 <div class="feature-title">
                     ULTRA Interface
                 </div>
@@ -608,12 +738,15 @@ footer {
                 <div class="feature-text">
                     Modern purple futuristic design
                 </div>
+
             </div>
 
         </div>
 
     </div>
 
+
+    <!-- FOOTER -->
 
     <footer>
         © 2026 ULTRA-iOS
