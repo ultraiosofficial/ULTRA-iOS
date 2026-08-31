@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#050805">
+
+<title>BGMI India | ULTRA-iOS</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    color: #f7fff7;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(65,255,100,.13),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 100% 80%,
+            rgba(0,255,110,.06),
+            transparent 35%
+        ),
+        #030503;
+
+    overflow-x: hidden;
+}
+
+/* futuristic grid */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .18;
+
+    background-image:
+        linear-gradient(
+            rgba(100,255,130,.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(100,255,130,.08) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent
+    );
+
+    animation: gridMove 12s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(45px);
+    }
+}
+
+/* particles */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #9cffb0;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #52ff78;
+    animation: particle 7s linear infinite;
+}
+
+.particles span:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.particles span:nth-child(2) {
+    left: 30%;
+    animation-delay: 2s;
+}
+
+.particles span:nth-child(3) {
+    left: 50%;
+    animation-delay: 4s;
+}
+
+.particles span:nth-child(4) {
+    left: 70%;
+    animation-delay: 1s;
+}
+
+.particles span:nth-child(5) {
+    left: 90%;
+    animation-delay: 3s;
+}
+
+@keyframes particle {
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+.container {
+    width: min(650px, 94%);
+    margin: auto;
+    padding: 35px 0 60px;
+}
+
+/* Back button */
+
+.back {
+    display: inline-flex;
+    text-decoration: none;
+    color: #b8c9b9;
+    border: 1px solid #253526;
+    background: rgba(10,15,10,.75);
+    padding: 11px 18px;
+    border-radius: 14px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    transition: .25s;
+}
+
+.back:hover {
+    color: white;
+    border-color: #69ff82;
+    box-shadow: 0 0 20px rgba(70,255,100,.2);
+}
+
+/* Main card */
+
+.card {
+    padding: 32px;
+    border-radius: 32px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,27,18,.96),
+            rgba(5,8,5,.97)
+        );
+
+    border: 1px solid rgba(100,255,125,.25);
+
+    box-shadow:
+        0 0 60px rgba(40,255,75,.08),
+        inset 0 0 50px rgba(90,255,110,.025);
+
+    animation: cardIn .9s ease;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* icon */
+
+.icon-wrap {
+    text-align: center;
+}
+
+.app-icon {
+    width: 145px;
+    height: 145px;
+    border-radius: 35px;
+    object-fit: cover;
+
+    box-shadow:
+        0 0 0 1px rgba(150,255,160,.25),
+        0 0 35px rgba(80,255,100,.3);
+
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+h1 {
+    text-align: center;
+    margin-top: 25px;
+    font-size: clamp(27px,7vw,42px);
+    font-weight: 900;
+}
+
+.meta {
+    text-align: center;
+    margin-top: 10px;
+    color: #98aa99;
+    letter-spacing: 3px;
+    font-family: monospace;
+}
+
+/* status */
+
+.status {
+    width: fit-content;
+    margin: 20px auto 28px;
+
+    padding: 8px 16px;
+    border-radius: 999px;
+
+    color: #8cff9c;
+    border: 1px solid #2c7e3c;
+    background: rgba(40,255,80,.06);
+
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+/* buttons */
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 62px;
+
+    margin-top: 15px;
+
+    border-radius: 19px;
+    text-decoration: none;
+
+    font-size: 19px;
+    font-weight: 900;
+
+    transition: .25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.install {
+    color: #061006;
+    background:
+        linear-gradient(
+            90deg,
+            #9dff38,
+            #c7ff55
+        );
+
+    box-shadow:
+        0 0 25px rgba(160,255,50,.25);
+}
+
+.download {
+    color: #eaffeb;
+    border: 1px solid #314531;
+    background: rgba(15,22,15,.8);
+}
+
+.button:hover,
+.button:active {
+    transform: scale(.985);
+}
+
+.install:hover {
+    box-shadow:
+        0 0 35px rgba(160,255,50,.45);
+}
+
+/* shine */
+
+.button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 45%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.5),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+    animation: buttonShine 3.5s infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        left: -100%;
+    }
+
+    50%,100% {
+        left: 150%;
+    }
+}
+
+/* Instructions */
+
+.instructions {
+    margin-top: 30px;
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background: rgba(15,22,15,.8);
+    border: 1px solid #202e20;
+}
+
+.instructions h2 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #b9cbb9;
+    margin-bottom: 16px;
+}
+
+.instructions ol {
+    padding-left: 22px;
+}
+
+.instructions li {
+    margin: 13px 0;
+    color: #b6c0b6;
+    line-height: 1.55;
+}
+
+code {
+    padding: 3px 7px;
+    border-radius: 5px;
+    background: #202820;
+    color: #c7ffc7;
+}
+
+/* information */
+
+.info {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #202d20;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid #172017;
+}
+
+.row:last-child {
+    border-bottom: 0;
+}
+
+.label {
+    color: #7f917f;
+}
+
+.value {
+    text-align: right;
+    font-weight: 800;
+}
+
+/* footer */
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #536153;
+    font-family: monospace;
+}
+
+@media(max-width:600px) {
+
+    .card {
+        padding: 22px;
+        border-radius: 25px;
+    }
+
+    .app-icon {
+        width: 120px;
+        height: 120px;
+        border-radius: 29px;
+    }
+
+    .row {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="container">
+
+<a href="index.html" class="back">
+    ← Back to ULTRA-iOS
+</a>
+
+<div class="card">
+
+    <div class="icon-wrap">
+
+        <img src="bgmi-icon.png"
+             class="app-icon"
+             alt="BATTLEGROUNDS MOBILE">
+
+    </div>
+
+    <h1>
+        BATTLEGROUNDS MOBILE
+    </h1>
+
+    <div class="meta">
+        INDIA&nbsp;&nbsp;•&nbsp;&nbsp;ULTRA-iOS
+    </div>
+
+    <div class="status">
+        ● AVAILABLE
+    </div>
+
+
+    <!-- INSTALL -->
+
+    <!--
+      IMPORTANT:
+      Replace the URL below with your actual BGMI
+      installation URL when you have one.
+    -->
+
+    <a href="#"
+       class="button install"
+       onclick="showInstallMessage(event)">
+        ↓ Install
+    </a>
+
+
+    <!-- IPA DOWNLOAD -->
+
+    <!-- Replace # with your actual IPA URL -->
+
+    <a href="#"
+       class="button download"
+       onclick="showDownloadMessage(event)">
+        Download IPA
+    </a>
+
+
+    <!-- APP INFORMATION -->
+
+    <div class="info">
+
+        <div class="row">
+            <span class="label">Region</span>
+            <span class="value">🇮🇳 India</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Platform</span>
+            <span class="value">iOS / iPadOS</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Publisher</span>
+            <span class="value">ULTRA-iOS</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Status</span>
+            <span class="value">Available</span>
+        </div>
+
+    </div>
+
+
+    <!-- INSTALLATION INSTRUCTIONS -->
+
+    <div class="instructions">
+
+        <h2>AFTER YOU TAP INSTALL</h2>
+
+        <ol>
+
+            <li>
+                Tap <strong>Install</strong> when the
+                installation prompt appears.
+            </li>
+
+            <li>
+                Wait for the application to finish
+                installing on your Home Screen.
+            </li>
+
+            <li>
+                If iOS asks you to trust an enterprise
+                developer, only trust a developer/profile
+                you know and expect.
+            </li>
+
+            <li>
+                Check
+                <code>Settings → General → VPN & Device Management</code>
+                if your installation method requires it.
+            </li>
+
+        </ol>
+
+    </div>
+
+</div>
+
+<footer>
+    ULTRA-iOS • BGMI India
+</footer>
+
+</div>
+
+
+<script>
+
+function showInstallMessage(event) {
+
+    event.preventDefault();
+
+    alert(
+        "BGMI Install URL is not configured yet.\\n\\n" +
+        "Replace the href=\"#\" in bgmi.html with your " +
+        "actual installation URL."
+    );
+}
+
+function showDownloadMessage(event) {
+
+    event.preventDefault();
+
+    alert(
+        "BGMI IPA download URL is not configured yet.\\n\\n" +
+        "Replace the href=\"#\" in bgmi.html with your " +
+        "actual IPA file URL."
+    );
+}
+
+</script>
+
+</body>
+</html>
