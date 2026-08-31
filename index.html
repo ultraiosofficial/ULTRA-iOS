@@ -3,2002 +3,574 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050008">
-
-<title>ULTRA-iOS</title>
+<meta name="theme-color" content="#09000f">
+<title>ULTRA-iOS | Installation Hub</title>
 
 <style>
-
-/* =========================================================
-   ULTRA-iOS FUTURISTIC UI
-========================================================= */
-
-:root{
-    --purple:#9b00ff;
-    --violet:#5b00ff;
-    --pink:#ed00ff;
-    --cyan:#00eaff;
-    --white:#fff;
-    --muted:#bda9c7;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+html {
+    scroll-behavior: smooth;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-
-    font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    Arial,
-    sans-serif;
-
-    color:white;
-
+body {
+    min-height: 100vh;
     background:
-    radial-gradient(
-        circle at 50% -10%,
-        #8c00e8 0%,
-        #3b005d 20%,
-        #13001d 45%,
-        #050008 75%,
-        #020003 100%
-    );
+        radial-gradient(circle at 50% 0%, #5d008f 0%, transparent 35%),
+        radial-gradient(circle at 0% 50%, #250044 0%, transparent 35%),
+        #050008;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Segoe UI", sans-serif;
+    overflow-x: hidden;
 }
 
-/* =========================================================
-   BOOT SCREEN
-========================================================= */
-
-.boot{
-    position:fixed;
-    inset:0;
-
-    z-index:9999;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-
+/* Animated background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
     background:
-    radial-gradient(
-        circle,
-        #210039,
-        #050008 70%
-    );
-
-    transition:
-    opacity 1s ease,
-    visibility 1s ease;
+        linear-gradient(120deg, transparent 45%, rgba(208,0,255,.08) 50%, transparent 55%);
+    background-size: 300% 300%;
+    animation: scan 8s linear infinite;
+    z-index: -2;
 }
 
-.boot.hide{
-    opacity:0;
-    visibility:hidden;
+@keyframes scan {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 300% 300%; }
 }
 
-.boot-logo{
-    font-size:42px;
-    font-weight:1000;
-    letter-spacing:6px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #fff,
-        #b400ff,
-        #fff,
-        #ed00ff,
-        #fff
-    );
-
-    background-size:300%;
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-
-    animation:
-    bootShine 2s linear infinite;
+/* Stars */
+.stars,
+.stars2,
+.stars3 {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-repeat: repeat;
 }
 
-@keyframes bootShine{
-    from{background-position:300%}
-    to{background-position:-100%}
-}
-
-.boot-line{
-    width:230px;
-    height:2px;
-
-    margin-top:22px;
-
-    overflow:hidden;
-
-    background:rgba(255,255,255,.1);
-}
-
-.boot-line span{
-    display:block;
-
-    width:0%;
-    height:100%;
-
-    background:
-    linear-gradient(
-        90deg,
-        #7600ff,
-        #ed00ff,
-        #fff
-    );
-
-    box-shadow:
-    0 0 12px #d000ff;
-
-    animation:
-    bootProgress 2.2s ease forwards;
-}
-
-@keyframes bootProgress{
-    to{width:100%}
-}
-
-.boot-text{
-    margin-top:12px;
-
-    font-size:10px;
-    letter-spacing:3px;
-
-    color:#9f83aa;
-
-    animation:
-    bootBlink 1s infinite;
-}
-
-@keyframes bootBlink{
-    50%{opacity:.35}
-}
-
-/* =========================================================
-   AMBIENT
-========================================================= */
-
-.ambient{
-    position:fixed;
-    inset:-30%;
-
-    pointer-events:none;
-    z-index:-20;
-
-    background:
-    radial-gradient(
-        circle at 20% 20%,
-        rgba(183,0,255,.22),
-        transparent 22%
-    ),
-    radial-gradient(
-        circle at 80% 60%,
-        rgba(94,0,255,.22),
-        transparent 25%
-    ),
-    radial-gradient(
-        circle at 50% 100%,
-        rgba(235,0,255,.12),
-        transparent 25%
-    );
-
-    animation:
-    ambientMove 14s ease-in-out infinite alternate;
-}
-
-@keyframes ambientMove{
-    0%{
-        transform:translate(-2%,-1%) scale(1);
-    }
-
-    50%{
-        transform:translate(3%,2%) scale(1.08);
-    }
-
-    100%{
-        transform:translate(-1%,4%) scale(1.04);
-    }
-}
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.grid{
-    position:fixed;
-
-    left:-20%;
-    right:-20%;
-    bottom:-15%;
-
-    height:60vh;
-
-    pointer-events:none;
-    z-index:-10;
-
-    opacity:.3;
-
+.stars {
     background-image:
-    linear-gradient(
-        rgba(177,0,255,.2) 1px,
-        transparent 1px
-    ),
-    linear-gradient(
-        90deg,
-        rgba(177,0,255,.2) 1px,
-        transparent 1px
-    );
-
-    background-size:45px 45px;
-
-    transform:
-    perspective(500px)
-    rotateX(65deg);
-
-    transform-origin:center bottom;
-
-    mask-image:
-    linear-gradient(
-        to top,
-        black,
-        transparent
-    );
-
-    animation:gridMove 8s linear infinite;
+        radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px);
+    background-size: 90px 90px;
+    animation: starsMove 18s linear infinite;
+    opacity: .35;
 }
 
-@keyframes gridMove{
-    from{background-position:0 0}
-    to{background-position:0 45px}
+.stars2 {
+    background-image:
+        radial-gradient(circle, rgba(214,60,255,.9) 1px, transparent 1px);
+    background-size: 150px 150px;
+    animation: starsMove 28s linear infinite reverse;
+    opacity: .25;
 }
 
-/* =========================================================
-   SCANLINES
-========================================================= */
-
-.scanlines{
-    position:fixed;
-    inset:0;
-
-    pointer-events:none;
-    z-index:500;
-
-    opacity:.055;
-
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 4px,
-        rgba(255,255,255,.15) 5px
-    );
+.stars3 {
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px);
+    background-size: 230px 230px;
+    animation: starsMove 40s linear infinite;
+    opacity: .2;
 }
 
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-.particles{
-    position:fixed;
-    inset:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
-    z-index:-5;
+@keyframes starsMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(230px); }
 }
 
-.particle{
-    position:absolute;
+.container {
+    width: min(1050px, 94%);
+    margin: auto;
+    padding: 35px 0 60px;
+}
 
-    width:3px;
-    height:3px;
+/* Header */
+.hero {
+    text-align: center;
+    padding: 30px 10px 45px;
+    animation: fadeDown 1s ease;
+}
 
-    border-radius:50%;
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    background:#d55cff;
-
+.logo {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 30px;
+    border: 2px solid rgba(220,80,255,.8);
     box-shadow:
-    0 0 7px #bd00ff,
-    0 0 18px #8500ff;
-
-    opacity:0;
-
-    animation:
-    particleFloat linear infinite;
+        0 0 20px #a900ff,
+        0 0 55px rgba(190,0,255,.55);
+    animation: logoFloat 4s ease-in-out infinite;
 }
 
-.p1{left:3%;animation-duration:9s}
-.p2{left:9%;animation-duration:14s;animation-delay:2s}
-.p3{left:15%;animation-duration:11s;animation-delay:4s}
-.p4{left:22%;animation-duration:17s;animation-delay:1s}
-.p5{left:29%;animation-duration:12s;animation-delay:6s}
-.p6{left:36%;animation-duration:15s;animation-delay:3s}
-.p7{left:43%;animation-duration:10s;animation-delay:5s}
-.p8{left:50%;animation-duration:18s;animation-delay:2s}
-.p9{left:57%;animation-duration:13s;animation-delay:7s}
-.p10{left:64%;animation-duration:16s;animation-delay:1s}
-.p11{left:71%;animation-duration:10s;animation-delay:4s}
-.p12{left:78%;animation-duration:15s;animation-delay:6s}
-.p13{left:85%;animation-duration:12s;animation-delay:3s}
-.p14{left:92%;animation-duration:17s;animation-delay:8s}
-.p15{left:97%;animation-duration:11s;animation-delay:5s}
-
-@keyframes particleFloat{
-
-    0%{
-        transform:
-        translateY(110vh)
-        translateX(0)
-        scale(.3);
-
-        opacity:0;
+@keyframes logoFloat {
+    0%,100% {
+        transform: translateY(0) rotate(0deg);
     }
-
-    15%{opacity:.85}
-
-    50%{
-        transform:
-        translateY(50vh)
-        translateX(30px)
-        scale(1);
-    }
-
-    100%{
-        transform:
-        translateY(-10vh)
-        translateX(-30px)
-        scale(1.4);
-
-        opacity:0;
+    50% {
+        transform: translateY(-10px) rotate(1deg);
     }
 }
 
-/* =========================================================
-   SHOOTING STARS
-========================================================= */
+.title {
+    margin-top: 22px;
+    font-size: clamp(38px, 8vw, 70px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg,#fff,#dc54ff,#fff);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+}
 
-.shooting-star{
-    position:fixed;
+@keyframes shine {
+    to { background-position: 200%; }
+}
 
-    width:140px;
-    height:2px;
+.subtitle {
+    margin-top: 8px;
+    color: #cbb7d3;
+    font-size: 17px;
+}
 
-    background:
-    linear-gradient(
-        90deg,
-        transparent,
-        #d000ff,
-        #fff
-    );
+/* Online badge */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 12px 24px;
+    border: 1px solid #bd29ff;
+    border-radius: 999px;
+    background: rgba(80,0,120,.35);
+    box-shadow: 0 0 25px rgba(196,0,255,.5);
+    font-weight: 800;
+    letter-spacing: 2px;
+}
 
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d900ff;
+    box-shadow: 0 0 15px #d900ff;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.7);
+        opacity: .4;
+    }
+}
+
+/* Cards */
+.section {
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px solid rgba(213,43,255,.65);
+    border-radius: 30px;
+    background: rgba(13,0,23,.78);
     box-shadow:
-    0 0 8px #c000ff,
-    0 0 20px #9000ff;
-
-    transform:rotate(-25deg);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    z-index:-2;
-
-    animation:
-    shooting 8s linear infinite;
+        0 0 35px rgba(153,0,255,.18),
+        inset 0 0 35px rgba(135,0,255,.06);
+    backdrop-filter: blur(15px);
+    animation: sectionIn .9s ease both;
 }
 
-.star1{
-    top:15%;
-    left:-150px;
-}
-
-.star2{
-    top:43%;
-    left:-150px;
-    animation-delay:4s;
-}
-
-@keyframes shooting{
-
-    0%{
-        transform:
-        translateX(0)
-        translateY(0)
-        rotate(-25deg);
-
-        opacity:0;
+@keyframes sectionIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
     }
-
-    5%{opacity:1}
-
-    18%{
-        transform:
-        translateX(115vw)
-        translateY(45vh)
-        rotate(-25deg);
-
-        opacity:0;
-    }
-
-    100%{opacity:0}
-}
-
-/* =========================================================
-   ROCKET
-========================================================= */
-
-.rocket-stage{
-    position:fixed;
-    inset:0;
-
-    pointer-events:none;
-
-    overflow:hidden;
-
-    z-index:700;
-}
-
-.launch-flash{
-    position:absolute;
-
-    left:50%;
-    bottom:0;
-
-    width:20px;
-    height:20px;
-
-    border-radius:50%;
-
-    transform:
-    translateX(-50%)
-    scale(0);
-
-    background:white;
-
-    box-shadow:
-    0 0 25px #fff,
-    0 0 70px #d000ff,
-    0 0 140px #8500ff;
-
-    opacity:0;
-}
-
-.launch-flash.active{
-    animation:
-    flashBoom 1.1s ease-out;
-}
-
-@keyframes flashBoom{
-
-    0%{
-        transform:
-        translateX(-50%)
-        scale(0);
-
-        opacity:.9;
-    }
-
-    30%{
-        transform:
-        translateX(-50%)
-        scale(8);
-
-        opacity:.25;
-    }
-
-    100%{
-        transform:
-        translateX(-50%)
-        scale(25);
-
-        opacity:0;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-.rocket{
-    position:absolute;
-
-    left:50%;
-    bottom:-160px;
-
-    width:75px;
-    height:110px;
-
-    opacity:0;
-
-    filter:
-    drop-shadow(0 0 12px #c000ff)
-    drop-shadow(0 0 35px rgba(155,0,255,.7));
+.section-title {
+    font-size: 30px;
+    font-weight: 900;
 }
 
-.rocket.launch{
-    animation:
-    rocketLaunch 4.8s
-    cubic-bezier(.18,.72,.22,1)
-    forwards;
+.section-description {
+    color: #b9a7c0;
+    margin-top: 8px;
+    margin-bottom: 24px;
 }
 
-@keyframes rocketLaunch{
-
-    0%{
-        bottom:-160px;
-        opacity:0;
-
-        transform:
-        translateX(-50%)
-        scale(.75);
-    }
-
-    8%{opacity:1}
-
-    18%{bottom:8%}
-    35%{bottom:28%}
-    55%{bottom:48%}
-    75%{bottom:70%}
-
-    100%{
-        bottom:125%;
-        opacity:0;
-
-        transform:
-        translateX(-50%)
-        scale(1.05);
-    }
+/* Profile */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
-.rocket-body{
-    position:absolute;
-
-    left:50%;
-    top:0;
-
-    width:48px;
-    height:78px;
-
-    transform:translateX(-50%);
-
-    border-radius:
-    50%
-    50%
-    30%
-    30%;
-
-    background:
-    linear-gradient(
-        90deg,
-        #5a00a8,
-        #d400ff 48%,
-        #fff 50%,
-        #9500ff 56%,
-        #420075
-    );
-
-    border:
-    1px solid rgba(255,255,255,.75);
-
-    box-shadow:
-    inset 0 0 10px rgba(255,255,255,.5),
-    0 0 15px #c000ff;
+.info-box {
+    padding: 22px;
+    border-radius: 20px;
+    border: 1px solid rgba(181,44,255,.4);
+    background: rgba(4,0,8,.7);
 }
 
-.rocket-nose{
-    position:absolute;
-
-    left:50%;
-    top:-27px;
-
-    width:48px;
-    height:45px;
-
-    transform:translateX(-50%);
-
-    background:
-    linear-gradient(
-        135deg,
-        #fff,
-        #d500ff 55%,
-        #7200ff
-    );
-
-    clip-path:
-    polygon(
-        50% 0,
-        100% 100%,
-        0 100%
-    );
+.info-label {
+    color: #9d89a8;
+    font-size: 13px;
+    letter-spacing: 2px;
 }
 
-.rocket-window{
-    position:absolute;
-
-    left:50%;
-    top:22px;
-
-    width:18px;
-    height:18px;
-
-    transform:translateX(-50%);
-
-    border-radius:50%;
-
-    background:
-    radial-gradient(
-        circle at 35% 30%,
-        white,
-        #b900ff 45%,
-        #35005e
-    );
-
-    border:2px solid white;
-
-    box-shadow:
-    0 0 10px #c000ff;
+.info-value {
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 800;
 }
 
-.fin-left,
-.fin-right{
-    position:absolute;
-
-    top:54px;
-
-    width:23px;
-    height:34px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #6800d0,
-        #e000ff
-    );
+/* Buttons */
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 64px;
+    margin-top: 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 19px;
+    font-weight: 900;
+    border: 1px solid #d43cff;
+    transition: .25s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.fin-left{
-    left:-13px;
-
-    clip-path:
-    polygon(
-        100% 0,
-        100% 100%,
-        0 100%
-    );
-}
-
-.fin-right{
-    right:-13px;
-
-    clip-path:
-    polygon(
-        0 0,
-        100% 100%,
-        0 100%
-    );
-}
-
-.flame{
-    position:absolute;
-
-    left:50%;
-    top:73px;
-
-    transform:translateX(-50%);
-
-    width:27px;
-    height:65px;
-
-    border-radius:
-    50%
-    50%
-    60%
-    60%;
-
-    background:
-    linear-gradient(
-        to bottom,
-        #fff,
-        #f500ff 25%,
-        #9900ff 60%,
-        transparent
-    );
-
-    filter:
-    blur(2px)
-    drop-shadow(0 0 12px #d000ff);
-
-    animation:
-    flameMove .08s
-    ease-in-out infinite alternate;
-}
-
-@keyframes flameMove{
-
-    from{
-        transform:
-        translateX(-50%)
-        scaleY(.85)
-        scaleX(.8);
-    }
-
-    to{
-        transform:
-        translateX(-50%)
-        scaleY(1.25)
-        scaleX(1.15);
-    }
-}
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.container{
-    position:relative;
-
-    width:100%;
-    max-width:920px;
-
-    margin:auto;
-
-    padding:
-    38px 18px 55px;
-
-    z-index:2;
-}
-
-/* =========================================================
-   HUD
-========================================================= */
-
-.hud{
-    display:flex;
-
-    justify-content:space-between;
-    align-items:center;
-
-    margin-bottom:25px;
-
-    color:#b977d9;
-
-    font-size:10px;
-
-    letter-spacing:2px;
-}
-
-.hud-line{
-    height:1px;
-
-    flex:1;
-
-    margin:0 12px;
-
-    background:
-    linear-gradient(
+.button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
         90deg,
         transparent,
-        rgba(200,0,255,.7),
+        rgba(255,255,255,.35),
         transparent
     );
+    transform: skewX(-20deg);
+    animation: buttonShine 3s infinite;
 }
 
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo-area{
-    position:relative;
-
-    width:180px;
-    height:180px;
-
-    margin:auto;
+@keyframes buttonShine {
+    0% { left: -100%; }
+    50%,100% { left: 150%; }
 }
 
-.energy-ring{
-    position:absolute;
-    inset:3px;
-
-    border-radius:50%;
-
-    border:
-    1px solid rgba(220,0,255,.65);
-
+.primary {
+    background: linear-gradient(90deg,#dc00ff,#7800ff);
     box-shadow:
-    0 0 15px rgba(180,0,255,.45),
-    inset 0 0 15px rgba(180,0,255,.25);
-
-    animation:
-    ringSpin 9s linear infinite;
+        0 0 25px rgba(216,0,255,.6),
+        0 0 60px rgba(122,0,255,.25);
 }
 
-.energy-ring:before,
-.energy-ring:after{
-    content:"";
-
-    position:absolute;
-    inset:12px;
-
-    border-radius:50%;
-
-    border:
-    1px dashed rgba(205,0,255,.45);
+.secondary {
+    background: rgba(60,0,85,.35);
 }
 
-.energy-ring:after{
-    inset:25px;
-
-    border-style:solid;
-
-    border-color:
-    rgba(255,255,255,.12)
-    transparent
-    rgba(190,0,255,.55)
-    transparent;
-
-    animation:
-    ringSpinReverse 5s linear infinite;
+.button:hover,
+.button:active {
+    transform: scale(.98);
+    box-shadow: 0 0 35px rgba(221,0,255,.7);
 }
 
-.ring2{
-    inset:-10px;
-
-    border-color:
-    rgba(140,0,255,.25);
-
-    animation-duration:13s;
-    animation-direction:reverse;
+/* Apps */
+.apps {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
-.ring3{
-    inset:-23px;
-
-    border:
-    1px dotted rgba(218,0,255,.28);
-
-    animation-duration:18s;
-}
-
-@keyframes ringSpin{
-    to{transform:rotate(360deg)}
-}
-
-@keyframes ringSpinReverse{
-    to{transform:rotate(-360deg)}
-}
-
-.logo{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:125px;
-    height:125px;
-
-    object-fit:cover;
-
-    transform:
-    translate(-50%,-50%);
-
-    border-radius:30px;
-
-    border:
-    2px solid rgba(255,255,255,.3);
-
-    box-shadow:
-    0 0 15px #a000ff,
-    0 0 35px rgba(190,0,255,.75),
-    0 0 70px rgba(120,0,255,.45);
-
-    animation:
-    logoFloat 4s ease-in-out infinite,
-    logoGlow 2.8s ease-in-out infinite;
-}
-
-@keyframes logoFloat{
-
-    0%,100%{
-        transform:
-        translate(-50%,-50%)
-        translateY(0);
-    }
-
-    50%{
-        transform:
-        translate(-50%,-50%)
-        translateY(-8px);
-    }
-}
-
-@keyframes logoGlow{
-
-    0%,100%{
-        box-shadow:
-        0 0 15px #a000ff,
-        0 0 35px rgba(190,0,255,.65),
-        0 0 70px rgba(120,0,255,.35);
-    }
-
-    50%{
-        box-shadow:
-        0 0 25px #df00ff,
-        0 0 55px rgba(210,0,255,.9),
-        0 0 100px rgba(120,0,255,.55);
-    }
-}
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.title{
-    margin-top:27px;
-
-    text-align:center;
-
-    font-size:46px;
-
-    font-weight:950;
-
-    letter-spacing:4px;
-
+.app-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px;
+    min-height: 120px;
+    border-radius: 24px;
+    border: 1px solid rgba(188,34,255,.55);
     background:
-    linear-gradient(
-        110deg,
-        #fff 20%,
-        #b73cff 35%,
-        #fff 48%,
-        #d400ff 62%,
-        #fff 78%
-    );
-
-    background-size:250% auto;
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    color:transparent;
-
-    animation:
-    titleShine 4s linear infinite;
+        linear-gradient(110deg,
+        rgba(35,0,52,.9),
+        rgba(7,0,13,.9));
+    text-decoration: none;
+    color: white;
+    transition: .3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes titleShine{
-
-    0%{background-position:200% center}
-    100%{background-position:-50% center}
+.app-card::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    right: -70px;
+    top: -70px;
+    border-radius: 50%;
+    background: #c400ff;
+    filter: blur(60px);
+    opacity: .15;
 }
 
-.subtitle{
-    text-align:center;
-
-    margin-top:8px;
-
-    color:#dfc4ec;
-
-    font-size:15px;
+.app-card:hover,
+.app-card:active {
+    transform: translateY(-5px) scale(1.01);
+    border-color: #e34cff;
+    box-shadow: 0 0 30px rgba(191,0,255,.35);
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status{
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    width:max-content;
-
-    margin:
-    20px auto 38px;
-
-    padding:
-    9px 20px;
-
-    border-radius:999px;
-
-    border:
-    1px solid rgba(210,0,255,.7);
-
-    background:
-    rgba(100,0,150,.22);
-
-    box-shadow:
-    0 0 15px rgba(180,0,255,.35);
-
-    font-size:12px;
-
-    font-weight:800;
-
-    letter-spacing:1.5px;
+.app-icon {
+    width: 90px;
+    height: 90px;
+    flex: 0 0 90px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 0 22px rgba(190,0,255,.4);
 }
 
-.status-dot{
-    width:9px;
-    height:9px;
-
-    margin-right:9px;
-
-    border-radius:50%;
-
-    background:#d900ff;
-
-    box-shadow:
-    0 0 7px #e000ff,
-    0 0 18px #a000ff;
-
-    animation:
-    dotPulse 1.2s ease-in-out infinite;
+.app-info {
+    flex: 1;
+    min-width: 0;
 }
 
-@keyframes dotPulse{
+.app-name {
+    font-size: 22px;
+    font-weight: 900;
+}
 
-    0%,100%{
-        transform:scale(.75);
-        opacity:.65;
+.app-region {
+    margin-top: 7px;
+    color: #a99aae;
+}
+
+.install-small,
+.coming {
+    flex-shrink: 0;
+    padding: 13px 22px;
+    border-radius: 16px;
+    font-weight: 900;
+}
+
+.install-small {
+    color: #66ff9b;
+    border: 1px solid #28c96b;
+    background: rgba(0,100,45,.12);
+}
+
+.coming {
+    color: #cf8cff;
+    border: 1px solid #a92cff;
+    background: rgba(140,0,255,.12);
+    box-shadow: 0 0 20px rgba(170,0,255,.18);
+}
+
+/* Rocket */
+.rocket {
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    font-size: 42px;
+    z-index: 5;
+    animation: rocketFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px #d400ff);
+    pointer-events: none;
+}
+
+@keyframes rocketFloat {
+    0%,100% {
+        transform: translateY(0) rotate(-8deg);
     }
-
-    50%{
-        transform:scale(1.35);
-        opacity:1;
+    50% {
+        transform: translateY(-18px) rotate(8deg);
     }
 }
 
-/* =========================================================
-   CARDS
-========================================================= */
-
-.card{
-    position:relative;
-
-    overflow:hidden;
-
-    margin-bottom:24px;
-
-    padding:26px;
-
-    border-radius:28px;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(30,5,48,.82),
-        rgba(10,3,17,.82)
-    );
-
-    border:
-    1px solid rgba(190,60,255,.55);
-
-    box-shadow:
-    0 0 18px rgba(150,0,255,.18),
-    inset 0 0 35px rgba(120,0,255,.06);
-
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
-
-    animation:
-    cardAppear .8s ease both;
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 35px;
+    color: #806f89;
 }
 
-.card:hover{
-    border-color:
-    rgba(220,70,255,.72);
-
-    box-shadow:
-    0 0 28px rgba(160,0,255,.3),
-    inset 0 0 40px rgba(120,0,255,.08);
-}
-
-.card:before{
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    left:-120%;
-
-    width:60%;
-    height:100%;
-
-    transform:skewX(-20deg);
-
-    background:
-    linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.08),
-        transparent
-    );
-
-    animation:
-    cardReflection 6s ease-in-out infinite;
-}
-
-@keyframes cardAppear{
-
-    from{
-        opacity:0;
-        transform:
-        translateY(35px)
-        scale(.98);
+/* Mobile */
+@media(max-width:700px) {
+    .container {
+        width: 94%;
     }
 
-    to{
-        opacity:1;
-        transform:
-        translateY(0)
-        scale(1);
+    .section {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .app-card {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .app-icon {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+        border-radius: 18px;
+    }
+
+    .app-name {
+        font-size: 17px;
+    }
+
+    .app-region {
+        font-size: 13px;
+    }
+
+    .install-small,
+    .coming {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .rocket {
+        font-size: 30px;
+        right: 12px;
+        bottom: 15px;
     }
 }
 
-@keyframes cardReflection{
-
-    0%,65%{left:-120%}
-    85%,100%{left:150%}
-}
-
-.card-title{
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    font-size:23px;
-
-    font-weight:850;
-
-    margin-bottom:8px;
-}
-
-.card-description{
-    color:var(--muted);
-
-    font-size:14px;
-
-    line-height:1.6;
-
-    margin-bottom:20px;
-}
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-grid{
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:14px;
-
-    margin-bottom:18px;
-}
-
-.info-box{
-    padding:17px;
-
-    border-radius:18px;
-
-    background:
-    rgba(8,2,14,.72);
-
-    border:
-    1px solid rgba(170,50,255,.3);
-
-    transition:.3s ease;
-}
-
-.info-box:hover{
-    transform:translateY(-4px);
-
-    border-color:
-    rgba(220,50,255,.75);
-
-    box-shadow:
-    0 0 22px rgba(180,0,255,.28);
-}
-
-.info-label{
-    color:#9f8baa;
-
-    font-size:11px;
-
-    text-transform:uppercase;
-
-    letter-spacing:1px;
-
-    margin-bottom:7px;
-}
-
-.info-value{
-    font-size:16px;
-
-    font-weight:800;
-}
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.btn{
-    position:relative;
-
-    display:block;
-
-    width:100%;
-
-    overflow:hidden;
-
-    padding:17px 20px;
-
-    margin-top:12px;
-
-    border-radius:19px;
-
-    text-align:center;
-
-    text-decoration:none;
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:850;
-
-    transition:.25s ease;
-}
-
-.install-btn{
-    background:
-    linear-gradient(
-        100deg,
-        #7200ff,
-        #b000ff,
-        #ed00ff,
-        #8500ff
-    );
-
-    background-size:300% 100%;
-
-    box-shadow:
-    0 0 20px rgba(190,0,255,.65);
-
-    animation:
-    buttonGradient 4s linear infinite,
-    buttonPulse 2.4s ease-in-out infinite;
-}
-
-.install-btn:active{
-    transform:scale(.96);
-}
-
-.install-btn:before{
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    left:-100%;
-
-    width:55%;
-    height:100%;
-
-    background:
-    linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.6),
-        transparent
-    );
-
-    transform:skewX(-20deg);
-
-    animation:
-    buttonSweep 3s ease-in-out infinite;
-}
-
-@keyframes buttonGradient{
-
-    0%{background-position:0%}
-    100%{background-position:300%}
-}
-
-@keyframes buttonSweep{
-
-    0%,55%{left:-100%}
-    80%,100%{left:150%}
-}
-
-@keyframes buttonPulse{
-
-    0%,100%{
-        box-shadow:
-        0 0 15px rgba(190,0,255,.5);
-    }
-
-    50%{
-        box-shadow:
-        0 0 30px rgba(220,0,255,.9),
-        0 0 60px rgba(160,0,255,.3);
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }
-
-.view-btn{
-    background:
-    rgba(90,0,140,.24);
-
-    border:
-    1px solid rgba(205,70,255,.55);
-}
-
-.view-btn:hover{
-    transform:translateY(-3px);
-
-    box-shadow:
-    0 0 20px rgba(190,0,255,.3);
-}
-
-/* =========================================================
-   APP CARDS
-========================================================= */
-
-.app-card{
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    margin-top:14px;
-
-    padding:14px;
-
-    border-radius:22px;
-
-    background:
-    linear-gradient(
-        120deg,
-        rgba(7,9,15,.95),
-        rgba(17,5,26,.92)
-    );
-
-    border:
-    1px solid rgba(155,70,255,.28);
-
-    transition:
-    transform .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
-}
-
-.app-card:hover{
-    transform:
-    translateX(5px)
-    translateY(-3px);
-
-    border-color:
-    rgba(205,70,255,.75);
-
-    box-shadow:
-    0 0 25px rgba(150,0,255,.28);
-}
-
-.app-icon{
-    width:76px;
-    height:76px;
-
-    flex:0 0 76px;
-
-    object-fit:cover;
-
-    border-radius:18px;
-
-    box-shadow:
-    0 0 12px rgba(150,0,255,.3);
-
-    transition:.35s ease;
-}
-
-.app-card:hover .app-icon{
-    transform:
-    scale(1.08)
-    rotate(-3deg);
-
-    box-shadow:
-    0 0 25px rgba(195,0,255,.65);
-}
-
-.app-info{
-    flex:1;
-    min-width:0;
-}
-
-.app-name{
-    font-size:19px;
-    font-weight:850;
-    margin-bottom:7px;
-}
-
-.app-meta{
-    color:#a9a1ad;
-    font-size:12px;
-}
-
-.app-button{
-    min-width:112px;
-
-    padding:12px 15px;
-
-    border-radius:15px;
-
-    text-align:center;
-
-    white-space:nowrap;
-
-    font-size:12px;
-
-    font-weight:850;
-
-    color:#50f58d;
-
-    text-decoration:none;
-
-    border:
-    1px solid rgba(35,220,105,.8);
-
-    background:
-    rgba(0,100,45,.16);
-}
-
-.coming-soon .app-button{
-    color:#c78aff;
-
-    border-color:
-    rgba(160,75,255,.7);
-
-    background:
-    rgba(90,0,170,.14);
-
-    animation:
-    comingGlow 2.5s ease-in-out infinite;
-}
-
-@keyframes comingGlow{
-
-    0%,100%{
-        box-shadow:0 0 0 rgba(170,0,255,0);
-    }
-
-    50%{
-        box-shadow:
-        0 0 18px rgba(170,0,255,.45);
-    }
-}
-
-/* =========================================================
-   FEATURES
-========================================================= */
-
-.feature{
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    padding:17px 0;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.07);
-}
-
-.feature:last-child{
-    border-bottom:none;
-}
-
-.feature-icon{
-    width:49px;
-    height:49px;
-
-    flex:0 0 49px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    border-radius:15px;
-
-    background:
-    rgba(130,0,210,.2);
-
-    border:
-    1px solid rgba(205,70,255,.45);
-
-    font-size:22px;
-
-    box-shadow:
-    0 0 15px rgba(180,0,255,.25);
-
-    animation:
-    featureFloat 3s ease-in-out infinite;
-}
-
-@keyframes featureFloat{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:
-        translateY(-5px)
-        rotate(2deg);
-    }
-}
-
-.feature-title{
-    font-size:16px;
-    font-weight:850;
-}
-
-.feature-text{
-    margin-top:3px;
-
-    color:#a997b1;
-
-    font-size:12px;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-    text-align:center;
-
-    color:#907b99;
-
-    font-size:12px;
-
-    padding:22px 0 10px;
-}
-
-.footer-line{
-    width:80%;
-    height:1px;
-
-    margin:
-    0 auto 18px;
-
-    background:
-    linear-gradient(
-        90deg,
-        transparent,
-        rgba(200,0,255,.65),
-        transparent
-    );
-}
-
-/* =========================================================
-   TOUCH ENERGY
-========================================================= */
-
-.touch-energy{
-    position:fixed;
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    pointer-events:none;
-
-    z-index:900;
-
-    background:#d000ff;
-
-    box-shadow:
-    0 0 10px #d000ff,
-    0 0 35px #9000ff;
-}
-
-/* =========================================================
-   SHOCKWAVE
-========================================================= */
-
-.shockwave{
-    position:fixed;
-
-    width:20px;
-    height:20px;
-
-    border-radius:50%;
-
-    border:
-    2px solid #d000ff;
-
-    pointer-events:none;
-
-    z-index:800;
-
-    transform:
-    translate(-50%,-50%)
-    scale(0);
-
-    box-shadow:
-    0 0 15px #d000ff,
-    inset 0 0 15px #d000ff;
-
-    animation:
-    shock 900ms ease-out forwards;
-}
-
-@keyframes shock{
-
-    to{
-        transform:
-        translate(-50%,-50%)
-        scale(18);
-
-        opacity:0;
-    }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:600px){
-
-    .container{
-        padding:
-        25px 13px 40px;
-    }
-
-    .boot-logo{
-        font-size:32px;
-    }
-
-    .logo-area{
-        width:155px;
-        height:155px;
-    }
-
-    .logo{
-        width:105px;
-        height:105px;
-
-        border-radius:26px;
-    }
-
-    .title{
-        font-size:34px;
-        letter-spacing:2px;
-    }
-
-    .subtitle{
-        font-size:13px;
-    }
-
-    .status{
-        margin-bottom:28px;
-        font-size:10px;
-    }
-
-    .card{
-        padding:19px;
-        border-radius:23px;
-    }
-
-    .card-title{
-        font-size:20px;
-    }
-
-    .profile-grid{
-        grid-template-columns:1fr;
-    }
-
-    .app-card{
-        gap:10px;
-        padding:12px;
-    }
-
-    .app-icon{
-        width:63px;
-        height:63px;
-        flex-basis:63px;
-        border-radius:15px;
-    }
-
-    .app-name{
-        font-size:14px;
-    }
-
-    .app-meta{
-        font-size:10px;
-    }
-
-    .app-button{
-        min-width:88px;
-        padding:10px 8px;
-        font-size:10px;
-    }
-
-    .btn{
-        font-size:15px;
-        padding:16px 15px;
-    }
-}
-
 </style>
 </head>
 
-
 <body>
 
-<!-- =====================================================
-     BOOT SCREEN
-===================================================== -->
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
-<div class="boot" id="boot">
-
-    <div class="boot-logo">
-        ULTRA-iOS
-    </div>
-
-    <div class="boot-line">
-        <span></span>
-    </div>
-
-    <div class="boot-text">
-        INITIALIZING ULTRA SYSTEM
-    </div>
-
-</div>
-
-
-<!-- BACKGROUND -->
-
-<div class="ambient"></div>
-<div class="grid"></div>
-<div class="scanlines"></div>
-
-<div class="particles">
-
-    <span class="particle p1"></span>
-    <span class="particle p2"></span>
-    <span class="particle p3"></span>
-    <span class="particle p4"></span>
-    <span class="particle p5"></span>
-    <span class="particle p6"></span>
-    <span class="particle p7"></span>
-    <span class="particle p8"></span>
-    <span class="particle p9"></span>
-    <span class="particle p10"></span>
-    <span class="particle p11"></span>
-    <span class="particle p12"></span>
-    <span class="particle p13"></span>
-    <span class="particle p14"></span>
-    <span class="particle p15"></span>
-
-</div>
-
-<div class="shooting-star star1"></div>
-<div class="shooting-star star2"></div>
-
-
-<!-- =====================================================
-     ROCKET
-===================================================== -->
-
-<div class="rocket-stage">
-
-    <div
-        class="launch-flash"
-        id="launchFlash">
-    </div>
-
-    <div
-        class="rocket"
-        id="rocket">
-
-        <div class="rocket-nose"></div>
-
-        <div class="rocket-body">
-
-            <div class="rocket-window"></div>
-
-            <div class="fin-left"></div>
-            <div class="fin-right"></div>
-
-        </div>
-
-        <div class="flame"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
+<div class="rocket">🚀</div>
 
 <div class="container">
 
+<header class="hero">
 
-    <!-- HUD -->
+    <img src="ultra-logo.png"
+         class="logo"
+         alt="ULTRA-iOS Logo">
 
-    <div class="hud">
+    <h1 class="title">ULTRA-iOS</h1>
 
-        <span>
-            ULTRA SYSTEM
-        </span>
-
-        <div class="hud-line"></div>
-
-        <span>
-            ONLINE
-        </span>
-
-    </div>
-
-
-    <!-- LOGO -->
-
-    <div class="logo-area">
-
-        <div class="energy-ring"></div>
-        <div class="energy-ring ring2"></div>
-        <div class="energy-ring ring3"></div>
-
-        <img
-            class="logo"
-            src="ultra-logo.png"
-            alt="ULTRA-iOS"
-        >
-
-    </div>
-
-
-    <!-- TITLE -->
-
-    <div class="title">
-        ULTRA-iOS
-    </div>
-
-    <div class="subtitle">
+    <p class="subtitle">
         Next Generation iOS Installation Hub
-    </div>
-
-
-    <!-- STATUS -->
+    </p>
 
     <div class="status">
-
         <span class="status-dot"></span>
-
         SYSTEM ONLINE
+    </div>
+
+</header>
+
+
+<!-- CONFIGURATION PROFILE -->
+
+<section class="section">
+
+    <h2 class="section-title">⚡ Configuration Profile</h2>
+
+    <p class="section-description">
+        Install the ULTRA-iOS configuration profile directly on your
+        iPhone or iPad.
+    </p>
+
+    <div class="profile-grid">
+
+        <div class="info-box">
+            <div class="info-label">PROFILE</div>
+            <div class="info-value">ULTRA Anti-Revoke</div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-label">PLATFORM</div>
+            <div class="info-value">iOS / iPadOS</div>
+        </div>
 
     </div>
 
+    <!-- CHANGE THE FILENAME HERE IF YOUR MOBILECONFIG HAS A DIFFERENT NAME -->
+    <a class="button primary"
+       href="ULTRA_iOS_AntiRevoke.mobileconfig">
+        🚀 Install Profile
+    </a>
 
-    <!-- =================================================
-         PROFILE CARD
-    ================================================= -->
+    <a class="button secondary"
+       href="ULTRA_iOS_AntiRevoke.mobileconfig">
+        View Configuration Profile
+    </a>
 
-    <div class="card">
-
-        <div class="card-title">
-            ⚡ Configuration Profile
-        </div>
-
-        <div class="card-description">
-
-            Install the ULTRA-iOS configuration profile
-            directly on your iPhone or iPad.
-
-        </div>
+</section>
 
 
-        <div class="profile-grid">
+<!-- APPS -->
 
-            <div class="info-box">
+<section class="section">
 
-                <div class="info-label">
-                    Profile
-                </div>
+    <h2 class="section-title">📱 ULTRA Apps</h2>
 
-                <div class="info-value">
-                    ULTRA Anti-Revoke
-                </div>
+    <p class="section-description">
+        Available applications and upcoming releases.
+    </p>
 
-            </div>
-
-
-            <div class="info-box">
-
-                <div class="info-label">
-                    Platform
-                </div>
-
-                <div class="info-value">
-                    iOS / iPadOS
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- INSTALL -->
-
-        <a
-            class="btn install-btn"
-            id="installProfile"
-            href="ULTRA_iOS_AntiRevoke.mobileconfig"
-        >
-            🚀 Install Profile
-        </a>
-
-
-        <!-- VIEW -->
-
-        <a
-            class="btn view-btn"
-            href="ULTRA_iOS_AntiRevoke.mobileconfig"
-        >
-            View Configuration Profile
-        </a>
-
-    </div>
-
-
-    <!-- =================================================
-         APPS
-    ================================================= -->
-
-    <div class="card">
-
-        <div class="card-title">
-            📱 ULTRA Apps
-        </div>
-
-        <div class="card-description">
-            Available applications and upcoming releases.
-        </div>
-
+    <div class="apps">
 
         <!-- BGMI -->
+        <a href="bgmi.html" class="app-card">
 
-        <div class="app-card">
-
-            <img
-                class="app-icon"
-                src="bgmi-icon.png"
-                alt="BATTLEGROUNDS MOBILE"
-            >
+            <img src="bgmi-icon.png"
+                 class="app-icon"
+                 alt="BGMI">
 
             <div class="app-info">
 
@@ -2006,31 +578,25 @@ footer{
                     🎮 BATTLEGROUNDS MOBILE
                 </div>
 
-                <div class="app-meta">
+                <div class="app-region">
                     🇮🇳 India • ULTRA-iOS
                 </div>
 
             </div>
 
-            <a
-                class="app-button"
-                href="#"
-            >
+            <span class="install-small">
                 ↓ Install
-            </a>
+            </span>
 
-        </div>
+        </a>
 
 
         <!-- PUBG VIETNAM -->
+        <div class="app-card">
 
-        <div class="app-card coming-soon">
-
-            <img
-                class="app-icon"
-                src="pubg-icon.png"
-                alt="PUBG MOBILE Vietnam"
-            >
+            <img src="pubg-icon.png"
+                 class="app-icon"
+                 alt="PUBG Mobile">
 
             <div class="app-info">
 
@@ -2038,28 +604,25 @@ footer{
                     🎮 PUBG MOBILE
                 </div>
 
-                <div class="app-meta">
+                <div class="app-region">
                     🇻🇳 Vietnam • ULTRA-iOS
                 </div>
 
             </div>
 
-            <div class="app-button">
+            <span class="coming">
                 Coming Soon
-            </div>
+            </span>
 
         </div>
 
 
         <!-- PUBG KOREAN -->
+        <div class="app-card">
 
-        <div class="app-card coming-soon">
-
-            <img
-                class="app-icon"
-                src="pubg-icon.png"
-                alt="PUBG MOBILE Korean"
-            >
+            <img src="pubg-icon.png"
+                 class="app-icon"
+                 alt="PUBG Mobile">
 
             <div class="app-info">
 
@@ -2067,28 +630,25 @@ footer{
                     🎮 PUBG MOBILE
                 </div>
 
-                <div class="app-meta">
+                <div class="app-region">
                     🇰🇷 Korean • ULTRA-iOS
                 </div>
 
             </div>
 
-            <div class="app-button">
+            <span class="coming">
                 Coming Soon
-            </div>
+            </span>
 
         </div>
 
 
         <!-- PUBG TAIWAN -->
+        <div class="app-card">
 
-        <div class="app-card coming-soon">
-
-            <img
-                class="app-icon"
-                src="pubg-icon.png"
-                alt="PUBG MOBILE Taiwan"
-            >
+            <img src="pubg-icon.png"
+                 class="app-icon"
+                 alt="PUBG Mobile">
 
             <div class="app-info">
 
@@ -2096,28 +656,25 @@ footer{
                     🎮 PUBG MOBILE
                 </div>
 
-                <div class="app-meta">
+                <div class="app-region">
                     🇹🇼 Taiwan • ULTRA-iOS
                 </div>
 
             </div>
 
-            <div class="app-button">
+            <span class="coming">
                 Coming Soon
-            </div>
+            </span>
 
         </div>
 
 
         <!-- PUBG GLOBAL -->
+        <div class="app-card">
 
-        <div class="app-card coming-soon">
-
-            <img
-                class="app-icon"
-                src="pubg-icon.png"
-                alt="PUBG MOBILE Global"
-            >
+            <img src="pubg-icon.png"
+                 class="app-icon"
+                 alt="PUBG Mobile">
 
             <div class="app-info">
 
@@ -2125,432 +682,28 @@ footer{
                     🎮 PUBG MOBILE
                 </div>
 
-                <div class="app-meta">
+                <div class="app-region">
                     🌎 Global • ULTRA-iOS
                 </div>
 
             </div>
 
-            <div class="app-button">
+            <span class="coming">
                 Coming Soon
-            </div>
+            </span>
 
         </div>
 
     </div>
 
-
-    <!-- =================================================
-         FEATURES
-    ================================================= -->
-
-    <div class="card">
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                🛡️
-            </div>
-
-            <div>
-
-                <div class="feature-title">
-                    Secure Profile
-                </div>
-
-                <div class="feature-text">
-                    Configuration delivered over HTTPS
-                </div>
-
-            </div>
-
-        </div>
+</section>
 
 
-        <div class="feature">
-
-            <div class="feature-icon">
-                ⚡
-            </div>
-
-            <div>
-
-                <div class="feature-title">
-                    One-Tap Installation
-                </div>
-
-                <div class="feature-text">
-                    Designed for iPhone and iPad
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                🚀
-            </div>
-
-            <div>
-
-                <div class="feature-title">
-                    ULTRA Launch System
-                </div>
-
-                <div class="feature-text">
-                    Futuristic animated experience
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- FOOTER -->
-
-    <footer>
-
-        <div class="footer-line"></div>
-
-        © 2026 ULTRA-iOS
-
-    </footer>
+<footer>
+    © 2026 ULTRA-iOS
+</footer>
 
 </div>
-
-
-<script>
-
-/* =========================================================
-   BOOT SEQUENCE
-========================================================= */
-
-window.addEventListener("load", function(){
-
-    setTimeout(function(){
-
-        document
-        .getElementById("boot")
-        .classList.add("hide");
-
-    }, 2400);
-
-});
-
-
-/* =========================================================
-   ROCKET
-========================================================= */
-
-const rocket =
-document.getElementById("rocket");
-
-const flash =
-document.getElementById("launchFlash");
-
-function launchRocket(){
-
-    rocket.classList.remove("launch");
-    flash.classList.remove("active");
-
-    void rocket.offsetWidth;
-    void flash.offsetWidth;
-
-    rocket.classList.add("launch");
-    flash.classList.add("active");
-
-}
-
-
-/* Launch after boot */
-
-window.addEventListener("load",function(){
-
-    setTimeout(
-        launchRocket,
-        2700
-    );
-
-});
-
-
-/* =========================================================
-   INSTALL BUTTON
-========================================================= */
-
-const installButton =
-document.getElementById("installProfile");
-
-installButton.addEventListener(
-    "click",
-    function(event){
-
-        launchRocket();
-
-        createShockwave(
-            window.innerWidth / 2,
-            window.innerHeight / 2
-        );
-
-    }
-);
-
-
-/* =========================================================
-   SHOCKWAVE
-========================================================= */
-
-function createShockwave(x,y){
-
-    const wave =
-    document.createElement("div");
-
-    wave.className =
-    "shockwave";
-
-    wave.style.left =
-    x + "px";
-
-    wave.style.top =
-    y + "px";
-
-    document.body.appendChild(wave);
-
-    setTimeout(
-        function(){
-            wave.remove();
-        },
-        1000
-    );
-
-}
-
-
-/* =========================================================
-   TOUCH ENERGY
-========================================================= */
-
-document.addEventListener(
-    "touchstart",
-    function(e){
-
-        if(!e.touches.length)
-        return;
-
-        const touch =
-        e.touches[0];
-
-        createTouchEnergy(
-            touch.clientX,
-            touch.clientY
-        );
-
-    },
-    {passive:true}
-);
-
-
-function createTouchEnergy(x,y){
-
-    const glow =
-    document.createElement("div");
-
-    glow.className =
-    "touch-energy";
-
-    glow.style.left =
-    x + "px";
-
-    glow.style.top =
-    y + "px";
-
-    document.body.appendChild(glow);
-
-    glow.animate(
-        [
-            {
-                transform:
-                "translate(-50%,-50%) scale(1)",
-                opacity:1
-            },
-
-            {
-                transform:
-                "translate(-50%,-50%) scale(9)",
-                opacity:0
-            }
-        ],
-        {
-            duration:650,
-            easing:"ease-out"
-        }
-    );
-
-    setTimeout(
-        function(){
-            glow.remove();
-        },
-        700
-    );
-
-}
-
-
-/* =========================================================
-   ROCKET PARTICLES
-========================================================= */
-
-function createRocketParticle(){
-
-    const stage =
-    document.querySelector(
-        ".rocket-stage"
-    );
-
-    const particle =
-    document.createElement("div");
-
-    particle.style.position =
-    "absolute";
-
-    particle.style.left =
-    (50 + (Math.random()*12-6))
-    + "%";
-
-    particle.style.bottom =
-    "20px";
-
-    const size =
-    Math.random()*4+2;
-
-    particle.style.width =
-    size+"px";
-
-    particle.style.height =
-    size+"px";
-
-    particle.style.borderRadius =
-    "50%";
-
-    particle.style.background =
-    Math.random() > .5
-    ? "#d000ff"
-    : "#ffffff";
-
-    particle.style.boxShadow =
-    "0 0 12px #c000ff";
-
-    stage.appendChild(
-        particle
-    );
-
-    particle.animate(
-        [
-            {
-                transform:
-                "translate(0,0) scale(1)",
-                opacity:1
-            },
-
-            {
-                transform:
-                "translate(" +
-                (Math.random()*120-60) +
-                "px,-" +
-                (Math.random()*180+80) +
-                "px) scale(0)",
-
-                opacity:0
-            }
-        ],
-        {
-            duration:
-            Math.random()*900+700,
-
-            easing:
-            "cubic-bezier(.2,.7,.2,1)"
-        }
-    );
-
-    setTimeout(
-        () => particle.remove(),
-        1800
-    );
-
-}
-
-setInterval(
-    createRocketParticle,
-    140
-);
-
-
-/* =========================================================
-   APP CARD TOUCH GLOW
-========================================================= */
-
-document.querySelectorAll(
-    ".app-card"
-).forEach(function(card){
-
-    card.addEventListener(
-        "click",
-        function(){
-
-            card.style.boxShadow =
-            "0 0 35px rgba(190,0,255,.55)";
-
-            setTimeout(
-                function(){
-
-                    card.style.boxShadow =
-                    "";
-
-                },
-                500
-            );
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   RANDOM SYSTEM STATUS
-========================================================= */
-
-const statusText =
-document.querySelector(".status");
-
-setInterval(
-    function(){
-
-        statusText.animate(
-            [
-                {
-                    opacity:.65
-                },
-
-                {
-                    opacity:1
-                }
-            ],
-            {
-                duration:500
-            }
-        );
-
-    },
-    3500
-);
-
-</script>
 
 </body>
 </html>
