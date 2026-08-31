@@ -2,450 +2,584 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12001f">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-<meta name="theme-color" content="#050805">
-
-<title>BGMI India | ULTRA-iOS</title>
+<title>BGMI • ULTRA-iOS</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    min-height: 100vh;
-    color: #f7fff7;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "Segoe UI",
-        sans-serif;
-
+body{
+    min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+    "Segoe UI",sans-serif;
+    color:#fff;
     background:
-        radial-gradient(
-            circle at 50% 10%,
-            rgba(65,255,100,.13),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 100% 80%,
-            rgba(0,255,110,.06),
-            transparent 35%
-        ),
-        #030503;
-
-    overflow-x: hidden;
+        radial-gradient(circle at 50% -10%,rgba(180,0,255,.35),transparent 35%),
+        radial-gradient(circle at 0% 50%,rgba(120,0,255,.20),transparent 35%),
+        radial-gradient(circle at 100% 80%,rgba(255,0,255,.15),transparent 35%),
+        #08000e;
+    overflow-x:hidden;
 }
 
-/* futuristic grid */
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: .18;
-
-    background-image:
-        linear-gradient(
-            rgba(100,255,130,.08) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(100,255,130,.08) 1px,
-            transparent 1px
+body::before{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    pointer-events:none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.018) 4px
         );
+    animation:scan 8s linear infinite;
+    z-index:0;
+}
 
-    background-size: 45px 45px;
-    mask-image: linear-gradient(
-        to bottom,
-        black,
+@keyframes scan{
+    from{transform:translateY(0);}
+    to{transform:translateY(80px);}
+}
+
+/* moving purple glow */
+
+.glow{
+    position:fixed;
+    width:380px;
+    height:380px;
+    border-radius:50%;
+    background:rgba(180,0,255,.16);
+    filter:blur(100px);
+    pointer-events:none;
+    z-index:0;
+    animation:floatGlow 7s ease-in-out infinite alternate;
+}
+
+.glow.one{
+    top:-120px;
+    left:-100px;
+}
+
+.glow.two{
+    right:-130px;
+    bottom:-100px;
+    animation-delay:2s;
+}
+
+@keyframes floatGlow{
+    from{
+        transform:translate(0,0) scale(1);
+    }
+    to{
+        transform:translate(70px,50px) scale(1.25);
+    }
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:1;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:
+        0 0 6px #fff,
+        0 0 15px #d000ff;
+    opacity:.7;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+    from{
+        transform:translateY(110vh) translateX(0);
+        opacity:0;
+    }
+    15%{opacity:.8;}
+    85%{opacity:.8;}
+    to{
+        transform:translateY(-20vh) translateX(80px);
+        opacity:0;
+    }
+}
+
+/* =========================
+   ROCKET
+========================= */
+
+.rocket{
+    position:fixed;
+    left:-100px;
+    top:72%;
+    font-size:42px;
+    z-index:4;
+    pointer-events:none;
+    filter:
+        drop-shadow(0 0 8px #fff)
+        drop-shadow(0 0 20px #b000ff);
+    animation:rocketFlight 12s linear infinite;
+}
+
+@keyframes rocketFlight{
+    0%{
+        transform:translate(-120px,120px) rotate(-28deg);
+        opacity:0;
+    }
+
+    8%{
+        opacity:1;
+    }
+
+    35%{
+        transform:translate(35vw,-100px) rotate(-28deg);
+    }
+
+    65%{
+        transform:translate(70vw,-280px) rotate(-28deg);
+    }
+
+    92%{
+        transform:translate(115vw,-500px) rotate(-28deg);
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(125vw,-600px) rotate(-28deg);
+        opacity:0;
+    }
+}
+
+.rocket::after{
+    content:"";
+    position:absolute;
+    width:65px;
+    height:8px;
+    left:-52px;
+    top:25px;
+    border-radius:50%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #ff00ff,
+        #9d00ff,
         transparent
     );
-
-    animation: gridMove 12s linear infinite;
+    filter:blur(5px);
+    animation:flame .15s infinite alternate;
 }
 
-@keyframes gridMove {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(45px);
-    }
+@keyframes flame{
+    from{transform:scaleX(.7);}
+    to{transform:scaleX(1.35);}
 }
 
-/* particles */
+/* =========================
+   PAGE
+========================= */
 
-.particles {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
+.page{
+    position:relative;
+    z-index:5;
+    width:min(900px,94%);
+    margin:auto;
+    padding:30px 0 70px;
 }
 
-.particles span {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #9cffb0;
-    border-radius: 50%;
-    box-shadow: 0 0 12px #52ff78;
-    animation: particle 7s linear infinite;
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#e6b8ff;
+    text-decoration:none;
+    border:1px solid rgba(190,50,255,.45);
+    background:rgba(50,0,80,.35);
+    padding:11px 17px;
+    border-radius:14px;
+    margin-bottom:22px;
+    backdrop-filter:blur(15px);
+    transition:.3s;
 }
 
-.particles span:nth-child(1) {
-    left: 10%;
-    animation-delay: 0s;
+.back:hover{
+    transform:translateX(-5px);
+    box-shadow:0 0 25px rgba(190,0,255,.45);
 }
 
-.particles span:nth-child(2) {
-    left: 30%;
-    animation-delay: 2s;
-}
+/* =========================
+   MAIN CARD
+========================= */
 
-.particles span:nth-child(3) {
-    left: 50%;
-    animation-delay: 4s;
-}
-
-.particles span:nth-child(4) {
-    left: 70%;
-    animation-delay: 1s;
-}
-
-.particles span:nth-child(5) {
-    left: 90%;
-    animation-delay: 3s;
-}
-
-@keyframes particle {
-    from {
-        transform: translateY(110vh);
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    80% {
-        opacity: 1;
-    }
-
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
-}
-
-.container {
-    width: min(650px, 94%);
-    margin: auto;
-    padding: 35px 0 60px;
-}
-
-/* Back button */
-
-.back {
-    display: inline-flex;
-    text-decoration: none;
-    color: #b8c9b9;
-    border: 1px solid #253526;
-    background: rgba(10,15,10,.75);
-    padding: 11px 18px;
-    border-radius: 14px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    transition: .25s;
-}
-
-.back:hover {
-    color: white;
-    border-color: #69ff82;
-    box-shadow: 0 0 20px rgba(70,255,100,.2);
-}
-
-/* Main card */
-
-.card {
-    padding: 32px;
-    border-radius: 32px;
+.main-card{
+    position:relative;
+    padding:38px 28px;
+    border-radius:30px;
     background:
         linear-gradient(
             145deg,
-            rgba(18,27,18,.96),
-            rgba(5,8,5,.97)
+            rgba(35,0,55,.78),
+            rgba(9,0,18,.90)
         );
-
-    border: 1px solid rgba(100,255,125,.25);
-
+    border:1px solid rgba(201,43,255,.55);
     box-shadow:
-        0 0 60px rgba(40,255,75,.08),
-        inset 0 0 50px rgba(90,255,110,.025);
-
-    animation: cardIn .9s ease;
+        0 0 25px rgba(166,0,255,.18),
+        inset 0 0 35px rgba(145,0,255,.06);
+    backdrop-filter:blur(20px);
+    overflow:hidden;
+    animation:cardIn .9s ease both;
 }
 
-@keyframes cardIn {
-    from {
-        opacity: 0;
-        transform: translateY(35px) scale(.97);
+.main-card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:32px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(220,0,255,.8),
+        transparent
+    );
+    height:2px;
+    animation:borderScan 4s linear infinite;
+}
+
+@keyframes borderScan{
+    from{
+        top:0;
+        left:-100%;
+        width:70%;
     }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+    50%{
+        left:100%;
+    }
+    100%{
+        left:-100%;
     }
 }
 
-/* icon */
-
-.icon-wrap {
-    text-align: center;
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(35px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
 }
 
-.app-icon {
-    width: 145px;
-    height: 145px;
-    border-radius: 35px;
-    object-fit: cover;
+/* =========================
+   ICON
+========================= */
 
+.app-icon{
+    width:125px;
+    height:125px;
+    display:block;
+    margin:5px auto 22px;
+    object-fit:cover;
+    border-radius:29px;
+    border:2px solid rgba(255,255,255,.25);
     box-shadow:
-        0 0 0 1px rgba(150,255,160,.25),
-        0 0 35px rgba(80,255,100,.3);
-
-    animation: iconFloat 4s ease-in-out infinite;
+        0 0 15px rgba(190,0,255,.7),
+        0 0 45px rgba(150,0,255,.35);
+    animation:iconFloat 4s ease-in-out infinite;
 }
 
-@keyframes iconFloat {
-    0%,100% {
-        transform: translateY(0);
+@keyframes iconFloat{
+    0%,100%{
+        transform:translateY(0) rotate(0deg);
     }
-
-    50% {
-        transform: translateY(-9px);
+    50%{
+        transform:translateY(-9px) rotate(1deg);
     }
 }
 
-h1 {
-    text-align: center;
-    margin-top: 25px;
-    font-size: clamp(27px,7vw,42px);
-    font-weight: 900;
+/* =========================
+   TITLE
+========================= */
+
+h1{
+    text-align:center;
+    font-size:clamp(29px,6vw,52px);
+    letter-spacing:-1px;
+    margin-bottom:8px;
+    text-shadow:
+        0 0 10px rgba(255,255,255,.25),
+        0 0 30px rgba(210,0,255,.45);
 }
 
-.meta {
-    text-align: center;
-    margin-top: 10px;
-    color: #98aa99;
-    letter-spacing: 3px;
-    font-family: monospace;
+.subtitle{
+    text-align:center;
+    color:#c9a9d5;
+    font-size:15px;
+    letter-spacing:2px;
+    margin-bottom:18px;
 }
 
-/* status */
+/* =========================
+   STATUS
+========================= */
 
-.status {
-    width: fit-content;
-    margin: 20px auto 28px;
-
-    padding: 8px 16px;
-    border-radius: 999px;
-
-    color: #8cff9c;
-    border: 1px solid #2c7e3c;
-    background: rgba(40,255,80,.06);
-
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
+.status{
+    width:max-content;
+    margin:0 auto 28px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(130,255,180,.45);
+    color:#baffd0;
+    background:rgba(0,255,120,.06);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    box-shadow:0 0 18px rgba(0,255,120,.12);
 }
 
-/* buttons */
-
-.button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    min-height: 62px;
-
-    margin-top: 15px;
-
-    border-radius: 19px;
-    text-decoration: none;
-
-    font-size: 19px;
-    font-weight: 900;
-
-    transition: .25s;
-    position: relative;
-    overflow: hidden;
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#62ff9a;
+    box-shadow:0 0 12px #62ff9a;
+    animation:statusPulse 1.3s infinite;
 }
 
-.install {
-    color: #061006;
-    background:
-        linear-gradient(
-            90deg,
-            #9dff38,
-            #c7ff55
-        );
+@keyframes statusPulse{
+    50%{
+        transform:scale(1.6);
+        opacity:.45;
+    }
+}
 
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:grid;
+    gap:13px;
+}
+
+.btn{
+    width:100%;
+    min-height:62px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:800;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.install{
+    color:white;
+    background:linear-gradient(
+        100deg,
+        #7b00ff,
+        #e000ff,
+        #7500ff
+    );
+    background-size:200% 100%;
     box-shadow:
-        0 0 25px rgba(160,255,50,.25);
+        0 0 20px rgba(200,0,255,.45),
+        0 0 50px rgba(150,0,255,.20);
+    animation:gradientMove 3s ease infinite;
 }
 
-.download {
-    color: #eaffeb;
-    border: 1px solid #314531;
-    background: rgba(15,22,15,.8);
+@keyframes gradientMove{
+    0%{background-position:0%;}
+    50%{background-position:100%;}
+    100%{background-position:0%;}
 }
 
-.button:hover,
-.button:active {
-    transform: scale(.985);
-}
-
-.install:hover {
+.install:hover{
+    transform:translateY(-3px) scale(1.01);
     box-shadow:
-        0 0 35px rgba(160,255,50,.45);
+        0 0 30px rgba(230,0,255,.7),
+        0 0 70px rgba(150,0,255,.35);
 }
 
-/* shine */
-
-.button::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 45%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.5),
-            transparent
-        );
-
-    transform: skewX(-20deg);
-    animation: buttonShine 3.5s infinite;
+.download{
+    color:#e4c8ff;
+    border:1px solid rgba(190,70,255,.5);
+    background:rgba(80,0,110,.18);
 }
 
-@keyframes buttonShine {
-    0% {
-        left: -100%;
+.download:hover{
+    transform:translateY(-3px);
+    background:rgba(150,0,255,.18);
+    box-shadow:0 0 25px rgba(170,0,255,.3);
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+    margin-top:25px;
+    padding:7px 18px;
+    border-radius:20px;
+    border:1px solid rgba(190,60,255,.28);
+    background:rgba(20,0,30,.5);
+}
+
+.info-row{
+    min-height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    color:#bda9c8;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-row strong{
+    color:#fff;
+    text-align:right;
+}
+
+/* =========================
+   INSTRUCTIONS
+========================= */
+
+.instructions{
+    margin-top:24px;
+    padding:25px;
+    border-radius:22px;
+    background:rgba(20,0,28,.65);
+    border:1px solid rgba(190,60,255,.28);
+}
+
+.instructions h2{
+    font-size:18px;
+    margin-bottom:18px;
+}
+
+.instructions ol{
+    padding-left:22px;
+}
+
+.instructions li{
+    color:#cdbbd4;
+    line-height:1.7;
+    margin-bottom:10px;
+}
+
+/* =========================
+   FUTURISTIC DECOR
+========================= */
+
+.scanline{
+    position:absolute;
+    left:0;
+    right:0;
+    height:1px;
+    background:rgba(220,0,255,.5);
+    box-shadow:0 0 12px #d000ff;
+    animation:scanline 5s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes scanline{
+    from{top:-5%;}
+    to{top:105%;}
+}
+
+.footer{
+    text-align:center;
+    color:#735b7d;
+    font-size:12px;
+    letter-spacing:2px;
+    margin-top:35px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .page{
+        width:92%;
+        padding-top:22px;
     }
 
-    50%,100% {
-        left: 150%;
+    .main-card{
+        padding:30px 18px;
+        border-radius:25px;
+    }
+
+    .app-icon{
+        width:105px;
+        height:105px;
+    }
+
+    .info{
+        padding:5px 14px;
+    }
+
+    .info-row{
+        font-size:14px;
+    }
+
+    .instructions{
+        padding:20px;
+    }
+
+    .rocket{
+        font-size:32px;
     }
 }
 
-/* Instructions */
+/* reduce motion accessibility */
 
-.instructions {
-    margin-top: 30px;
-    padding: 22px;
-
-    border-radius: 20px;
-
-    background: rgba(15,22,15,.8);
-    border: 1px solid #202e20;
-}
-
-.instructions h2 {
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: #b9cbb9;
-    margin-bottom: 16px;
-}
-
-.instructions ol {
-    padding-left: 22px;
-}
-
-.instructions li {
-    margin: 13px 0;
-    color: #b6c0b6;
-    line-height: 1.55;
-}
-
-code {
-    padding: 3px 7px;
-    border-radius: 5px;
-    background: #202820;
-    color: #c7ffc7;
-}
-
-/* information */
-
-.info {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid #202d20;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 12px 0;
-    border-bottom: 1px solid #172017;
-}
-
-.row:last-child {
-    border-bottom: 0;
-}
-
-.label {
-    color: #7f917f;
-}
-
-.value {
-    text-align: right;
-    font-weight: 800;
-}
-
-/* footer */
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    color: #536153;
-    font-family: monospace;
-}
-
-@media(max-width:600px) {
-
-    .card {
-        padding: 22px;
-        border-radius: 25px;
-    }
-
-    .app-icon {
-        width: 120px;
-        height: 120px;
-        border-radius: 29px;
-    }
-
-    .row {
-        font-size: 14px;
+@media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
     }
 }
 </style>
@@ -453,161 +587,220 @@ footer {
 
 <body>
 
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<!-- Animated particles -->
 <div class="particles">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+    <span class="particle" style="left:8%;animation-duration:8s;animation-delay:0s"></span>
+    <span class="particle" style="left:17%;animation-duration:11s;animation-delay:2s"></span>
+    <span class="particle" style="left:28%;animation-duration:9s;animation-delay:1s"></span>
+    <span class="particle" style="left:39%;animation-duration:13s;animation-delay:4s"></span>
+    <span class="particle" style="left:51%;animation-duration:10s;animation-delay:2s"></span>
+    <span class="particle" style="left:64%;animation-duration:12s;animation-delay:5s"></span>
+    <span class="particle" style="left:76%;animation-duration:9s;animation-delay:1s"></span>
+    <span class="particle" style="left:88%;animation-duration:14s;animation-delay:3s"></span>
+    <span class="particle" style="left:94%;animation-duration:10s;animation-delay:6s"></span>
 </div>
 
-<div class="container">
+<!-- Rocket -->
+<div class="rocket">🚀</div>
 
-<a href="index.html" class="back">
-    ← Back to ULTRA-iOS
-</a>
+<div class="page">
 
-<div class="card">
-
-    <div class="icon-wrap">
-
-        <img src="bgmi-icon.png"
-             class="app-icon"
-             alt="BATTLEGROUNDS MOBILE">
-
-    </div>
-
-    <h1>
-        BATTLEGROUNDS MOBILE
-    </h1>
-
-    <div class="meta">
-        INDIA&nbsp;&nbsp;•&nbsp;&nbsp;ULTRA-iOS
-    </div>
-
-    <div class="status">
-        ● AVAILABLE
-    </div>
-
-
-    <!-- INSTALL -->
-
-    <!--
-      IMPORTANT:
-      Replace the URL below with your actual BGMI
-      installation URL when you have one.
-    -->
-
-    <a href="#"
-       class="button install"
-       onclick="showInstallMessage(event)">
-        ↓ Install
+    <a class="back" href="index.html">
+        ← Back to ULTRA-iOS
     </a>
 
+    <div class="main-card">
 
-    <!-- IPA DOWNLOAD -->
+        <div class="scanline"></div>
 
-    <!-- Replace # with your actual IPA URL -->
+        <!-- BGMI ICON -->
+        <img
+            class="app-icon"
+            src="bgmi-icon.png"
+            alt="BGMI"
+        >
 
-    <a href="#"
-       class="button download"
-       onclick="showDownloadMessage(event)">
-        Download IPA
-    </a>
+        <h1>BATTLEGROUNDS MOBILE</h1>
 
-
-    <!-- APP INFORMATION -->
-
-    <div class="info">
-
-        <div class="row">
-            <span class="label">Region</span>
-            <span class="value">🇮🇳 India</span>
+        <div class="subtitle">
+            🇮🇳 INDIA &nbsp; • &nbsp; ULTRA-iOS
         </div>
 
-        <div class="row">
-            <span class="label">Platform</span>
-            <span class="value">iOS / iPadOS</span>
+        <div class="status">
+            <span class="status-dot"></span>
+            AVAILABLE
         </div>
 
-        <div class="row">
-            <span class="label">Publisher</span>
-            <span class="value">ULTRA-iOS</span>
+        <div class="buttons">
+
+            <!-- INSTALL BUTTON -->
+            <a
+                class="btn install"
+                id="installButton"
+                href="#"
+            >
+                🚀 Install
+            </a>
+
+            <!-- IPA DOWNLOAD -->
+            <a
+                class="btn download"
+                id="downloadButton"
+                href="#"
+                download
+            >
+                ↓ Download IPA
+            </a>
+
         </div>
 
-        <div class="row">
-            <span class="label">Status</span>
-            <span class="value">Available</span>
+        <!-- APP INFORMATION -->
+        <div class="info">
+
+            <div class="info-row">
+                <span>Region</span>
+                <strong>🇮🇳 India</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Platform</span>
+                <strong>iOS / iPadOS</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Publisher</span>
+                <strong>ULTRA-iOS</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Status</span>
+                <strong>Available</strong>
+            </div>
+
+        </div>
+
+        <!-- INSTALLATION GUIDE -->
+        <div class="instructions">
+
+            <h2>⚡ AFTER YOU TAP INSTALL</h2>
+
+            <ol>
+                <li>
+                    Tap <strong>Install</strong> when the iOS installation prompt appears.
+                </li>
+
+                <li>
+                    Wait for the application to finish installing on your Home Screen.
+                </li>
+
+                <li>
+                    If iOS shows a developer or profile trust prompt,
+                    only trust a developer/profile you know and expect.
+                </li>
+
+                <li>
+                    Launch the application after installation is complete.
+                </li>
+            </ol>
+
         </div>
 
     </div>
 
-
-    <!-- INSTALLATION INSTRUCTIONS -->
-
-    <div class="instructions">
-
-        <h2>AFTER YOU TAP INSTALL</h2>
-
-        <ol>
-
-            <li>
-                Tap <strong>Install</strong> when the
-                installation prompt appears.
-            </li>
-
-            <li>
-                Wait for the application to finish
-                installing on your Home Screen.
-            </li>
-
-            <li>
-                If iOS asks you to trust an enterprise
-                developer, only trust a developer/profile
-                you know and expect.
-            </li>
-
-            <li>
-                Check
-                <code>Settings → General → VPN & Device Management</code>
-                if your installation method requires it.
-            </li>
-
-        </ol>
-
+    <div class="footer">
+        ULTRA-iOS &nbsp; • &nbsp; FUTURE IS NOW
     </div>
 
 </div>
-
-<footer>
-    ULTRA-iOS • BGMI India
-</footer>
-
-</div>
-
 
 <script>
 
-function showInstallMessage(event) {
+/* =====================================================
+   CHANGE ONLY THESE TWO URLS
+===================================================== */
 
-    event.preventDefault();
+/*
+   INSTALL_URL:
+   Put your actual iOS installation URL here.
 
-    alert(
-        "BGMI Install URL is not configured yet.\\n\\n" +
-        "Replace the href=\"#\" in bgmi.html with your " +
-        "actual installation URL."
-    );
-}
+   Example format for an enterprise/OTA installation:
+   itms-services://?action=download-manifest&url=https://YOUR-DOMAIN/manifest.plist
 
-function showDownloadMessage(event) {
+   Do NOT put the .ipa URL here if you are using
+   an OTA manifest. Use the manifest.plist URL.
+*/
 
-    event.preventDefault();
+const INSTALL_URL = "YOUR_INSTALL_URL_HERE";
 
-    alert(
-        "BGMI IPA download URL is not configured yet.\\n\\n" +
-        "Replace the href=\"#\" in bgmi.html with your " +
-        "actual IPA file URL."
-    );
+
+/*
+   IPA_URL:
+   Put the direct URL of your IPA here.
+*/
+const IPA_URL = "YOUR_IPA_URL_HERE";
+
+
+/* Apply URLs */
+document.getElementById("installButton").href = INSTALL_URL;
+document.getElementById("downloadButton").href = IPA_URL;
+
+
+/* =========================
+   BUTTON TAP EFFECT
+========================= */
+
+document.querySelectorAll(".btn").forEach(button => {
+
+    button.addEventListener("click", function(e){
+
+        if(this.getAttribute("href") === "#" ||
+           this.getAttribute("href") === "YOUR_INSTALL_URL_HERE" ||
+           this.getAttribute("href") === "YOUR_IPA_URL_HERE"){
+
+            e.preventDefault();
+
+            alert(
+                "Installation link is not configured yet.\n\n" +
+                "Add your actual Install/IPA URL in bgmi.html."
+            );
+
+            return;
+        }
+
+        this.style.transform = "scale(.97)";
+
+        setTimeout(() => {
+            this.style.transform = "";
+        },150);
+
+    });
+
+});
+
+
+/* =========================
+   EXTRA PARTICLES
+========================= */
+
+const particleContainer =
+    document.querySelector(".particles");
+
+for(let i=0;i<18;i++){
+
+    const p=document.createElement("span");
+
+    p.className="particle";
+
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(7+Math.random()*10)+"s";
+    p.style.animationDelay=(Math.random()*8)+"s";
+    p.style.width=(1+Math.random()*3)+"px";
+    p.style.height=p.style.width;
+
+    particleContainer.appendChild(p);
 }
 
 </script>
