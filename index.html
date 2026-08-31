@@ -1,1 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ULTRA-iOS</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 50% 15%, #7b00ff 0%, #3d006d 25%, #12001e 55%, #050006 100%);
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(180, 0, 255, .18), transparent 35%),
+        radial-gradient(circle at 10% 80%, rgba(120, 0, 255, .12), transparent 30%);
+    z-index: -1;
+}
+
+/* MAIN CONTAINER */
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 35px 18px 45px;
+}
+
+/* LOGO */
+.logo-box {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.logo-box img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 28px;
+    border: 2px solid rgba(255,255,255,.25);
+    box-shadow:
+        0 0 15px #b000ff,
+        0 0 35px rgba(175,0,255,.65),
+        0 0 70px rgba(120,0,255,.35);
+}
+
+.title {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 10px #d000ff,
+        0 0 25px #8b00ff;
+}
+
+.subtitle {
+    text-align: center;
+    margin-top: 8px;
+    color: #e4c9ff;
+    font-size: 16px;
+}
+
+/* STATUS */
+.status {
+    width: fit-content;
+    margin: 20px auto 35px;
+    padding: 9px 22px;
+    border-radius: 30px;
+    border: 1px solid #b900ff;
+    background: rgba(120,0,180,.25);
+    color: #fff;
+    font-weight: 700;
+    box-shadow:
+        0 0 12px rgba(200,0,255,.7),
+        inset 0 0 15px rgba(180,0,255,.2);
+}
+
+.status-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: #d000ff;
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 12px #e000ff;
+}
+
+/* CARDS */
+.card {
+    background: rgba(25, 0, 40, .72);
+    border: 1px solid rgba(200, 70, 255, .7);
+    border-radius: 28px;
+    padding: 26px;
+    margin-bottom: 25px;
+    box-shadow:
+        0 0 18px rgba(160,0,255,.3),
+        inset 0 0 25px rgba(130,0,255,.08);
+    backdrop-filter: blur(12px);
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.card-description {
+    color: #dbc7e8;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* PROFILE INFO */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.info-box {
+    background: rgba(20,0,32,.75);
+    border: 1px solid rgba(180,70,255,.4);
+    border-radius: 18px;
+    padding: 17px;
+}
+
+.info-label {
+    color: #bda7ca;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* BUTTONS */
+.btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 18px 20px;
+    margin-top: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.install-btn {
+    background: linear-gradient(90deg, #8b00ff, #d000ff);
+    box-shadow:
+        0 0 18px rgba(190,0,255,.75),
+        0 0 35px rgba(170,0,255,.35);
+}
+
+.install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 25px rgba(220,0,255,.9),
+        0 0 45px rgba(170,0,255,.5);
+}
+
+.view-btn {
+    background: rgba(100,0,160,.35);
+    border: 1px solid rgba(205,70,255,.65);
+}
+
+.view-btn:hover {
+    background: rgba(150,0,220,.45);
+}
+
+/* APP CARDS */
+.app-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(8, 12, 18, .88);
+    border: 1px solid rgba(150,80,255,.25);
+    border-radius: 22px;
+    padding: 15px;
+    margin-top: 14px;
+}
+
+.app-icon {
+    width: 76px;
+    height: 76px;
+    flex: 0 0 76px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.app-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.app-meta {
+    color: #aeb4bd;
+    font-size: 13px;
+}
+
+.app-button {
+    min-width: 110px;
+    padding: 12px 18px;
+    border-radius: 16px;
+    text-align: center;
+    font-weight: 800;
+    text-decoration: none;
+    border: 1px solid #24d66b;
+    color: #45ed85;
+    background: rgba(0,90,40,.18);
+}
+
+.app-button:hover {
+    background: rgba(0,120,50,.3);
+}
+
+/* COMING SOON */
+.coming-soon {
+    border-color: rgba(160,80,255,.35);
+}
+
+.coming-soon .app-button {
+    border-color: #9b55ff;
+    color: #c78aff;
+    background: rgba(100,0,180,.15);
+    cursor: default;
+}
+
+.coming-soon .app-button:hover {
+    background: rgba(100,0,180,.15);
+}
+
+/* FEATURES */
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.feature:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(160,0,255,.25);
+    border: 1px solid rgba(210,80,255,.45);
+    font-size: 23px;
+    box-shadow: 0 0 12px rgba(180,0,255,.3);
+}
+
+.feature-title {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.feature-text {
+    color: #bdaec8;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    color: #aa91b8;
+    font-size: 14px;
+    padding: 25px 0 10px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .container {
+        padding: 28px 14px 35px;
+    }
+
+    .logo-box img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .title {
+        font-size: 34px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .app-card {
+        padding: 13px;
+    }
+
+    .app-icon {
+        width: 65px;
+        height: 65px;
+        flex-basis: 65px;
+        border-radius: 15px;
+    }
+
+    .app-name {
+        font-size: 17px;
+    }
+
+    .app-meta {
+        font-size: 11px;
+    }
+
+    .app-button {
+        min-width: 90px;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ULTRA-iOS LOGO -->
+    <div class="logo-box">
+        <img src="ultra-logo.png" alt="ULTRA-iOS Logo">
+    </div>
+
+    <div class="title">ULTRA-iOS</div>
+
+    <div class="subtitle">
+        Next Generation iOS Installation Hub
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+
+    <!-- CONFIGURATION PROFILE -->
+    <div class="card">
+
+        <div class="card-title">
+            ⚡ Configuration Profile
+        </div>
+
+        <div class="card-description">
+            Install the ULTRA-iOS configuration profile directly on your
+            iPhone or iPad.
+        </div>
+
+        <div class="profile-grid">
+
+            <div class="info-box">
+                <div class="info-label">Profile</div>
+                <div class="info-value">ULTRA Anti-Revoke</div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-label">Platform</div>
+                <div class="info-value">iOS / iPadOS</div>
+            </div>
+
+        </div>
+
+        <!-- INSTALL PROFILE -->
+        <a
+            class="btn install-btn"
+            href="ULTRA_iOS_AntiRevoke.mobileconfig"
+        >
+            ⚡ Install Profile
+        </a>
+
+        <!-- VIEW PROFILE -->
+        <a
+            class="btn view-btn"
+            href="ULTRA_iOS_AntiRevoke.mobileconfig"
+        >
+            View Configuration Profile
+        </a>
+
+    </div>
+
+
+    <!-- APPS -->
+    <div class="card">
+
+        <div class="card-title">
+            📱 ULTRA Apps
+        </div>
+
+        <div class="card-description">
+            Available applications and upcoming releases.
+        </div>
+
+
+        <!-- BGMI -->
+        <div class="app-card">
+
+            <img
+                class="app-icon"
+                src="bgmi-icon.png"
+                alt="BGMI Indian App"
+            >
+
+            <div class="app-info">
+                <div class="app-name">
+                    BGMI Indian App
+                </div>
+
+                <div class="app-meta">
+                    🛡 DNS &nbsp; • &nbsp; HSBC Bank
+                </div>
+            </div>
+
+            <a class="app-button" href="#">
+                ↓ Install
+            </a>
+
+        </div>
+
+
+        <!-- BGMI 2 -->
+        <div class="app-card">
+
+            <img
+                class="app-icon"
+                src="bgmi-icon.png"
+                alt="BGMI Indian App"
+            >
+
+            <div class="app-info">
+                <div class="app-name">
+                    BGMI Indian App
+                </div>
+
+                <div class="app-meta">
+                    🛡 DNS &nbsp; • &nbsp; CenPower
+                </div>
+            </div>
+
+            <a class="app-button" href="#">
+                ↓ Install
+            </a>
+
+        </div>
+
+
+        <!-- BGMI 3 -->
+        <div class="app-card">
+
+            <img
+                class="app-icon"
+                src="bgmi-icon.png"
+                alt="BGMI Indian App"
+            >
+
+            <div class="app-info">
+                <div class="app-name">
+                    BGMI Indian App
+                </div>
+
+                <div class="app-meta">
+                    🛡 DNS &nbsp; • &nbsp; CenPower 2
+                </div>
+            </div>
+
+            <a class="app-button" href="#">
+                ↓ Install
+            </a>
+
+        </div>
+
+
+        <!-- PUBG MOBILE -->
+        <div class="app-card coming-soon">
+
+            <img
+                class="app-icon"
+                src="pubg-icon.png"
+                alt="PUBG Mobile"
+            >
+
+            <div class="app-info">
+                <div class="app-name">
+                    PUBG Mobile
+                </div>
+
+                <div class="app-meta">
+                    🎮 PUBG MOBILE &nbsp; • &nbsp; ULTRA-iOS
+                </div>
+            </div>
+
+            <div class="app-button">
+                Coming Soon
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+    <div class="card">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🛡️
+            </div>
+
+            <div>
+                <div class="feature-title">
+                    Secure Profile
+                </div>
+
+                <div class="feature-text">
+                    Configuration delivered over HTTPS
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <div>
+                <div class="feature-title">
+                    One-Tap Installation
+                </div>
+
+                <div class="feature-text">
+                    Designed for iPhone and iPad
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💜
+            </div>
+
+            <div>
+                <div class="feature-title">
+                    ULTRA Interface
+                </div>
+
+                <div class="feature-text">
+                    Modern purple futuristic design
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        © 2026 ULTRA-iOS
+    </footer>
+
+</div>
+
+</body>
+</html>
