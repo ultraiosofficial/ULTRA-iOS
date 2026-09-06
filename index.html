@@ -2,20 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#07000f">
-<title>ULTRA-iOS | Installation Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07000d">
+<title>ULTRA-iOS</title>
 
 <style>
-/* =========================================================
-   ULTRA-iOS FUTURISTIC UI
-   Bubble / tap ripple animation: COMPLETELY REMOVED
-   ========================================================= */
-
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -25,221 +20,319 @@ html {
 
 body {
     min-height: 100vh;
-    overflow-x: hidden;
     color: #fff;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                 "Segoe UI", sans-serif;
+        "Segoe UI", sans-serif;
+
     background:
-        radial-gradient(circle at 50% 10%, rgba(140, 0, 255, .22), transparent 30%),
-        radial-gradient(circle at 10% 80%, rgba(0, 153, 255, .13), transparent 25%),
-        radial-gradient(circle at 90% 70%, rgba(255, 0, 153, .12), transparent 25%),
+        radial-gradient(circle at 50% -10%, rgba(210,0,255,.45), transparent 40%),
+        radial-gradient(circle at 0% 35%, rgba(100,0,255,.25), transparent 40%),
+        radial-gradient(circle at 100% 75%, rgba(255,0,220,.2), transparent 40%),
         #050008;
+
+    overflow-x: hidden;
+    perspective: 1000px;
 }
 
-/* ================= BACKGROUND ================= */
+/* =========================================================
+   PRELOADER
+========================================================= */
 
-body::before {
-    content: "";
+#loader {
     position: fixed;
     inset: 0;
-    z-index: -10;
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(rgba(145, 0, 255, .09) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(145, 0, 255, .09) 1px, transparent 1px);
-
-    background-size: 42px 42px;
-    transform: perspective(500px) rotateX(58deg) scale(1.7);
-    transform-origin: center bottom;
-
-    animation: gridMove 9s linear infinite;
-}
-
-@keyframes gridMove {
-    from {
-        background-position: 0 0, 0 0;
-    }
-    to {
-        background-position: 0 42px, 42px 0;
-    }
-}
-
-/* Animated atmospheric glow */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: -50%;
-    z-index: -9;
-    pointer-events: none;
-
+    z-index: 999999;
     background:
-        conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(156, 0, 255, .08),
-            transparent 18%,
-            rgba(0, 208, 255, .07),
-            transparent 35%
-        );
+        radial-gradient(circle, rgba(150,0,255,.15), transparent 50%),
+        #050008;
 
-    animation: atmosphere 18s linear infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity .8s ease, visibility .8s ease;
 }
 
-@keyframes atmosphere {
+#loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-box::before {
+    content: "";
+    position: absolute;
+    inset: -35px;
+    border-radius: 50%;
+    border: 1px solid rgba(220,0,255,.15);
+    box-shadow:
+        0 0 30px rgba(200,0,255,.15),
+        inset 0 0 30px rgba(200,0,255,.1);
+
+    animation: bootPulse 1.5s ease-in-out infinite;
+}
+
+.spinner-box::after {
+    content: "";
+    position: absolute;
+    inset: -55px;
+    border-radius: 50%;
+    border: 1px dashed rgba(190,0,255,.2);
+
+    animation: bootOrbit 5s linear infinite;
+}
+
+.circle-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #d000ff;
+    border-right-color: #00f0ff;
+
+    animation:
+        ringSpin 1.2s cubic-bezier(.68,-.55,.27,1.55) infinite,
+        ringGlow 1s ease-in-out infinite alternate;
+}
+
+.circle-ring-inner {
+    position: absolute;
+    inset: 15px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-bottom-color: #ff00c8;
+    border-left-color: #7200ff;
+
+    animation: ringSpinReverse .8s linear infinite;
+}
+
+@keyframes ringSpin {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes ringSpinReverse {
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes ringGlow {
+    from { filter: drop-shadow(0 0 4px #d000ff); }
+    to { filter: drop-shadow(0 0 22px #d000ff); }
+}
+
+@keyframes bootPulse {
+    50% {
+        transform: scale(1.15);
+        opacity: .35;
+    }
+}
+
+@keyframes bootOrbit {
     to {
         transform: rotate(360deg);
     }
 }
 
-/* ================= AMBIENT ORBS ================= */
+.loader-text {
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 4px;
 
-.glow {
-    position: fixed;
-    width: 420px;
-    height: 420px;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(90px);
-    opacity: .22;
-    z-index: -5;
+    background: linear-gradient(
+        90deg,
+        #ff00e6,
+        #fff,
+        #00f0ff,
+        #bd43ff
+    );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation:
+        textGlow 1.5s infinite alternate,
+        loaderTextMove 2s linear infinite;
 }
 
-.glow.one {
-    top: -180px;
-    left: -120px;
-    background: #8b00ff;
-    animation: glowOne 7s ease-in-out infinite alternate;
-}
+@keyframes textGlow {
+    0% {
+        opacity: .5;
+        filter: blur(.5px);
+    }
 
-.glow.two {
-    right: -150px;
-    bottom: -180px;
-    background: #008cff;
-    animation: glowTwo 9s ease-in-out infinite alternate;
-}
-
-@keyframes glowOne {
-    to {
-        transform: translate(120px, 180px) scale(1.25);
-        opacity: .38;
+    100% {
+        opacity: 1;
+        filter: blur(0);
     }
 }
 
-@keyframes glowTwo {
+@keyframes loaderTextMove {
     to {
-        transform: translate(-100px, -120px) scale(1.3);
-        opacity: .35;
+        background-position: 300%;
     }
 }
 
-/* ================= SCANLINES ================= */
+/* =========================================================
+   FUTURISTIC BACKGROUND
+========================================================= */
 
-.scanlines {
+body::before {
+    content: "";
     position: fixed;
     inset: 0;
+
     pointer-events: none;
-    z-index: 1000;
-    opacity: .08;
+    z-index: 0;
+    opacity: .18;
+
+    background-image:
+        linear-gradient(rgba(190,0,255,.25) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(190,0,255,.25) 1px, transparent 1px);
+
+    background-size: 45px 45px;
+
+    animation:
+        gridMove 8s linear infinite,
+        gridPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: translateY(0) perspective(700px) rotateX(10deg);
+    }
+
+    100% {
+        transform: translateY(45px) perspective(700px) rotateX(10deg);
+    }
+}
+
+@keyframes gridPulse {
+    from { opacity: .10; }
+    to { opacity: .24; }
+}
+
+/* HORIZONTAL DIGITAL HUD LINES */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: 2;
 
     background:
         repeating-linear-gradient(
             to bottom,
-            transparent 0px,
-            transparent 3px,
-            rgba(255,255,255,.25) 4px
+            transparent 0,
+            transparent 5px,
+            rgba(255,0,255,.018) 6px,
+            transparent 7px
         );
 
-    animation: scanlines 7s linear infinite;
+    animation: hudFlicker 4s infinite;
 }
 
-@keyframes scanlines {
-    from {
-        transform: translateY(-10px);
-    }
-    to {
-        transform: translateY(10px);
-    }
+@keyframes hudFlicker {
+    0%, 90%, 100% { opacity: .5; }
+    92% { opacity: .8; }
+    94% { opacity: .3; }
 }
 
-/* ================= HUD LINES ================= */
+/* =========================================================
+   AMBIENT ENERGY
+========================================================= */
 
-.hud-line {
+.glow {
     position: fixed;
-    z-index: 20;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+
+    filter: blur(120px);
     pointer-events: none;
-    opacity: .55;
+    z-index: 0;
+
+    opacity: .8;
+
+    animation: ambient 6s ease-in-out infinite alternate;
 }
 
-.hud-line.left {
-    left: 0;
-    top: 18%;
-    width: 80px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #a600ff);
-    animation: hudLeft 3s ease-in-out infinite;
+.glow.one {
+    background: rgba(170,0,255,.3);
+    left: -160px;
+    top: -150px;
 }
 
-.hud-line.right {
-    right: 0;
-    top: 68%;
-    width: 100px;
-    height: 1px;
-    background: linear-gradient(90deg, #00c8ff, transparent);
-    animation: hudRight 4s ease-in-out infinite;
+.glow.two {
+    background: rgba(255,0,220,.22);
+    right: -180px;
+    bottom: -150px;
+    animation-delay: 2s;
 }
 
-.hud-line.vertical {
-    left: 7%;
-    top: 0;
-    width: 1px;
-    height: 150px;
-    background: linear-gradient(#9b00ff, transparent);
-    animation: hudVertical 4s ease-in-out infinite;
+@keyframes ambient {
+    0% {
+        transform: translate(0,0) scale(1);
+        filter: blur(120px);
+    }
+
+    50% {
+        transform: translate(60px,30px) scale(1.15);
+        filter: blur(90px);
+    }
+
+    100% {
+        transform: translate(100px,60px) scale(1.3);
+        filter: blur(130px);
+    }
 }
 
-@keyframes hudLeft {
-    0%,100% { width: 40px; opacity: .2; }
-    50% { width: 180px; opacity: 1; }
-}
+/* =========================================================
+   PARTICLES
+========================================================= */
 
-@keyframes hudRight {
-    0%,100% { width: 50px; opacity: .2; }
-    50% { width: 220px; opacity: 1; }
-}
-
-@keyframes hudVertical {
-    0%,100% { height: 80px; }
-    50% { height: 260px; }
-}
-
-/* ================= PARTICLES ================= */
-
-#particles {
+.particles {
     position: fixed;
     inset: 0;
+    overflow: hidden;
+
     pointer-events: none;
-    z-index: -1;
+    z-index: 1;
 }
 
 .particle {
     position: absolute;
-    width: 3px;
-    height: 3px;
+
+    width: 2px;
+    height: 2px;
     border-radius: 50%;
+
     background: #fff;
+
     box-shadow:
         0 0 6px #fff,
-        0 0 14px #9d00ff,
-        0 0 25px #7c00ff;
+        0 0 15px #d000ff;
 
-    animation: particleFloat linear infinite;
+    animation: starFall linear infinite;
 }
 
-@keyframes particleFloat {
+@keyframes starFall {
     0% {
-        transform: translate3d(0, 110vh, 0) scale(.3);
+        transform: translate3d(0,110vh,0) scale(.3);
         opacity: 0;
     }
 
@@ -247,432 +340,416 @@ body::after {
         opacity: 1;
     }
 
-    80% {
-        opacity: .8;
+    85% {
+        opacity: 1;
     }
 
     100% {
-        transform: translate3d(var(--drift), -15vh, 0) scale(1.5);
+        transform:
+            translate3d(60px,-10vh,0)
+            scale(1.4);
+
         opacity: 0;
     }
 }
 
-/* ================= PRELOADER ================= */
+/* =========================================================
+   GLOBAL SCAN
+========================================================= */
 
-#preloader {
+.scanline {
     position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 22px;
+    left: 0;
+    right: 0;
+    top: -5%;
 
-    background:
-        radial-gradient(circle, rgba(110,0,255,.18), transparent 35%),
-        #030006;
+    height: 3px;
 
-    transition: opacity .8s ease, visibility .8s ease;
+    z-index: 3;
+    pointer-events: none;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,0,255,.9),
+        #fff,
+        rgba(255,0,255,.9),
+        transparent
+    );
+
+    box-shadow:
+        0 0 15px #ff00ff,
+        0 0 35px #b000ff;
+
+    opacity: .6;
+
+    animation: globalScan 5s cubic-bezier(.4,0,.2,1) infinite;
 }
 
-#preloader.hide {
-    opacity: 0;
-    visibility: hidden;
+@keyframes globalScan {
+    from { top: -5%; }
+    to { top: 105%; }
 }
 
-.loader-core {
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
     position: relative;
-    width: 120px;
-    height: 120px;
-}
+    z-index: 5;
 
-.loader-core span {
-    position: absolute;
-    inset: 0;
-    border: 1px solid transparent;
-    border-top-color: #9b00ff;
-    border-right-color: #00d9ff;
-    border-radius: 50%;
-}
-
-.loader-core span:nth-child(1) {
-    animation: spin 1.1s linear infinite;
-}
-
-.loader-core span:nth-child(2) {
-    inset: 13px;
-    border-top-color: #ff00d4;
-    border-left-color: #7200ff;
-    animation: spinReverse 1.5s linear infinite;
-}
-
-.loader-core span:nth-child(3) {
-    inset: 27px;
-    border-bottom-color: #00eaff;
-    animation: spin 2s linear infinite;
-}
-
-.loader-core::after {
-    content: "ULTRA";
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 13px;
-    letter-spacing: 4px;
-    color: #fff;
-    text-shadow: 0 0 15px #a000ff;
-    animation: corePulse 1s ease-in-out infinite alternate;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spinReverse {
-    to { transform: rotate(-360deg); }
-}
-
-@keyframes corePulse {
-    from { opacity: .4; transform: scale(.9); }
-    to { opacity: 1; transform: scale(1.08); }
-}
-
-.boot-text {
-    font-family: monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: #b58cff;
-    text-align: center;
-    animation: bootBlink .7s infinite alternate;
-}
-
-@keyframes bootBlink {
-    to { opacity: .4; }
-}
-
-/* ================= CONTAINER ================= */
-
-.container {
-    width: min(1100px, calc(100% - 30px));
+    width: min(950px,94%);
     margin: auto;
-    padding: 50px 0 100px;
+
+    padding: 28px 0 70px;
 }
 
-/* ================= HERO ================= */
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero {
-    min-height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     text-align: center;
-    position: relative;
+    padding: 20px 10px 38px;
+
+    animation:
+        heroIn 1.2s cubic-bezier(.16,1,.3,1),
+        heroFloat 5s ease-in-out infinite 1.3s;
 }
 
-/* Hero rings */
-
-.hero::before,
-.hero::after {
-    content: "";
-    position: absolute;
-    width: 420px;
-    height: 420px;
-    border: 1px solid rgba(153, 0, 255, .25);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.hero::before {
-    animation: heroRing 10s linear infinite;
-}
-
-.hero::after {
-    width: 300px;
-    height: 300px;
-    border-color: rgba(0, 210, 255, .22);
-    animation: heroRingReverse 7s linear infinite;
-}
-
-@keyframes heroRing {
+@keyframes heroIn {
     from {
-        transform: rotate(0deg) scale(.85);
+        opacity: 0;
+        transform:
+            translateY(-45px)
+            scale(.9)
+            rotateX(-15deg);
     }
+
     to {
-        transform: rotate(360deg) scale(1.1);
+        opacity: 1;
+        transform: none;
     }
 }
 
-@keyframes heroRingReverse {
-    from {
-        transform: rotate(360deg) scale(1);
+@keyframes heroFloat {
+    0%,100% {
+        transform: translateY(0);
     }
-    to {
-        transform: rotate(0deg) scale(.75);
+
+    50% {
+        transform: translateY(-4px);
     }
 }
 
-/* ================= LOGO ================= */
+/* =========================================================
+   LOGO
+========================================================= */
 
 .logo-wrap {
     position: relative;
-    width: 170px;
-    height: 170px;
-    display: grid;
-    place-items: center;
-    margin-bottom: 25px;
+    width: 130px;
+    height: 130px;
+    margin: auto;
 }
 
 .logo-wrap::before {
     content: "";
+
     position: absolute;
-    inset: -14px;
-    border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        transparent,
-        #7800ff,
-        transparent,
-        #00d9ff,
-        transparent,
-        #ff00dd,
-        transparent
-    );
-    animation: logoOrbit 3s linear infinite;
-    filter: blur(1px);
-    opacity: .9;
+    inset: -12px;
+
+    border-radius: 36px;
+    border: 1px solid rgba(230,0,255,.5);
+
+    box-shadow:
+        0 0 25px rgba(220,0,255,.45),
+        inset 0 0 20px rgba(220,0,255,.25);
+
+    animation:
+        logoRing 2.5s ease-in-out infinite alternate,
+        logoPulse 3s ease-in-out infinite;
 }
 
 .logo-wrap::after {
     content: "";
+
     position: absolute;
-    inset: -5px;
-    border-radius: 50%;
-    background: #08000f;
+    inset: -22px;
+
+    border-radius: 45px;
+    border: 1px dashed rgba(190,0,255,.4);
+
+    animation: logoOrbit 6s linear infinite;
 }
 
-.logo {
-    position: relative;
-    z-index: 2;
-    width: 145px;
-    height: 145px;
-    object-fit: contain;
-    border-radius: 30px;
+@keyframes logoRing {
+    0% {
+        transform: scale(.98);
+        opacity: .5;
+    }
 
-    filter:
-        drop-shadow(0 0 10px #7700ff)
-        drop-shadow(0 0 30px rgba(0, 191, 255, .5));
+    100% {
+        transform: scale(1.12);
+        opacity: 1;
 
-    animation:
-        logoFloat 3s ease-in-out infinite,
-        logoGlow 1.5s ease-in-out infinite alternate;
+        box-shadow:
+            0 0 35px rgba(230,0,255,.8),
+            inset 0 0 30px rgba(220,0,255,.4);
+    }
+}
+
+@keyframes logoPulse {
+    50% {
+        border-color: rgba(0,240,255,.7);
+    }
 }
 
 @keyframes logoOrbit {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.logo {
+    width: 130px;
+    height: 130px;
+
+    object-fit: cover;
+    border-radius: 31px;
+
+    border: 2px solid rgba(230,80,255,.8);
+
+    box-shadow:
+        0 0 25px #a000ff,
+        0 0 65px rgba(190,0,255,.55);
+
+    animation: logoFloat 3.5s ease-in-out infinite;
 }
 
 @keyframes logoFloat {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
-@keyframes logoGlow {
-    from {
-        filter:
-            drop-shadow(0 0 8px #7700ff)
-            drop-shadow(0 0 20px rgba(0, 191, 255, .3));
-    }
-
-    to {
-        filter:
-            drop-shadow(0 0 20px #9b00ff)
-            drop-shadow(0 0 45px rgba(0, 191, 255, .7));
-    }
-}
-
-/* ================= GLITCH TITLE ================= */
-
-.glitch {
-    position: relative;
-    font-size: clamp(45px, 11vw, 100px);
-    line-height: .9;
-    font-weight: 900;
-    letter-spacing: -4px;
-    color: #fff;
-    text-shadow:
-        0 0 10px #fff,
-        0 0 25px #8500ff,
-        0 0 60px rgba(128,0,255,.8);
-    animation: titlePulse 2.5s ease-in-out infinite;
-}
-
-.glitch::before,
-.glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.glitch::before {
-    color: #00eaff;
-    transform: translate(2px, 0);
-    clip-path: inset(0 0 60% 0);
-    animation: glitchTop 2.7s infinite;
-}
-
-.glitch::after {
-    color: #ff00d4;
-    transform: translate(-2px, 0);
-    clip-path: inset(65% 0 0 0);
-    animation: glitchBottom 2.2s infinite;
-}
-
-@keyframes titlePulse {
     0%,100% {
-        transform: scale(1);
+        transform: translateY(0) rotate(0deg);
     }
+
     50% {
-        transform: scale(1.025);
+        transform:
+            translateY(-12px)
+            rotate(2deg)
+            scale(1.02);
     }
 }
 
-@keyframes glitchTop {
-    0%, 85%, 100% {
-        transform: translate(0);
-    }
-    87% {
-        transform: translate(7px, -2px);
-    }
-    89% {
-        transform: translate(-5px, 2px);
-    }
+/* =========================================================
+   TITLE
+========================================================= */
+
+.title {
+    margin-top: 24px;
+
+    font-size: clamp(40px,9vw,70px);
+    font-weight: 950;
+    letter-spacing: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #fff,
+        #d96cff,
+        #ff00e6,
+        #00f0ff,
+        #fff,
+        #bd43ff
+    );
+
+    background-size: 400%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation: titleShine 4s linear infinite;
+
+    filter:
+        drop-shadow(0 0 20px rgba(220,0,255,.35));
 }
 
-@keyframes glitchBottom {
-    0%, 80%, 100% {
-        transform: translate(0);
-    }
-    83% {
-        transform: translate(-7px, 2px);
-    }
-    86% {
-        transform: translate(4px, -1px);
+@keyframes titleShine {
+    to {
+        background-position: 400%;
     }
 }
 
 .subtitle {
-    margin-top: 20px;
-    max-width: 650px;
-    color: #a995c9;
+    margin-top: 8px;
+
+    color: #bda7c6;
     font-size: 15px;
-    line-height: 1.7;
-    letter-spacing: 2px;
+
+    animation: pulseGlow 3s ease-in-out infinite alternate;
 }
 
-/* ================= SYSTEM STATUS ================= */
+@keyframes pulseGlow {
+    0% {
+        opacity: .7;
+    }
 
-.system-status {
+    100% {
+        opacity: 1;
+        text-shadow:
+            0 0 10px rgba(220,0,255,.5);
+    }
+}
+
+/* =========================================================
+   STATUS HUD
+========================================================= */
+
+.status {
     position: relative;
-    margin-top: 28px;
-    padding: 12px 22px;
-    border: 1px solid rgba(153,0,255,.55);
-    background: rgba(20,0,35,.5);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 20px;
+    padding: 10px 20px;
+
+    border-radius: 30px;
+    border: 1px solid rgba(220,0,255,.7);
+
+    background: rgba(100,0,130,.2);
+
     box-shadow:
-        0 0 20px rgba(126,0,255,.18),
-        inset 0 0 20px rgba(126,0,255,.08);
-    overflow: hidden;
-    font-family: monospace;
+        0 0 20px rgba(190,0,255,.22),
+        inset 0 0 15px rgba(190,0,255,.08);
+
     font-size: 11px;
+    font-weight: 900;
     letter-spacing: 3px;
-    color: #cdb6ff;
+
+    overflow: hidden;
+
+    animation: statusFloat 3s ease-in-out infinite;
 }
 
-.system-status::before {
+.status::before {
     content: "";
+
     position: absolute;
+    left: -100%;
     top: 0;
-    left: -30%;
-    width: 25%;
+
+    width: 70%;
     height: 100%;
+
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.4),
+        rgba(255,255,255,.35),
+        rgba(0,240,255,.2),
         transparent
     );
+
     transform: skewX(-20deg);
-    animation: statusSweep 2.4s linear infinite;
+
+    animation: statusScan 2.5s linear infinite;
 }
 
-@keyframes statusSweep {
+@keyframes statusScan {
     to {
-        left: 130%;
+        left: 150%;
+    }
+}
+
+@keyframes statusFloat {
+    50% {
+        transform: translateY(-3px);
     }
 }
 
 .status-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin-right: 8px;
+    width: 8px;
+    height: 8px;
+
     border-radius: 50%;
-    background: #00ff9d;
-    box-shadow: 0 0 12px #00ff9d;
-    animation: statusPulse .8s infinite alternate;
+
+    background: #e000ff;
+
+    box-shadow:
+        0 0 8px #e000ff,
+        0 0 20px #e000ff;
+
+    animation: statusPulse 1.2s infinite;
 }
 
 @keyframes statusPulse {
-    to {
-        transform: scale(1.5);
-        box-shadow: 0 0 25px #00ff9d;
+    50% {
+        transform: scale(1.8);
+        opacity: .3;
     }
 }
 
-/* ================= SECTIONS ================= */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 .section {
     position: relative;
-    margin-top: 35px;
-    padding: 30px;
-    border: 1px solid rgba(145,0,255,.32);
+    overflow: hidden;
+
+    margin-top: 24px;
+    padding: 28px;
+
+    border-radius: 30px;
+
+    border: 1px solid rgba(205,45,255,.5);
+
     background:
         linear-gradient(
-            135deg,
-            rgba(45,0,70,.55),
-            rgba(5,0,15,.72)
+            145deg,
+            rgba(36,0,52,.78),
+            rgba(8,0,14,.94)
         );
-    box-shadow:
-        0 0 25px rgba(105,0,255,.12),
-        inset 0 0 30px rgba(125,0,255,.05);
 
-    overflow: hidden;
-    transform-style: preserve-3d;
+    box-shadow:
+        0 0 35px rgba(170,0,255,.15),
+        inset 0 0 35px rgba(150,0,255,.06);
+
+    backdrop-filter: blur(20px);
+
+    animation: sectionIn .8s ease both;
+
     transition:
         transform .25s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
+        box-shadow .3s ease,
+        border-color .3s ease;
 }
 
-/* Animated neon edge */
+/* Animated neon frame */
 
-.section::before {
+.section::after {
     content: "";
+
     position: absolute;
     inset: 0;
+
+    border-radius: inherit;
+
     padding: 1px;
-    background: conic-gradient(
-        from var(--angle, 0deg),
-        transparent 0 30%,
-        #7200ff 35%,
-        #00d9ff 45%,
-        transparent 55% 80%,
-        #ff00d4 90%,
-        transparent
-    );
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,0,255,.8),
+            transparent,
+            rgba(0,240,255,.6),
+            transparent
+        );
+
+    background-size: 300% 300%;
 
     -webkit-mask:
         linear-gradient(#000 0 0) content-box,
@@ -681,675 +758,908 @@ body::after {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
 
-    animation: borderRotate 5s linear infinite;
     pointer-events: none;
+
+    animation: borderFlow 5s linear infinite;
 }
 
-@keyframes borderRotate {
+@keyframes borderFlow {
     to {
-        --angle: 360deg;
+        background-position: 300% 300%;
     }
 }
 
-.section::after {
+.section::before {
     content: "";
+
     position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 80%;
-    background: linear-gradient(
-        transparent,
-        rgba(152,0,255,.08),
-        transparent
-    );
-    animation: sectionScan 4s linear infinite;
-    pointer-events: none;
-}
+    top: 0;
+    left: -100%;
 
-@keyframes sectionScan {
-    to {
-        top: 130%;
-    }
-}
+    width: 70%;
+    height: 2px;
 
-/* Corner brackets */
-
-.corner {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border-color: #8b00ff;
-    border-style: solid;
-    opacity: .8;
-    z-index: 3;
-}
-
-.corner.tl {
-    top: 10px;
-    left: 10px;
-    border-width: 2px 0 0 2px;
-}
-
-.corner.tr {
-    top: 10px;
-    right: 10px;
-    border-width: 2px 2px 0 0;
-}
-
-.corner.bl {
-    bottom: 10px;
-    left: 10px;
-    border-width: 0 0 2px 2px;
-}
-
-.corner.br {
-    bottom: 10px;
-    right: 10px;
-    border-width: 0 2px 2px 0;
-}
-
-.section:hover {
-    border-color: rgba(170,0,255,.75);
-    box-shadow:
-        0 0 35px rgba(120,0,255,.25),
-        inset 0 0 35px rgba(120,0,255,.1);
-}
-
-/* ================= SECTION HEADER ================= */
-
-.section-header {
-    position: relative;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.section-header .line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        #8c00ff,
-        transparent
-    );
-}
-
-.section-title {
-    font-size: 13px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #d6c5ff;
-}
-
-/* ================= CONFIG CARD ================= */
-
-.config-card {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 22px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.025);
-    overflow: hidden;
-}
-
-.config-card::before {
-    content: "";
-    position: absolute;
-    width: 120px;
-    height: 200%;
-    top: -50%;
-    left: -150px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0,225,255,.15),
-        transparent
-    );
-    transform: rotate(20deg);
-    animation: configSweep 3s linear infinite;
-}
-
-@keyframes configSweep {
-    to {
-        left: 120%;
-    }
-}
-
-.config-icon {
-    width: 65px;
-    height: 65px;
-    flex: 0 0 65px;
-    display: grid;
-    place-items: center;
-    border: 1px solid #7300ff;
-    background: rgba(111,0,255,.12);
-    box-shadow:
-        0 0 20px rgba(111,0,255,.25),
-        inset 0 0 15px rgba(111,0,255,.1);
-    font-size: 27px;
-    animation: iconPulse 2s ease-in-out infinite;
-}
-
-@keyframes iconPulse {
-    0%,100% {
-        box-shadow:
-            0 0 15px rgba(111,0,255,.2),
-            inset 0 0 10px rgba(111,0,255,.08);
-    }
-
-    50% {
-        box-shadow:
-            0 0 30px rgba(111,0,255,.55),
-            inset 0 0 20px rgba(111,0,255,.2);
-    }
-}
-
-.config-info {
-    flex: 1;
-}
-
-.config-info h3 {
-    font-size: 17px;
-    margin-bottom: 7px;
-}
-
-.config-info p {
-    color: #8e7da9;
-    font-size: 12px;
-}
-
-/* ================= BUTTON ================= */
-
-.install-btn {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 170px;
-    padding: 14px 22px;
-    margin-top: 20px;
-
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-
-    border: 1px solid #9500ff;
     background:
         linear-gradient(
-            120deg,
-            rgba(112,0,255,.2),
-            rgba(0,198,255,.12)
+            90deg,
+            transparent,
+            #fff,
+            #d000ff,
+            #00f0ff,
+            transparent
         );
 
     box-shadow:
-        0 0 15px rgba(130,0,255,.25),
-        inset 0 0 15px rgba(130,0,255,.08);
+        0 0 15px #d000ff,
+        0 0 25px #00f0ff;
 
-    overflow: hidden;
-    transition: .25s ease;
+    animation: sectionBeam 4s linear infinite;
 }
 
-.install-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 80%;
-    height: 100%;
-    transform: skewX(-25deg);
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.45),
-        transparent
-    );
-    animation: buttonSweep 2.3s linear infinite;
-}
+@keyframes sectionBeam {
+    0% {
+        left: -100%;
+    }
 
-@keyframes buttonSweep {
-    to {
-        left: 140%;
+    100% {
+        left: 150%;
     }
 }
 
-.install-btn:hover {
-    transform: translateY(-3px);
-    border-color: #00d9ff;
-    box-shadow:
-        0 0 25px rgba(0,217,255,.45),
-        0 0 50px rgba(125,0,255,.25);
+@keyframes sectionIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
-.install-btn:active {
-    transform: scale(.97);
+.section h2 {
+    font-size: 28px;
+    font-weight: 950;
+
+    text-shadow:
+        0 0 15px rgba(210,0,255,.25);
 }
 
-/* ================= INFO BOX ================= */
+.description {
+    margin-top: 8px;
+    margin-bottom: 22px;
+
+    color: #ae9ab5;
+}
+
+/* =========================================================
+   PROFILE BOXES
+========================================================= */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
 
 .info-box {
     position: relative;
-    margin-top: 18px;
-    padding: 18px;
-    border-left: 2px solid #7800ff;
-    background: rgba(119,0,255,.06);
-    color: #9e8db9;
-    font-size: 12px;
-    line-height: 1.7;
     overflow: hidden;
-}
 
-.info-box::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 2px;
-    height: 35%;
-    background: #00eaff;
-    box-shadow: 0 0 15px #00eaff;
-    animation: infoScan 2s linear infinite;
-}
+    padding: 20px;
 
-@keyframes infoScan {
-    0% { top: -40%; }
-    100% { top: 120%; }
-}
+    border-radius: 19px;
 
-/* ================= APP GRID ================= */
+    border: 1px solid rgba(200,50,255,.35);
 
-.apps-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
+    background: rgba(5,0,10,.65);
 
-.app-card {
-    position: relative;
-    min-height: 190px;
-    padding: 24px;
-    border: 1px solid rgba(133,0,255,.35);
-    background:
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(0,217,255,.08),
-            transparent 35%
-        ),
-        rgba(15,0,25,.7);
-
-    overflow: hidden;
-    transform-style: preserve-3d;
     transition:
-        transform .2s ease,
+        transform .3s cubic-bezier(.2,.8,.2,1),
         border-color .3s ease,
         box-shadow .3s ease;
 }
 
-/* Hologram sweep */
+.info-box::before {
+    content: "";
+
+    position: absolute;
+    left: -100%;
+    top: 0;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(220,0,255,.12),
+            rgba(0,240,255,.08),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation: infoScan 5s linear infinite;
+}
+
+@keyframes infoScan {
+    0% { left: -100%; }
+    65%,100% { left: 150%; }
+}
+
+.info-box::after {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    right: -50px;
+    top: -50px;
+
+    border-radius: 50%;
+
+    background: rgba(220,0,255,.15);
+
+    filter: blur(25px);
+
+    animation: infoOrb 4s ease-in-out infinite alternate;
+}
+
+@keyframes infoOrb {
+    to {
+        transform: scale(1.4);
+        background: rgba(0,240,255,.18);
+    }
+}
+
+.info-box:hover {
+    transform: translateY(-5px) scale(1.02);
+
+    border-color: #df4cff;
+
+    box-shadow:
+        0 10px 30px rgba(200,0,255,.3),
+        0 0 15px rgba(0,240,255,.1);
+}
+
+.info-label {
+    color: #8d7795;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.info-value {
+    margin-top: 8px;
+
+    font-size: 18px;
+    font-weight: 850;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.button {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 62px;
+
+    margin-top: 16px;
+
+    border-radius: 19px;
+
+    color: #fff;
+    text-decoration: none;
+
+    font-size: 18px;
+    font-weight: 900;
+
+    overflow: hidden;
+
+    transition:
+        transform .3s cubic-bezier(.2,.8,.2,1),
+        box-shadow .3s ease;
+}
+
+.button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 55%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.6),
+            rgba(0,240,255,.25),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation: buttonShine 2.5s infinite;
+}
+
+@keyframes buttonShine {
+    0% { left: -100%; }
+    50%,100% { left: 150%; }
+}
+
+.primary {
+    background:
+        linear-gradient(
+            90deg,
+            #7200ff,
+            #e000ff,
+            #ff00cc,
+            #00c8ff,
+            #8200ff
+        );
+
+    background-size: 400%;
+
+    box-shadow:
+        0 0 25px rgba(210,0,255,.45),
+        0 0 60px rgba(140,0,255,.2);
+
+    animation: buttonGradient 4s linear infinite;
+}
+
+@keyframes buttonGradient {
+    to {
+        background-position: 400%;
+    }
+}
+
+.primary:hover {
+    transform: translateY(-3px) scale(1.01);
+
+    box-shadow:
+        0 0 35px rgba(230,0,255,.7),
+        0 0 80px rgba(180,0,255,.4);
+}
+
+.secondary {
+    background: rgba(75,0,100,.25);
+
+    border: 1px solid rgba(210,60,255,.45);
+}
+
+.secondary:hover {
+    background: rgba(100,0,140,.4);
+
+    border-color: rgba(230,100,255,.8);
+
+    box-shadow:
+        0 0 20px rgba(210,60,255,.3);
+
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: scale(.96) !important;
+}
+
+/* =========================================================
+   APP CARDS
+========================================================= */
+
+.apps {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.app-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    min-height: 110px;
+    padding: 13px;
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(195,35,255,.42);
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(12,0,20,.8),
+            rgba(30,0,40,.65),
+            rgba(12,0,20,.8)
+        );
+
+    color: #fff;
+    text-decoration: none;
+
+    overflow: hidden;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .3s ease,
+        box-shadow .35s ease;
+}
+
+/* Holographic sweep */
 
 .app-card::before {
     content: "";
+
     position: absolute;
-    top: -100%;
-    left: -30%;
-    width: 160%;
-    height: 50%;
-    transform: rotate(-12deg);
-    background: linear-gradient(
-        transparent,
-        rgba(130,0,255,.15),
-        rgba(0,218,255,.1),
-        transparent
-    );
-    animation: cardSweep 4.5s linear infinite;
+
+    left: -100%;
+    top: 0;
+
+    width: 60%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(220,0,255,.15),
+            rgba(0,240,255,.12),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation: cardScan 4s linear infinite;
 }
 
-@keyframes cardSweep {
-    0% {
-        top: -100%;
-    }
-    100% {
-        top: 160%;
-    }
-}
-
-/* Animated border */
+/* Moving energy border */
 
 .app-card::after {
     content: "";
+
     position: absolute;
     inset: 0;
+
+    border-radius: inherit;
+
     border: 1px solid transparent;
+
     background:
-        linear-gradient(#08000f,#08000f) padding-box,
         linear-gradient(
-            110deg,
+            90deg,
             transparent,
-            #7600ff,
+            rgba(255,0,255,.8),
             transparent,
-            #00d9ff,
+            rgba(0,240,255,.7),
             transparent
         ) border-box;
-    opacity: .7;
-    animation: cardBorder 3s linear infinite;
+
+    background-size: 300% 100%;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) padding-box,
+        linear-gradient(#000 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    animation: cardBorder 5s linear infinite;
+
     pointer-events: none;
+}
+
+@keyframes cardScan {
+    0% {
+        left: -100%;
+    }
+
+    60%,100% {
+        left: 150%;
+    }
 }
 
 @keyframes cardBorder {
     to {
-        filter: hue-rotate(360deg);
+        background-position: 300% 0;
     }
 }
 
-.app-card:hover {
-    transform: translateY(-8px) scale(1.015);
-    border-color: rgba(0,220,255,.65);
+.app-card:hover,
+.app-card:active {
+    transform:
+        translateY(-6px)
+        scale(1.015);
+
+    border-color: #e04cff;
+
     box-shadow:
-        0 0 30px rgba(110,0,255,.25),
-        0 0 70px rgba(0,180,255,.1);
+        0 10px 30px rgba(200,0,255,.35),
+        inset 0 0 20px rgba(190,0,255,.15),
+        0 0 25px rgba(0,240,255,.08);
 }
 
 .app-icon {
-    width: 62px;
-    height: 62px;
+    width: 82px;
+    height: 82px;
+
+    flex: 0 0 82px;
+
     object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 18px;
+
+    border-radius: 20px;
 
     box-shadow:
-        0 0 15px rgba(122,0,255,.35);
+        0 0 20px rgba(180,0,255,.35);
 
-    transform: translateZ(30px);
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        box-shadow .35s ease;
+
+    transform: translateZ(20px);
 }
 
-.app-card h3 {
-    position: relative;
-    z-index: 2;
-    font-size: 17px;
-    margin-bottom: 8px;
+.app-card:hover .app-icon {
+    transform:
+        translateZ(35px)
+        rotate(-5deg)
+        scale(1.1);
+
+    box-shadow:
+        0 0 35px rgba(210,0,255,.75),
+        0 0 20px rgba(0,240,255,.2);
 }
 
-.app-card p {
-    position: relative;
-    z-index: 2;
-    color: #827194;
-    font-size: 11px;
-    line-height: 1.6;
+.app-info {
+    flex: 1;
+    min-width: 0;
 }
 
-.app-link {
-    position: relative;
-    z-index: 5;
-    display: inline-block;
-    margin-top: 15px;
-    padding: 9px 14px;
-    color: #fff;
-    border: 1px solid #7200ff;
-    text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 2px;
-    background: rgba(115,0,255,.1);
-    transition: .25s ease;
+.app-name {
+    font-size: 20px;
+    font-weight: 900;
 }
 
-.app-link:hover {
-    border-color: #00d9ff;
-    box-shadow: 0 0 20px rgba(0,217,255,.3);
+.app-region {
+    margin-top: 6px;
+
+    color: #a896af;
+    font-size: 14px;
+}
+
+.install-small,
+.coming {
+    flex-shrink: 0;
+
+    padding: 11px 15px;
+
+    border-radius: 14px;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    transition: all .3s ease;
+}
+
+.install-small {
+    color: #78ff9d;
+
+    border: 1px solid #31c86b;
+
+    background: rgba(0,100,45,.12);
+
+    box-shadow:
+        0 0 12px rgba(40,255,120,.1);
+}
+
+.app-card:hover .install-small {
+    background: rgba(0,180,80,.25);
+
+    box-shadow:
+        0 0 20px rgba(40,255,120,.4);
+
+    transform: scale(1.05);
 }
 
 .coming {
-    display: inline-block;
-    position: relative;
-    z-index: 3;
-    margin-top: 14px;
-    font-family: monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: #8d6da8;
-    animation: comingPulse 1.5s ease-in-out infinite;
+    color: #d493ff;
+
+    border: 1px solid #9c2cff;
+
+    background: rgba(140,0,255,.1);
+
+    box-shadow:
+        0 0 15px rgba(150,0,255,.12);
+
+    animation: comingPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes comingPulse {
-    0%,100% { opacity: .4; }
-    50% { opacity: 1; }
-}
-
-/* ================= TERMINAL ================= */
-
-.terminal {
-    margin-top: 18px;
-    padding: 17px;
-    min-height: 120px;
-
-    font-family: monospace;
-    font-size: 10px;
-    line-height: 1.8;
-    color: #8fffd2;
-
-    border: 1px solid rgba(0,255,180,.18);
-    background: rgba(0,20,18,.25);
-    box-shadow: inset 0 0 25px rgba(0,255,180,.025);
-}
-
-.terminal-line {
-    opacity: 0;
-    animation: terminalAppear .5s forwards;
-}
-
-.terminal-line:nth-child(1) { animation-delay: .2s; }
-.terminal-line:nth-child(2) { animation-delay: .7s; }
-.terminal-line:nth-child(3) { animation-delay: 1.2s; }
-.terminal-line:nth-child(4) { animation-delay: 1.7s; }
-.terminal-line:nth-child(5) { animation-delay: 2.2s; }
-
-@keyframes terminalAppear {
-    to {
-        opacity: 1;
+    50% {
+        box-shadow:
+            0 0 25px rgba(180,0,255,.3);
     }
 }
 
-/* ================= FOOTER ================= */
+/* =========================================================
+   ROCKET
+========================================================= */
 
-footer {
-    margin-top: 50px;
-    text-align: center;
-    color: #5e506e;
-    font-size: 10px;
-    letter-spacing: 2px;
+.rocket-launch {
+    position: fixed;
+
+    left: -160px;
+    bottom: 8%;
+
+    width: 105px;
+    height: 105px;
+
+    z-index: 99999;
+    pointer-events: none;
+
+    opacity: 0;
 }
 
-/* ================= ROCKET ================= */
+.rocket-launch.active {
+    animation:
+        rocketFly 1.35s cubic-bezier(.2,.7,.15,1) forwards;
+}
 
-#launchOverlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.rocket-body {
+    position: absolute;
+
+    left: 28px;
+    top: 15px;
+
+    width: 45px;
+    height: 70px;
+
+    border-radius: 50% 50% 45% 45%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #b8b8c4,
+            #fff,
+            #8b8b99
+        );
+
+    border: 2px solid #fff;
+
+    box-shadow:
+        0 0 10px #fff,
+        0 0 25px #d000ff,
+        0 0 50px rgba(170,0,255,.8);
+
+    transform: rotate(-42deg);
+}
+
+.rocket-window {
+    position: absolute;
+
+    width: 19px;
+    height: 19px;
+
+    left: 11px;
+    top: 12px;
+
+    border-radius: 50%;
+
     background:
         radial-gradient(
-            circle,
-            rgba(110,0,255,.3),
-            rgba(3,0,8,.96) 55%
+            circle at 35% 30%,
+            #fff,
+            #72d9ff 35%,
+            #170044 70%
         );
+
+    border: 2px solid #ddd;
+
+    box-shadow:
+        0 0 12px #6bdcff;
 }
 
-#launchOverlay.active {
-    display: flex;
-}
-
-.launch-core {
-    position: relative;
-    width: 160px;
-    height: 250px;
-    text-align: center;
-}
-
-.rocket {
+.rocket-fin-left,
+.rocket-fin-right {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 75px;
-    filter:
-        drop-shadow(0 0 15px #a000ff)
-        drop-shadow(0 0 40px #00bfff);
 
-    animation: rocketShake .08s infinite alternate;
+    width: 17px;
+    height: 28px;
+
+    bottom: 7px;
+
+    background: #7c00ff;
+
+    box-shadow:
+        0 0 15px #b000ff;
 }
 
-@keyframes rocketShake {
-    from { margin-left: -3px; }
-    to { margin-left: 3px; }
+.rocket-fin-left {
+    left: -8px;
+    transform: skewY(25deg);
 }
 
-.flame {
+.rocket-fin-right {
+    right: -8px;
+    transform: skewY(-25deg);
+}
+
+.rocket-flame {
     position: absolute;
-    left: 50%;
-    top: calc(50% + 40px);
+
+    left: 40px;
+    top: 72px;
+
     width: 20px;
-    height: 100px;
-    transform: translateX(-50%);
-    background: linear-gradient(
-        #fff,
-        #00eaff,
-        #7800ff,
-        transparent
-    );
-    filter: blur(5px);
-    animation: flame .15s infinite alternate;
+    height: 55px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #fff,
+            #ffe600 20%,
+            #ff7200 48%,
+            #ff00c8 72%,
+            transparent
+        );
+
+    filter: blur(3px);
+
+    transform: rotate(-42deg);
+
+    animation:
+        rocketFlame .08s infinite alternate;
 }
 
-@keyframes flame {
+@keyframes rocketFlame {
     from {
-        height: 70px;
-        opacity: .6;
+        height: 42px;
+        opacity: .7;
     }
+
     to {
-        height: 130px;
+        height: 70px;
         opacity: 1;
     }
 }
 
-.launch-text {
-    position: absolute;
-    left: 50%;
-    top: calc(50% + 130px);
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-family: monospace;
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: #c7a9ff;
-}
+@keyframes rocketFly {
+    0% {
+        left: -150px;
+        bottom: 8%;
+        opacity: 0;
 
-.energy-ring {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 250px;
-    height: 250px;
-    border: 1px solid #8500ff;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow:
-        0 0 20px rgba(130,0,255,.5),
-        inset 0 0 20px rgba(130,0,255,.3);
-    animation: energyRing .7s linear infinite;
-}
-
-@keyframes energyRing {
-    to {
         transform:
-            translate(-50%, -50%)
-            rotate(360deg)
-            scale(1.35);
+            scale(.55)
+            rotate(-10deg);
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    30% {
+        left: 18%;
+        bottom: 28%;
+
+        transform:
+            scale(.9)
+            rotate(-10deg);
+    }
+
+    60% {
+        left: 53%;
+        bottom: 57%;
+
+        transform:
+            scale(1.05)
+            rotate(-10deg);
+    }
+
+    82% {
+        left: 78%;
+        bottom: 78%;
+
+        transform:
+            scale(.85)
+            rotate(-10deg);
+    }
+
+    100% {
+        left: 115%;
+        bottom: 112%;
+        opacity: 0;
+
+        transform:
+            scale(.55)
+            rotate(-10deg);
+    }
+}
+
+.exhaust {
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff00ff;
+
+    box-shadow:
+        0 0 15px #ff00ff;
+
+    animation:
+        exhaustFly .7s linear infinite;
+}
+
+.exhaust:nth-child(1) {
+    left: 35px;
+    top: 75px;
+}
+
+.exhaust:nth-child(2) {
+    left: 50px;
+    top: 82px;
+    animation-delay: .15s;
+}
+
+.exhaust:nth-child(3) {
+    left: 28px;
+    top: 88px;
+    animation-delay: .3s;
+}
+
+@keyframes exhaustFly {
+    0% {
+        transform: translate(0,0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(-35px,70px)
+            scale(0);
+
         opacity: 0;
     }
 }
 
-/* ================= RESPONSIVE ================= */
+/* =========================================================
+   LAUNCH FLASH
+========================================================= */
 
-@media (max-width: 700px) {
+.launch-flash {
+    position: fixed;
+    inset: 0;
 
-    .container {
-        width: min(100% - 20px, 1100px);
-        padding-top: 25px;
+    z-index: 99980;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,0,255,.35),
+            rgba(0,240,255,.08),
+            transparent 65%
+        );
+
+    opacity: 0;
+}
+
+.launch-flash.active {
+    animation: flash .6s ease-out;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
     }
 
-    .hero {
-        min-height: 75vh;
+    20% {
+        opacity: 1;
     }
 
-    .hero::before {
-        width: 300px;
-        height: 300px;
+    100% {
+        opacity: 0;
     }
+}
 
-    .hero::after {
-        width: 220px;
-        height: 220px;
-    }
+/* =========================================================
+   FOOTER
+========================================================= */
 
-    .logo-wrap {
-        width: 135px;
-        height: 135px;
-    }
+footer {
+    text-align: center;
 
-    .logo {
-        width: 115px;
-        height: 115px;
-    }
+    margin-top: 30px;
 
-    .glitch {
-        font-size: 48px;
-        letter-spacing: -3px;
-    }
+    color: #715d78;
 
-    .subtitle {
-        font-size: 12px;
-        padding: 0 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    animation:
+        pulseGlow 4s ease-in-out infinite alternate;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:650px) {
+
+    .page {
+        width: 93%;
+        padding-top: 18px;
     }
 
     .section {
-        padding: 22px 16px;
+        padding: 20px;
+        border-radius: 25px;
     }
 
-    .config-card {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .apps-grid {
+    .profile-grid {
         grid-template-columns: 1fr;
     }
 
     .app-card {
-        min-height: 175px;
+        gap: 11px;
     }
 
-    .install-btn {
-        width: 100%;
+    .app-icon {
+        width: 68px;
+        height: 68px;
+        flex-basis: 68px;
+        border-radius: 17px;
+    }
+
+    .app-name {
+        font-size: 16px;
+    }
+
+    .app-region {
+        font-size: 12px;
+    }
+
+    .install-small,
+    .coming {
+        padding: 9px 10px;
+        font-size: 10px;
+    }
+
+    .rocket-launch {
+        transform: scale(.75);
     }
 }
 
-/* ================= REDUCED MOTION ================= */
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion: reduce) {
 
     *,
     *::before,
     *::after {
-        animation-duration: .001ms !important;
+        animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
     }
@@ -1359,163 +1669,154 @@ footer {
 
 <body>
 
-<!-- Ambient elements -->
+<!-- PRELOADER -->
+<div id="loader">
+    <div class="spinner-box">
+        <div class="circle-ring"></div>
+        <div class="circle-ring-inner"></div>
+    </div>
+
+    <div class="loader-text">
+        INITIALIZING SYSTEM...
+    </div>
+</div>
+
+<!-- AMBIENT EFFECTS -->
 <div class="glow one"></div>
 <div class="glow two"></div>
+<div class="scanline"></div>
+<div class="particles"></div>
 
-<div class="scanlines"></div>
+<!-- ROCKET FLASH -->
+<div class="launch-flash" id="launchFlash"></div>
 
-<div class="hud-line left"></div>
-<div class="hud-line right"></div>
-<div class="hud-line vertical"></div>
+<!-- ROCKET -->
+<div class="rocket-launch" id="rocketLaunch">
 
-<div id="particles"></div>
+    <div class="rocket-body">
 
-<!-- ================= PRELOADER ================= -->
+        <div class="rocket-window"></div>
 
-<div id="preloader">
+        <div class="rocket-fin-left"></div>
+        <div class="rocket-fin-right"></div>
 
-    <div class="loader-core">
-        <span></span>
-        <span></span>
-        <span></span>
     </div>
 
-    <div class="boot-text">
-        INITIALIZING ULTRA-iOS SYSTEM...
-    </div>
+    <div class="rocket-flame"></div>
+
+    <div class="exhaust"></div>
+    <div class="exhaust"></div>
+    <div class="exhaust"></div>
 
 </div>
 
-<!-- ================= ROCKET LAUNCH ================= -->
+<!-- MAIN -->
+<div class="page">
 
-<div id="launchOverlay">
-
-    <div class="energy-ring"></div>
-
-    <div class="launch-core">
-
-        <div class="rocket">🚀</div>
-        <div class="flame"></div>
-
-        <div class="launch-text">
-            INSTALLING PROFILE...
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ================= MAIN ================= -->
-
-<main class="container">
-
-    <!-- HERO -->
-
-    <section class="hero">
+    <header class="hero">
 
         <div class="logo-wrap">
             <img
                 src="ultra-logo.png"
                 class="logo"
-                alt="ULTRA-iOS Logo"
+                alt="ULTRA-iOS"
             >
         </div>
 
-        <h1
-            class="glitch"
-            data-text="ULTRA-iOS"
-        >
+        <div class="title">
             ULTRA-iOS
-        </h1>
+        </div>
 
-        <p class="subtitle">
-            NEXT-GENERATION iOS INSTALLATION HUB
-            <br>
-            ENGINEERED FOR SPEED • STABILITY • CONTROL
+        <div class="subtitle">
+            Next Generation iOS Installation Hub
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+
+    </header>
+
+
+    <!-- PROFILE -->
+    <section class="section">
+
+        <h2>
+            ⚡ Configuration Profile
+        </h2>
+
+        <p class="description">
+            Install the ULTRA-iOS configuration profile directly on your iPhone or iPad.
         </p>
 
-        <div class="system-status">
-            <span class="status-dot"></span>
-            SYSTEM ONLINE // ULTRA CORE ACTIVE
-        </div>
+        <div class="profile-grid">
 
-    </section>
+            <div class="info-box">
 
-    <!-- ================= PROFILE ================= -->
+                <div class="info-label">
+                    PROFILE
+                </div>
 
-    <section class="section">
-
-        <span class="corner tl"></span>
-        <span class="corner tr"></span>
-        <span class="corner bl"></span>
-        <span class="corner br"></span>
-
-        <div class="section-header">
-            <div class="section-title">
-                CONFIGURATION PROFILE
-            </div>
-            <div class="line"></div>
-        </div>
-
-        <div class="config-card">
-
-            <div class="config-icon">
-                ⚡
-            </div>
-
-            <div class="config-info">
-
-                <h3>
+                <div class="info-value">
                     ULTRA Anti-Revoke
-                </h3>
+                </div>
 
-                <p>
-                    Advanced configuration profile
-                    for iOS / iPadOS.
-                </p>
+            </div>
 
-                <a
-                    href="ULTRA_iOS_AntiRevoke.mobileconfig"
-                    class="install-btn"
-                    id="installProfile"
-                >
-                    INSTALL PROFILE
-                </a>
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    PLATFORM
+                </div>
+
+                <div class="info-value">
+                    iOS / iPadOS
+                </div>
 
             </div>
 
         </div>
 
-        <div class="info-box">
-            ⚠ SYSTEM NOTICE:
-            Open the configuration profile in Safari and
-            follow the iOS installation instructions.
-        </div>
+
+        <a
+            href="ULTRA_iOS_AntiRevoke.mobileconfig"
+            class="button primary install-trigger"
+        >
+            Install Profile
+        </a>
+
+
+        <a
+            href="ULTRA_iOS_AntiRevoke.mobileconfig"
+            class="button secondary"
+        >
+            View Configuration Profile
+        </a>
 
     </section>
 
-    <!-- ================= APPS ================= -->
 
+    <!-- APPS -->
     <section class="section">
 
-        <span class="corner tl"></span>
-        <span class="corner tr"></span>
-        <span class="corner bl"></span>
-        <span class="corner br"></span>
+        <h2>
+            📱 ULTRA Apps
+        </h2>
 
-        <div class="section-header">
-            <div class="section-title">
-                APPLICATION MATRIX
-            </div>
-            <div class="line"></div>
-        </div>
+        <p class="description">
+            Available applications and upcoming releases.
+        </p>
 
-        <div class="apps-grid">
+        <div class="apps">
 
             <!-- BGMI -->
 
-            <div class="app-card">
+            <a
+                href="bgmi.html"
+                class="app-card"
+            >
 
                 <img
                     src="bgmi-icon.png"
@@ -1523,25 +1824,26 @@ footer {
                     alt="BGMI"
                 >
 
-                <h3>
-                    BGMI
-                </h3>
+                <div class="app-info">
 
-                <p>
-                    ULTRA optimized BGMI installation
-                    interface.
-                </p>
+                    <div class="app-name">
+                        BATTLEGROUNDS MOBILE
+                    </div>
 
-                <a
-                    href="bgmi.html"
-                    class="app-link"
-                >
-                    OPEN MODULE
-                </a>
+                    <div class="app-region">
+                        🇮🇳 India • ULTRA-iOS
+                    </div>
 
-            </div>
+                </div>
 
-            <!-- PUBG -->
+                <span class="install-small">
+                    ↓ Install
+                </span>
+
+            </a>
+
+
+            <!-- VIETNAM -->
 
             <div class="app-card">
 
@@ -1551,22 +1853,26 @@ footer {
                     alt="PUBG Mobile"
                 >
 
-                <h3>
-                    PUBG MOBILE
-                </h3>
+                <div class="app-info">
 
-                <p>
-                    Advanced installation module
-                    currently under development.
-                </p>
+                    <div class="app-name">
+                        PUBG MOBILE
+                    </div>
+
+                    <div class="app-region">
+                        🇻🇳 Vietnam • ULTRA-iOS
+                    </div>
+
+                </div>
 
                 <span class="coming">
-                    ◉ COMING SOON
+                    Coming Soon
                 </span>
 
             </div>
 
-            <!-- PUBG 2 -->
+
+            <!-- KOREAN -->
 
             <div class="app-card">
 
@@ -1576,22 +1882,26 @@ footer {
                     alt="PUBG Mobile"
                 >
 
-                <h3>
-                    PUBG MOBILE LITE
-                </h3>
+                <div class="app-info">
 
-                <p>
-                    ULTRA deployment system
-                    preparing for activation.
-                </p>
+                    <div class="app-name">
+                        PUBG MOBILE
+                    </div>
+
+                    <div class="app-region">
+                        🇰🇷 Korean • ULTRA-iOS
+                    </div>
+
+                </div>
 
                 <span class="coming">
-                    ◉ COMING SOON
+                    Coming Soon
                 </span>
 
             </div>
 
-            <!-- PUBG 3 -->
+
+            <!-- TAIWAN -->
 
             <div class="app-card">
 
@@ -1601,17 +1911,49 @@ footer {
                     alt="PUBG Mobile"
                 >
 
-                <h3>
-                    PUBG MOBILE CORE
-                </h3>
+                <div class="app-info">
 
-                <p>
-                    Next-generation module
-                    currently locked.
-                </p>
+                    <div class="app-name">
+                        PUBG MOBILE
+                    </div>
+
+                    <div class="app-region">
+                        🇹🇼 Taiwan • ULTRA-iOS
+                    </div>
+
+                </div>
 
                 <span class="coming">
-                    ◉ COMING SOON
+                    Coming Soon
+                </span>
+
+            </div>
+
+
+            <!-- GLOBAL -->
+
+            <div class="app-card">
+
+                <img
+                    src="pubg-icon.png"
+                    class="app-icon"
+                    alt="PUBG Mobile"
+                >
+
+                <div class="app-info">
+
+                    <div class="app-name">
+                        PUBG MOBILE
+                    </div>
+
+                    <div class="app-region">
+                        🌎 Global • ULTRA-iOS
+                    </div>
+
+                </div>
+
+                <span class="coming">
+                    Coming Soon
                 </span>
 
             </div>
@@ -1620,208 +1962,213 @@ footer {
 
     </section>
 
-    <!-- ================= SYSTEM CORE ================= -->
-
-    <section class="section">
-
-        <span class="corner tl"></span>
-        <span class="corner tr"></span>
-        <span class="corner bl"></span>
-        <span class="corner br"></span>
-
-        <div class="section-header">
-            <div class="section-title">
-                SYSTEM CORE
-            </div>
-            <div class="line"></div>
-        </div>
-
-        <div class="terminal">
-
-            <div class="terminal-line">
-                &gt; ULTRA CORE ................. ONLINE
-            </div>
-
-            <div class="terminal-line">
-                &gt; HOLOGRAPHIC ENGINE .......... ACTIVE
-            </div>
-
-            <div class="terminal-line">
-                &gt; NEURAL UI ................... ACTIVE
-            </div>
-
-            <div class="terminal-line">
-                &gt; ANTI-REVOKE MODULE .......... READY
-            </div>
-
-            <div class="terminal-line">
-                &gt; SYSTEM STATUS ............... NOMINAL
-            </div>
-
-        </div>
-
-    </section>
 
     <footer>
-        ULTRA-iOS // FUTURE INSTALLATION SYSTEM
+        ULTRA-iOS • FUTURE IS NOW
     </footer>
 
-</main>
+</div>
+
 
 <script>
-/* =========================================================
-   ULTRA-iOS JAVASCRIPT
-   IMPORTANT:
-   There is NO pointerdown / click ripple / bubble effect.
-   ========================================================= */
 
-/* ================= PRELOADER ================= */
+/* =========================================================
+   PRELOADER
+========================================================= */
 
 window.addEventListener("load", () => {
 
+    const loader = document.getElementById("loader");
+
     setTimeout(() => {
-
-        const loader = document.getElementById("preloader");
-
-        if (loader) {
-            loader.classList.add("hide");
-        }
-
-    }, 1800);
+        loader.classList.add("fade-out");
+    }, 500);
 
 });
 
-/* ================= PARTICLES ================= */
 
-const particleContainer =
-    document.getElementById("particles");
+/* =========================================================
+   PARTICLE GENERATION
+========================================================= */
 
-const particleCount =
-    window.innerWidth < 700 ? 35 : 70;
+const particles =
+    document.querySelector(".particles");
 
-for (let i = 0; i < particleCount; i++) {
+for(let i = 0; i < 65; i++){
 
-    const particle =
-        document.createElement("span");
+    const p =
+        document.createElement("div");
 
-    particle.className = "particle";
+    p.className = "particle";
 
-    particle.style.left =
+    p.style.left =
         Math.random() * 100 + "%";
 
-    particle.style.animationDuration =
-        (5 + Math.random() * 10) + "s";
+    p.style.animationDuration =
+        (5 + Math.random() * 12) + "s";
 
-    particle.style.animationDelay =
-        (-Math.random() * 12) + "s";
-
-    particle.style.setProperty(
-        "--drift",
-        ((Math.random() - .5) * 300) + "px"
-    );
+    p.style.animationDelay =
+        (-Math.random() * 15) + "s";
 
     const size =
         1 + Math.random() * 3;
 
-    particle.style.width = size + "px";
-    particle.style.height = size + "px";
+    p.style.width =
+        size + "px";
 
-    particleContainer.appendChild(particle);
+    p.style.height =
+        size + "px";
+
+    particles.appendChild(p);
 }
 
-/* ================= 3D CARD TILT ================= */
+
+/* =========================================================
+   ROCKET LAUNCH
+========================================================= */
+
+const rocket =
+    document.getElementById("rocketLaunch");
+
+const flash =
+    document.getElementById("launchFlash");
+
+
+function launchRocket(){
+
+    rocket.classList.remove("active");
+    flash.classList.remove("active");
+
+    void rocket.offsetWidth;
+    void flash.offsetWidth;
+
+    rocket.classList.add("active");
+    flash.classList.add("active");
+}
+
+
+document
+    .querySelectorAll(".install-trigger")
+    .forEach(button => {
+
+        button.addEventListener("click", function(event){
+
+            event.preventDefault();
+
+            const destination =
+                this.getAttribute("href");
+
+            launchRocket();
+
+            this.animate(
+                [
+                    { transform: "scale(1)" },
+                    { transform: "scale(.96)" },
+                    { transform: "scale(1)" }
+                ],
+                {
+                    duration: 300
+                }
+            );
+
+            setTimeout(() => {
+
+                window.location.href =
+                    destination;
+
+            }, 1050);
+
+        });
+
+    });
+
+
+/* =========================================================
+   3D TILT
+========================================================= */
 
 const tiltElements =
-    document.querySelectorAll(".app-card, .section");
+    document.querySelectorAll(
+        ".section, .app-card"
+    );
 
-const isTouch =
-    window.matchMedia("(pointer: coarse)").matches;
 
-if (!isTouch) {
+tiltElements.forEach(card => {
 
-    tiltElements.forEach(element => {
+    card.addEventListener("mousemove", e => {
 
-        element.addEventListener("mousemove", event => {
+        const rect =
+            card.getBoundingClientRect();
 
-            const rect =
-                element.getBoundingClientRect();
+        const x =
+            e.clientX - rect.left;
 
-            const x =
-                event.clientX - rect.left;
+        const y =
+            e.clientY - rect.top;
 
-            const y =
-                event.clientY - rect.top;
+        const centerX =
+            rect.width / 2;
 
-            const centerX =
-                rect.width / 2;
+        const centerY =
+            rect.height / 2;
 
-            const centerY =
-                rect.height / 2;
+        const rotateX =
+            (y - centerY) / 30;
 
-            const rotateY =
-                ((x - centerX) / centerX) * 3;
+        const rotateY =
+            (centerX - x) / 30;
 
-            const rotateX =
-                ((centerY - y) / centerY) * 3;
-
-            element.style.transform =
-                `perspective(900px)
-                 rotateX(${rotateX}deg)
-                 rotateY(${rotateY}deg)
-                 translateY(-2px)`;
-
-        });
-
-        element.addEventListener("mouseleave", () => {
-
-            element.style.transform = "";
-
-        });
+        card.style.transform =
+            `perspective(1000px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateZ(8px)
+             scale3d(1.01,1.01,1.01)`;
 
     });
 
-}
 
-/* ================= INSTALL LAUNCH ================= */
+    card.addEventListener("mouseleave", () => {
 
-const installButton =
-    document.getElementById("installProfile");
-
-const launchOverlay =
-    document.getElementById("launchOverlay");
-
-if (installButton) {
-
-    installButton.addEventListener("click", () => {
-
-        launchOverlay.classList.add("active");
-
-        setTimeout(() => {
-
-            launchOverlay.classList.remove("active");
-
-        }, 1400);
+        card.style.transform =
+            "perspective(1000px) " +
+            "rotateX(0deg) " +
+            "rotateY(0deg) " +
+            "translateZ(0) " +
+            "scale3d(1,1,1)";
 
     });
 
-}
+});
 
-/* ================= DYNAMIC HUD SIGNAL ================= */
+
+/* =========================================================
+   RANDOM DIGITAL GLITCH
+========================================================= */
 
 setInterval(() => {
 
-    const status =
-        document.querySelector(".system-status");
+    const title =
+        document.querySelector(".title");
 
-    if (!status) return;
+    if(!title) return;
 
-    status.style.boxShadow =
-        "0 0 " +
-        (20 + Math.random() * 20) +
-        "px rgba(126,0,255,.35), inset 0 0 20px rgba(126,0,255,.1)";
+    title.style.transform =
+        "translateX(" +
+        (Math.random() * 2 - 1) +
+        "px)";
 
-}, 900);
+    setTimeout(() => {
+
+        title.style.transform =
+            "translateX(0)";
+
+    }, 80);
+
+}, 4500);
+
 </script>
 
 </body>
 </html>
+
