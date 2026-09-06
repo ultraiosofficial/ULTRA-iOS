@@ -1,1255 +1,929 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07000d">
-
-<title>ULTRA-iOS</title>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    min-height:100vh;
-    color:#fff;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
-    background:
-        radial-gradient(circle at 50% -10%,rgba(210,0,255,.35),transparent 35%),
-        radial-gradient(circle at 0% 35%,rgba(100,0,255,.20),transparent 35%),
-        radial-gradient(circle at 100% 75%,rgba(255,0,220,.16),transparent 35%),
-        #050008;
-    overflow-x:hidden;
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
-    opacity:.16;
-    background-image:
-        linear-gradient(rgba(190,0,255,.22) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(190,0,255,.22) 1px,transparent 1px);
-    background-size:45px 45px;
-    animation:gridMove 10s linear infinite;
-}
-
-@keyframes gridMove{
-    0%{transform:translateY(0)}
-    100%{transform:translateY(45px)}
-}
-
-.glow{
-    position:fixed;
-    width:400px;
-    height:400px;
-    border-radius:50%;
-    filter:blur(110px);
-    pointer-events:none;
-    z-index:0;
-    opacity:.7;
-    animation:ambient 8s ease-in-out infinite alternate;
-}
-
-.glow.one{
-    background:rgba(170,0,255,.22);
-    left:-160px;
-    top:-150px;
-}
-
-.glow.two{
-    background:rgba(255,0,220,.16);
-    right:-180px;
-    bottom:-150px;
-    animation-delay:2s;
-}
-
-@keyframes ambient{
-    0%{transform:translate(0,0) scale(1)}
-    100%{transform:translate(80px,50px) scale(1.25)}
-}
-
-.particles{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:1;
-}
-
-.particle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:
-        0 0 6px #fff,
-        0 0 15px #d000ff;
-    animation:starFall linear infinite;
-}
-
-@keyframes starFall{
-    0%{
-        transform:translate3d(0,110vh,0) scale(.3);
-        opacity:0;
-    }
-    15%{opacity:1}
-    85%{opacity:1}
-    100%{
-        transform:translate3d(40px,-10vh,0) scale(1.2);
-        opacity:0;
-    }
-}
-
-.scanline{
-    position:fixed;
-    left:0;
-    right:0;
-    top:-5%;
-    height:2px;
-    z-index:3;
-    pointer-events:none;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,0,255,.8),
-        #fff,
-        rgba(255,0,255,.8),
-        transparent
-    );
-    box-shadow:
-        0 0 12px #ff00ff,
-        0 0 30px #b000ff;
-    opacity:.45;
-    animation:globalScan 7s linear infinite;
-}
-
-@keyframes globalScan{
-    from{top:-5%}
-    to{top:105%}
-}
-
-.page{
-    position:relative;
-    z-index:5;
-    width:min(950px,94%);
-    margin:auto;
-    padding:28px 0 70px;
-}
-
-.hero{
-    text-align:center;
-    padding:20px 10px 38px;
-    animation:heroIn 1s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes heroIn{
-    from{
-        opacity:0;
-        transform:translateY(-35px) scale(.95);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.logo-wrap{
-    position:relative;
-    width:130px;
-    height:130px;
-    margin:auto;
-}
-
-.logo-wrap::before{
-    content:"";
-    position:absolute;
-    inset:-12px;
-    border-radius:36px;
-    border:1px solid rgba(230,0,255,.35);
-    box-shadow:
-        0 0 20px rgba(220,0,255,.35),
-        inset 0 0 20px rgba(220,0,255,.15);
-    animation:logoRing 3s linear infinite;
-}
-
-.logo-wrap::after{
-    content:"";
-    position:absolute;
-    inset:-22px;
-    border-radius:45px;
-    border:1px dashed rgba(190,0,255,.25);
-    animation:logoOrbit 8s linear infinite;
-}
-
-@keyframes logoRing{
-    0%,100%{
-        transform:scale(1);
-        opacity:.6;
-    }
-    50%{
-        transform:scale(1.08);
-        opacity:1;
-    }
-}
-
-@keyframes logoOrbit{
-    to{transform:rotate(360deg)}
-}
-
-.logo{
-    width:130px;
-    height:130px;
-    object-fit:cover;
-    border-radius:31px;
-    border:2px solid rgba(230,80,255,.7);
-    box-shadow:
-        0 0 20px #a000ff,
-        0 0 55px rgba(190,0,255,.45);
-    animation:logoFloat 4s ease-in-out infinite;
-}
-
-@keyframes logoFloat{
-    0%,100%{
-        transform:translateY(0) rotate(0deg);
-    }
-    50%{
-        transform:translateY(-10px) rotate(1deg);
-    }
-}
-
-.title{
-    margin-top:24px;
-    font-size:clamp(40px,9vw,70px);
-    font-weight:950;
-    letter-spacing:4px;
-    background:linear-gradient(
-        90deg,
-        #fff,
-        #d96cff,
-        #ff00e6,
-        #fff,
-        #bd43ff
-    );
-    background-size:300%;
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    animation:titleShine 5s linear infinite;
-    text-shadow:0 0 30px rgba(220,0,255,.15);
-}
-
-@keyframes titleShine{
-    to{background-position:300%}
-}
-
-.subtitle{
-    margin-top:8px;
-    color:#bda7c6;
-    font-size:15px;
-}
-
-.status{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    margin-top:20px;
-    padding:10px 20px;
-    border-radius:30px;
-    border:1px solid rgba(220,0,255,.7);
-    background:rgba(100,0,130,.2);
-    box-shadow:
-        0 0 20px rgba(190,0,255,.22),
-        inset 0 0 15px rgba(190,0,255,.08);
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:3px;
-}
-
-.status-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#e000ff;
-    box-shadow:
-        0 0 8px #e000ff,
-        0 0 20px #e000ff;
-    animation:statusPulse 1.2s infinite;
-}
-
-@keyframes statusPulse{
-    50%{
-        transform:scale(1.8);
-        opacity:.3;
-    }
-}
-
-.section{
-    position:relative;
-    overflow:hidden;
-    margin-top:24px;
-    padding:28px;
-    border-radius:30px;
-    border:1px solid rgba(205,45,255,.5);
-    background:
-        linear-gradient(
-            145deg,
-            rgba(36,0,52,.78),
-            rgba(8,0,14,.94)
-        );
-    box-shadow:
-        0 0 35px rgba(170,0,255,.15),
-        inset 0 0 35px rgba(150,0,255,.06);
-    backdrop-filter:blur(20px);
-    animation:sectionIn .8s ease both;
-}
-
-.section::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:70%;
-    height:1px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #fff,
-        #d000ff,
-        transparent
-    );
-    box-shadow:0 0 15px #d000ff;
-    animation:sectionBeam 5s linear infinite;
-}
-
-@keyframes sectionBeam{
-    0%{left:-100%}
-    100%{left:150%}
-}
-
-@keyframes sectionIn{
-    from{
-        opacity:0;
-        transform:translateY(35px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.section h2{
-    font-size:28px;
-    font-weight:950;
-}
-
-.description{
-    margin-top:8px;
-    margin-bottom:22px;
-    color:#ae9ab5;
-}
-
-.profile-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-}
-
-.info-box{
-    position:relative;
-    overflow:hidden;
-    padding:20px;
-    border-radius:19px;
-    border:1px solid rgba(200,50,255,.35);
-    background:rgba(5,0,10,.65);
-    transition:.3s;
-}
-
-.info-box::after{
-    content:"";
-    position:absolute;
-    width:100px;
-    height:100px;
-    right:-50px;
-    top:-50px;
-    border-radius:50%;
-    background:rgba(220,0,255,.15);
-    filter:blur(25px);
-}
-
-.info-box:hover{
-    transform:translateY(-3px);
-    border-color:#df4cff;
-    box-shadow:0 0 25px rgba(200,0,255,.2);
-}
-
-.info-label{
-    color:#8d7795;
-    font-size:11px;
-    letter-spacing:2px;
-}
-
-.info-value{
-    margin-top:8px;
-    font-size:18px;
-    font-weight:850;
-}
-
-.button{
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    min-height:62px;
-    margin-top:16px;
-    border-radius:19px;
-    color:#fff;
-    text-decoration:none;
-    font-size:18px;
-    font-weight:900;
-    overflow:hidden;
-    transition:.25s;
-}
-
-.button::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:55%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.4),
-        transparent
-    );
-    transform:skewX(-20deg);
-    animation:buttonShine 3s infinite;
-}
-
-@keyframes buttonShine{
-    0%{left:-100%}
-    50%,100%{left:150%}
-}
-
-.primary{
-    background:
-        linear-gradient(
-            90deg,
-            #7200ff,
-            #e000ff,
-            #ff00cc,
-            #8200ff
-        );
-    background-size:300%;
-    box-shadow:
-        0 0 25px rgba(210,0,255,.45),
-        0 0 60px rgba(140,0,255,.2);
-    animation:buttonGradient 4s linear infinite;
-}
-
-@keyframes buttonGradient{
-    to{background-position:300%}
-}
-
-.secondary{
-    background:rgba(75,0,100,.25);
-    border:1px solid rgba(210,60,255,.45);
-}
-
-.button:active{
-    transform:scale(.97);
-}
-
-.ripple{
-    position:fixed;
-    width:20px;
-    height:20px;
-    border:2px solid #ff00ff;
-    border-radius:50%;
-    pointer-events:none;
-    z-index:99990;
-    transform:translate(-50%,-50%);
-    animation:ripple 1s ease-out forwards;
-    box-shadow:
-        0 0 15px #ff00ff,
-        0 0 35px #9c00ff;
-}
-
-@keyframes ripple{
-    from{
-        width:20px;
-        height:20px;
-        opacity:1;
-    }
-    to{
-        width:450px;
-        height:450px;
-        opacity:0;
-    }
-}
-
-.apps{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.app-card{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:17px;
-    min-height:110px;
-    padding:13px;
-    border-radius:22px;
-    border:1px solid rgba(195,35,255,.42);
-    background:rgba(12,0,20,.72);
-    color:#fff;
-    text-decoration:none;
-    overflow:hidden;
-    transition:.35s cubic-bezier(.2,.8,.2,1);
-}
-
-.app-card::before{
-    content:"";
-    position:absolute;
-    left:-100%;
-    top:0;
-    width:60%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(220,0,255,.08),
-        transparent
-    );
-    transform:skewX(-20deg);
-    animation:cardScan 5s linear infinite;
-}
-
-@keyframes cardScan{
-    0%{left:-100%}
-    60%,100%{left:150%}
-}
-
-.app-card:hover,
-.app-card:active{
-    transform:translateY(-5px) scale(1.01);
-    border-color:#e04cff;
-    box-shadow:
-        0 0 25px rgba(200,0,255,.28),
-        inset 0 0 20px rgba(190,0,255,.06);
-}
-
-.app-icon{
-    width:82px;
-    height:82px;
-    flex:0 0 82px;
-    object-fit:cover;
-    border-radius:20px;
-    box-shadow:
-        0 0 20px rgba(180,0,255,.35);
-    transition:.35s;
-}
-
-.app-card:hover .app-icon{
-    transform:rotate(-3deg) scale(1.05);
-    box-shadow:
-        0 0 30px rgba(210,0,255,.55);
-}
-
-.app-info{
-    flex:1;
-    min-width:0;
-}
-
-.app-name{
-    font-size:20px;
-    font-weight:900;
-}
-
-.app-region{
-    margin-top:6px;
-    color:#a896af;
-    font-size:14px;
-}
-
-.install-small,
-.coming{
-    flex-shrink:0;
-    padding:11px 15px;
-    border-radius:14px;
-    font-size:12px;
-    font-weight:900;
-}
-
-.install-small{
-    color:#78ff9d;
-    border:1px solid #31c86b;
-    background:rgba(0,100,45,.12);
-    box-shadow:0 0 12px rgba(40,255,120,.1);
-}
-
-.coming{
-    color:#d493ff;
-    border:1px solid #9c2cff;
-    background:rgba(140,0,255,.1);
-    box-shadow:0 0 15px rgba(150,0,255,.12);
-}
-
-.rocket-launch{
-    position:fixed;
-    left:-160px;
-    bottom:8%;
-    width:105px;
-    height:105px;
-    z-index:99999;
-    pointer-events:none;
-    opacity:0;
-}
-
-.rocket-launch.active{
-    animation:rocketFly 1.35s cubic-bezier(.2,.7,.15,1) forwards;
-}
-
-.rocket-body{
-    position:absolute;
-    left:28px;
-    top:15px;
-    width:45px;
-    height:70px;
-    border-radius:50% 50% 45% 45%;
-    background:
-        linear-gradient(
-            90deg,
-            #b8b8c4,
-            #fff,
-            #8b8b99
-        );
-    border:2px solid #fff;
-    box-shadow:
-        0 0 10px #fff,
-        0 0 25px #d000ff,
-        0 0 50px rgba(170,0,255,.8);
-    transform:rotate(-42deg);
-}
-
-.rocket-window{
-    position:absolute;
-    width:19px;
-    height:19px;
-    left:11px;
-    top:12px;
-    border-radius:50%;
-    background:
-        radial-gradient(circle at 35% 30%,#fff,#72d9ff 35%,#170044 70%);
-    border:2px solid #ddd;
-    box-shadow:0 0 12px #6bdcff;
-}
-
-.rocket-fin-left,
-.rocket-fin-right{
-    position:absolute;
-    width:17px;
-    height:28px;
-    bottom:7px;
-    background:#7c00ff;
-    box-shadow:0 0 15px #b000ff;
-}
-
-.rocket-fin-left{
-    left:-8px;
-    transform:skewY(25deg);
-}
-
-.rocket-fin-right{
-    right:-8px;
-    transform:skewY(-25deg);
-}
-
-.rocket-flame{
-    position:absolute;
-    left:40px;
-    top:72px;
-    width:20px;
-    height:55px;
-    border-radius:50%;
-    background:
-        linear-gradient(
-            to bottom,
-            #fff,
-            #ffe600 20%,
-            #ff7200 48%,
-            #ff00c8 72%,
-            transparent
-        );
-    filter:blur(3px);
-    transform:rotate(-42deg);
-    animation:rocketFlame .08s infinite alternate;
-}
-
-@keyframes rocketFlame{
-    from{
-        height:42px;
-        opacity:.7;
-    }
-    to{
-        height:70px;
-        opacity:1;
-    }
-}
-
-@keyframes rocketFly{
-    0%{
-        left:-150px;
-        bottom:8%;
-        opacity:0;
-        transform:scale(.55) rotate(-10deg);
-    }
-    8%{opacity:1}
-    30%{
-        left:18%;
-        bottom:28%;
-        transform:scale(.9) rotate(-10deg);
-    }
-    60%{
-        left:53%;
-        bottom:57%;
-        transform:scale(1.05) rotate(-10deg);
-    }
-    82%{
-        left:78%;
-        bottom:78%;
-        transform:scale(.85) rotate(-10deg);
-    }
-    100%{
-        left:115%;
-        bottom:112%;
-        opacity:0;
-        transform:scale(.55) rotate(-10deg);
-    }
-}
-
-.exhaust{
-    position:absolute;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#ff00ff;
-    box-shadow:0 0 15px #ff00ff;
-    animation:exhaustFly .7s linear infinite;
-}
-
-.exhaust:nth-child(1){
-    left:35px;
-    top:75px;
-}
-
-.exhaust:nth-child(2){
-    left:50px;
-    top:82px;
-    animation-delay:.15s;
-}
-
-.exhaust:nth-child(3){
-    left:28px;
-    top:88px;
-    animation-delay:.3s;
-}
-
-@keyframes exhaustFly{
-    0%{
-        transform:translate(0,0) scale(1);
-        opacity:1;
-    }
-    100%{
-        transform:translate(-35px,70px) scale(0);
-        opacity:0;
-    }
-}
-
-.launch-flash{
-    position:fixed;
-    inset:0;
-    z-index:99980;
-    pointer-events:none;
-    background:radial-gradient(
-        circle at 50% 50%,
-        rgba(255,0,255,.18),
-        transparent 55%
-    );
-    opacity:0;
-}
-
-.launch-flash.active{
-    animation:flash .6s ease-out;
-}
-
-@keyframes flash{
-    0%{opacity:0}
-    20%{opacity:1}
-    100%{opacity:0}
-}
-
-footer{
-    text-align:center;
-    margin-top:30px;
-    color:#715d78;
-    font-size:12px;
-    letter-spacing:2px;
-}
-
-@media(max-width:650px){
-
-    .page{
-        width:93%;
-        padding-top:18px;
-    }
-
-    .section{
-        padding:20px;
-        border-radius:25px;
-    }
-
-    .profile-grid{
-        grid-template-columns:1fr;
-    }
-
-    .app-card{
-        gap:11px;
-    }
-
-    .app-icon{
-        width:68px;
-        height:68px;
-        flex-basis:68px;
-        border-radius:17px;
-    }
-
-    .app-name{
-        font-size:16px;
-    }
-
-    .app-region{
-        font-size:12px;
-    }
-
-    .install-small,
-    .coming{
-        padding:9px 10px;
-        font-size:10px;
-    }
-
-    .rocket-launch{
-        transform:scale(.75);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#07000d">
+    <title>ULTRA-iOS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at 50% -10%, rgba(210,0,255,.35), transparent 35%),
+                radial-gradient(circle at 0% 35%, rgba(100,0,255,.20), transparent 35%),
+                radial-gradient(circle at 100% 75%, rgba(255,0,220,.16), transparent 35%),
+                #050008;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .16;
+            background-image:
+                linear-gradient(rgba(190,0,255,.22) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(190,0,255,.22) 1px, transparent 1px);
+            background-size: 45px 45px;
+            animation: gridMove 10s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(45px); }
+        }
+        .glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(110px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: .7;
+            animation: ambient 8s ease-in-out infinite alternate;
+        }
+        .glow.one {
+            background: rgba(170,0,255,.22);
+            left: -160px;
+            top: -150px;
+        }
+        .glow.two {
+            background: rgba(255,0,220,.16);
+            right: -180px;
+            bottom: -150px;
+            animation-delay: 2s;
+        }
+        @keyframes ambient {
+            0% { transform: translate(0,0) scale(1); }
+            100% { transform: translate(80px,50px) scale(1.25); }
+        }
+        .particles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow:
+                0 0 6px #fff,
+                0 0 15px #d000ff;
+            animation: starFall linear infinite;
+        }
+        @keyframes starFall {
+            0% {
+                transform: translate3d(0,110vh,0) scale(.3);
+                opacity: 0;
+            }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% {
+                transform: translate3d(40px,-10vh,0) scale(1.2);
+                opacity: 0;
+            }
+        }
+        .scanline {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: -5%;
+            height: 2px;
+            z-index: 3;
+            pointer-events: none;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,0,255,.8),
+                #fff,
+                rgba(255,0,255,.8),
+                transparent
+            );
+            box-shadow:
+                0 0 12px #ff00ff,
+                0 0 30px #b000ff;
+            opacity: .45;
+            animation: globalScan 7s linear infinite;
+        }
+        @keyframes globalScan {
+            from { top: -5%; }
+            to { top: 105%; }
+        }
+        .page {
+            position: relative;
+            z-index: 5;
+            width: min(950px, 94%);
+            margin: auto;
+            padding: 28px 0 70px;
+        }
+        .hero {
+            text-align: center;
+            padding: 20px 10px 38px;
+            animation: heroIn 1s cubic-bezier(.2,.8,.2,1);
+        }
+        @keyframes heroIn {
+            from {
+                opacity: 0;
+                transform: translateY(-35px) scale(.95);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        .logo-wrap {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: auto;
+        }
+        .logo-wrap::before {
+            content: "";
+            position: absolute;
+            inset: -12px;
+            border-radius: 36px;
+            border: 1px solid rgba(230,0,255,.35);
+            box-shadow:
+                0 0 20px rgba(220,0,255,.35),
+                inset 0 0 20px rgba(220,0,255,.15);
+            animation: logoRing 3s linear infinite;
+        }
+        .logo-wrap::after {
+            content: "";
+            position: absolute;
+            inset: -22px;
+            border-radius: 45px;
+            border: 1px dashed rgba(190,0,255,.25);
+            animation: logoOrbit 8s linear infinite;
+        }
+        @keyframes logoRing {
+            0%, 100% {
+                transform: scale(1);
+                opacity: .6;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 1;
+            }
+        }
+        @keyframes logoOrbit {
+            to { transform: rotate(360deg); }
+        }
+        .logo {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 31px;
+            border: 2px solid rgba(230,80,255,.7);
+            box-shadow:
+                0 0 20px #a000ff,
+                0 0 55px rgba(190,0,255,.45);
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+        }
+        .title {
+            margin-top: 24px;
+            font-size: clamp(40px, 9vw, 70px);
+            font-weight: 950;
+            letter-spacing: 4px;
+            background: linear-gradient(
+                90deg,
+                #fff,
+                #d96cff,
+                #ff00e6,
+                #fff,
+                #bd43ff
+            );
+            background-size: 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleShine 5s linear infinite;
+            text-shadow: 0 0 30px rgba(220,0,255,.15);
+        }
+        @keyframes titleShine {
+            to { background-position: 300%; }
+        }
+        .subtitle {
+            margin-top: 8px;
+            color: #bda7c6;
+            font-size: 15px;
+        }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(220,0,255,.7);
+            background: rgba(100,0,130,.2);
+            box-shadow:
+                0 0 20px rgba(190,0,255,.22),
+                inset 0 0 15px rgba(190,0,255,.08);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e000ff;
+            box-shadow:
+                0 0 8px #e000ff,
+                0 0 20px #e000ff;
+            animation: statusPulse 1.2s infinite;
+        }
+        @keyframes statusPulse {
+            50% {
+                transform: scale(1.8);
+                opacity: .3;
+            }
+        }
+        .section {
+            position: relative;
+            overflow: hidden;
+            margin-top: 24px;
+            padding: 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(205,45,255,.5);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(36,0,52,.78),
+                    rgba(8,0,14,.94)
+                );
+            box-shadow:
+                0 0 35px rgba(170,0,255,.15),
+                inset 0 0 35px rgba(150,0,255,.06);
+            backdrop-filter: blur(20px);
+            animation: sectionIn .8s ease both;
+        }
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #fff,
+                #d000ff,
+                transparent
+            );
+            box-shadow: 0 0 15px #d000ff;
+            animation: sectionBeam 5s linear infinite;
+        }
+        @keyframes sectionBeam {
+            0% { left: -100%; }
+            100% { left: 150%; }
+        }
+        @keyframes sectionIn {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        .section h2 {
+            font-size: 28px;
+            font-weight: 950;
+        }
+        .description {
+            margin-top: 8px;
+            margin-bottom: 22px;
+            color: #ae9ab5;
+        }
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .info-box {
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+            border-radius: 19px;
+            border: 1px solid rgba(200,50,255,.35);
+            background: rgba(5,0,10,.65);
+            transition: .3s;
+        }
+        .info-box::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -50px;
+            top: -50px;
+            border-radius: 50%;
+            background: rgba(220,0,255,.15);
+            filter: blur(25px);
+        }
+        .info-box:hover {
+            transform: translateY(-3px);
+            border-color: #df4cff;
+            box-shadow: 0 0 25px rgba(200,0,255,.2);
+        }
+        .info-label {
+            color: #8d7795;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+        .info-value {
+            margin-top: 8px;
+            font-size: 18px;
+            font-weight: 850;
+        }
+        .button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 62px;
+            margin-top: 16px;
+            border-radius: 19px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 900;
+            overflow: hidden;
+            transition: .25s;
+        }
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.4),
+                transparent
+            );
+            transform: skewX(-20deg);
+            animation: buttonShine 3s infinite;
+        }
+        @keyframes buttonShine {
+            0% { left: -100%; }
+            50%, 100% { left: 150%; }
+        }
+        .primary {
+            background:
+                linear-gradient(
+                    90deg,
+                    #7200ff,
+                    #e000ff,
+                    #ff00cc,
+                    #8200ff
+                );
+            background-size: 300%;
+            box-shadow:
+                0 0 25px rgba(210,0,255,.45),
+                0 0 60px rgba(140,0,255,.2);
+            animation: buttonGradient 4s linear infinite;
+        }
+        @keyframes buttonGradient {
+            to { background-position: 300%; }
+        }
+        .secondary {
+            background: rgba(75,0,100,.25);
+            border: 1px solid rgba(210,60,255,.45);
+        }
+        .button:active {
+            transform: scale(.97);
+        }
+        .ripple {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff00ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99990;
+            transform: translate(-50%,-50%);
+            animation: ripple 1s ease-out forwards;
+            box-shadow:
+                0 0 15px #ff00ff,
+                0 0 35px #9c00ff;
+        }
+        @keyframes ripple {
+            from {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+            to {
+                width: 450px;
+                height: 450px;
+                opacity: 0;
+            }
+        }
+        .apps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .app-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            min-height: 110px;
+            padding: 13px;
+            border-radius: 22px;
+            border: 1px solid rgba(195,35,255,.42);
+            background: rgba(12,0,20,.72);
+            color: #fff;
+            text-decoration: none;
+            overflow: hidden;
+            transition: .35s cubic-bezier(.2,.8,.2,1);
+        }
+        .app-card::before {
+            content: "";
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(220,0,255,.08),
+                transparent
+            );
+            transform: skewX(-20deg);
+            animation: cardScan 5s linear infinite;
+        }
+        @keyframes cardScan {
+            0% { left: -100%; }
+            60%, 100% { left: 150%; }
+        }
+        .app-card:hover,
+        .app-card:active {
+            transform: translateY(-5px) scale(1.01);
+            border-color: #e04cff;
+            box-shadow:
+                0 0 25px rgba(200,0,255,.28),
+                inset 0 0 20px rgba(190,0,255,.06);
+        }
+        .app-icon {
+            width: 82px;
+            height: 82px;
+            flex: 0 0 82px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(180,0,255,.35);
+            transition: .35s;
+        }
+        .app-card:hover .app-icon {
+            transform: rotate(-3deg) scale(1.05);
+            box-shadow: 0 0 30px rgba(210,0,255,.55);
+        }
+        .app-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .app-name {
+            font-size: 20px;
+            font-weight: 900;
+        }
+        .app-region {
+            margin-top: 6px;
+            color: #a896af;
+            font-size: 14px;
+        }
+        .install-small,
+        .coming {
+            flex-shrink: 0;
+            padding: 11px 15px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+        .install-small {
+            color: #78ff9d;
+            border: 1px solid #31c86b;
+            background: rgba(0,100,45,.12);
+            box-shadow: 0 0 12px rgba(40,255,120,.1);
+        }
+        .coming {
+            color: #d493ff;
+            border: 1px solid #9c2cff;
+            background: rgba(140,0,255,.1);
+            box-shadow: 0 0 15px rgba(150,0,255,.12);
+        }
+        .rocket-launch {
+            position: fixed;
+            left: -160px;
+            bottom: 8%;
+            width: 105px;
+            height: 105px;
+            z-index: 99999;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .rocket-launch.active {
+            animation: rocketFly 1.35s cubic-bezier(.2,.7,.15,1) forwards;
+        }
+        .rocket-body {
+            position: absolute;
+            left: 28px;
+            top: 15px;
+            width: 45px;
+            height: 70px;
+            border-radius: 50% 50% 45% 45%;
+            background: linear-gradient(
+                90deg,
+                #b8b8c4,
+                #fff,
+                #8b8b99
+            );
+            border: 2px solid #fff;
+            box-shadow:
+                0 0 10px #fff,
+                0 0 25px #d000ff,
+                0 0 50px rgba(170,0,255,.8);
+            transform: rotate(-42deg);
+        }
+        .rocket-window {
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            left: 11px;
+            top: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #fff, #72d9ff 35%, #170044 70%);
+            border: 2px solid #ddd;
+            box-shadow: 0 0 12px #6bdcff;
+        }
+        .rocket-fin-left,
+        .rocket-fin-right {
+            position: absolute;
+            width: 17px;
+            height: 28px;
+            bottom: 7px;
+            background: #7c00ff;
+            box-shadow: 0 0 15px #b000ff;
+        }
+        .rocket-fin-left {
+            left: -8px;
+            transform: skewY(25deg);
+        }
+        .rocket-fin-right {
+            right: -8px;
+            transform: skewY(-25deg);
+        }
+        .rocket-flame {
+            position: absolute;
+            left: 40px;
+            top: 72px;
+            width: 20px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(
+                to bottom,
+                #fff,
+                #ffe600 20%,
+                #ff7200 48%,
+                #ff00c8 72%,
+                transparent
+            );
+            filter: blur(3px);
+            transform: rotate(-42deg);
+            animation: rocketFlame .08s infinite alternate;
+        }
+        @keyframes rocketFlame {
+            from {
+                height: 42px;
+                opacity: .7;
+            }
+            to {
+                height: 70px;
+                opacity: 1;
+            }
+        }
+        @keyframes rocketFly {
+            0% {
+                left: -150px;
+                bottom: 8%;
+                opacity: 0;
+                transform: scale(.55) rotate(-10deg);
+            }
+            8% { opacity: 1; }
+            30% {
+                left: 18%;
+                bottom: 28%;
+                transform: scale(.9) rotate(-10deg);
+            }
+            60% {
+                left: 53%;
+                bottom: 57%;
+                transform: scale(1.05) rotate(-10deg);
+            }
+            82% {
+                left: 78%;
+                bottom: 78%;
+                transform: scale(.85) rotate(-10deg);
+            }
+            100% {
+                left: 115%;
+                bottom: 112%;
+                opacity: 0;
+                transform: scale(.55) rotate(-10deg);
+            }
+        }
+        .exhaust {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+            animation: exhaustFly .7s linear infinite;
+        }
+        .exhaust:nth-child(1) { left: 35px; top: 75px; }
+        .exhaust:nth-child(2) { left: 50px; top: 82px; animation-delay: .15s; }
+        .exhaust:nth-child(3) { left: 28px; top: 88px; animation-delay: .3s; }
+        @keyframes exhaustFly {
+            0% {
+                transform: translate(0,0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-35px, 70px) scale(0);
+                opacity: 0;
+            }
+        }
+        .launch-flash {
+            position: fixed;
+            inset: 0;
+            z-index: 99980;
+            pointer-events: none;
+            background: radial-gradient(
+                circle at 50% 50%,
+                rgba(255,0,255,.18),
+                transparent 55%
+            );
+            opacity: 0;
+        }
+        .launch-flash.active {
+            animation: flash .6s ease-out;
+        }
+        @keyframes flash {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #715d78;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+        @media(max-width:650px) {
+            .page {
+                width: 93%;
+                padding-top: 18px;
+            }
+            .section {
+                padding: 20px;
+                border-radius: 25px;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-card {
+                gap: 11px;
+            }
+            .app-icon {
+                width: 68px;
+                height: 68px;
+                flex-basis: 68px;
+                border-radius: 17px;
+            }
+            .app-name {
+                font-size: 16px;
+            }
+            .app-region {
+                font-size: 12px;
+            }
+            .install-small, .coming {
+                padding: 9px 10px;
+                font-size: 10px;
+            }
+            .rocket-launch {
+                transform: scale(.75);
+            }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="glow one"></div>
 <div class="glow two"></div>
-
 <div class="scanline"></div>
-
 <div class="particles"></div>
-
 <div class="launch-flash" id="launchFlash"></div>
 
 <div class="rocket-launch" id="rocketLaunch">
-
     <div class="rocket-body">
-
         <div class="rocket-window"></div>
-
         <div class="rocket-fin-left"></div>
         <div class="rocket-fin-right"></div>
-
     </div>
-
     <div class="rocket-flame"></div>
-
     <div class="exhaust"></div>
     <div class="exhaust"></div>
     <div class="exhaust"></div>
-
 </div>
 
 <div class="page">
+    <header class="hero">
+        <div class="logo-wrap">
+            <img src="ultra-logo.png" class="logo" alt="ULTRA-iOS">
+        </div>
+        <div class="title">ULTRA-iOS</div>
+        <div class="subtitle">Next Generation iOS Installation Hub</div>
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+    </header>
 
-<header class="hero">
-
-    <div class="logo-wrap">
-        <img
-            src="ultra-logo.png"
-            class="logo"
-            alt="ULTRA-iOS"
-        >
-    </div>
-
-    <div class="title">
-        ULTRA-iOS
-    </div>
-
-    <div class="subtitle">
-        Next Generation iOS Installation Hub
-    </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        SYSTEM ONLINE
-    </div>
-
-</header>
-
-<section class="section">
-
-    <h2>⚡ Configuration Profile</h2>
-
-    <p class="description">
-        Install the ULTRA-iOS configuration profile directly
-        on your iPhone or iPad.
-    </p>
-
-    <div class="profile-grid">
-
-        <div class="info-box">
-            <div class="info-label">PROFILE</div>
-            <div class="info-value">
-                ULTRA Anti-Revoke
+    <section class="section">
+        <h2>⚡ Configuration Profile</h2>
+        <p class="description">
+            Install the ULTRA-iOS configuration profile directly on your iPhone or iPad.
+        </p>
+        <div class="profile-grid">
+            <div class="info-box">
+                <div class="info-label">PROFILE</div>
+                <div class="info-value">ULTRA Anti-Revoke</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">PLATFORM</div>
+                <div class="info-value">iOS / iPadOS</div>
             </div>
         </div>
-
-        <div class="info-box">
-            <div class="info-label">PLATFORM</div>
-            <div class="info-value">
-                iOS / iPadOS
-            </div>
-        </div>
-
-    </div>
-
-    <a
-        href="ULTRA_iOS_AntiRevoke.mobileconfig"
-        class="button primary install-trigger"
-    >
-        Install Profile
-    </a>
-
-    <a
-        href="ULTRA_iOS_AntiRevoke.mobileconfig"
-        class="button secondary"
-    >
-        View Configuration Profile
-    </a>
-
-</section>
-
-<section class="section">
-
-    <h2>📱 ULTRA Apps</h2>
-
-    <p class="description">
-        Available applications and upcoming releases.
-    </p>
-
-    <div class="apps">
-
-        <!-- BGMI -->
-
-        <a
-            href="bgmi.html"
-            class="app-card"
-        >
-
-            <img
-                src="bgmi-icon.png"
-                class="app-icon"
-                alt="BGMI"
-            >
-
-            <div class="app-info">
-
-                <div class="app-name">
-                    BATTLEGROUNDS MOBILE
-                </div>
-
-                <div class="app-region">
-                    🇮🇳 India • ULTRA-iOS
-                </div>
-
-            </div>
-
-            <span class="install-small">
-                ↓ Install
-            </span>
-
+        <a href="ULTRA_iOS_AntiRevoke.mobileconfig" class="button primary install-trigger">
+            Install Profile
         </a>
+        <a href="ULTRA_iOS_AntiRevoke.mobileconfig" class="button secondary">
+            View Configuration Profile
+        </a>
+    </section>
 
-        <!-- VIETNAM -->
+    <section class="section">
+        <h2>📱 ULTRA Apps</h2>
+        <p class="description">Available applications and upcoming releases.</p>
 
-        <div class="app-card">
-
-            <img
-                src="pubg-icon.png"
-                class="app-icon"
-                alt="PUBG Mobile"
-            >
-
-            <div class="app-info">
-
-                <div class="app-name">
-                    PUBG MOBILE
+        <div class="apps">
+            <!-- BGMI -->
+            <a href="bgmi.html" class="app-card">
+                <img src="bgmi-icon.png" class="app-icon" alt="BGMI">
+                <div class="app-info">
+                    <div class="app-name">BATTLEGROUNDS MOBILE</div>
+                    <div class="app-region">🇮🇳 India • ULTRA-iOS</div>
                 </div>
+                <span class="install-small">↓ Install</span>
+            </a>
 
-                <div class="app-region">
-                    🇻🇳 Vietnam • ULTRA-iOS
+            <!-- VIETNAM -->
+            <div class="app-card">
+                <img src="pubg-icon.png" class="app-icon" alt="PUBG Mobile">
+                <div class="app-info">
+                    <div class="app-name">PUBG MOBILE</div>
+                    <div class="app-region">🇻🇳 Vietnam • ULTRA-iOS</div>
                 </div>
-
+                <span class="coming">Coming Soon</span>
             </div>
 
-            <span class="coming">
-                Coming Soon
-            </span>
-
-        </div>
-
-        <!-- KOREAN -->
-
-        <div class="app-card">
-
-            <img
-                src="pubg-icon.png"
-                class="app-icon"
-                alt="PUBG Mobile"
-            >
-
-            <div class="app-info">
-
-                <div class="app-name">
-                    PUBG MOBILE
+            <!-- KOREAN -->
+            <div class="app-card">
+                <img src="pubg-icon.png" class="app-icon" alt="PUBG Mobile">
+                <div class="app-info">
+                    <div class="app-name">PUBG MOBILE</div>
+                    <div class="app-region">🇰🇷 Korean • ULTRA-iOS</div>
                 </div>
-
-                <div class="app-region">
-                    🇰🇷 Korean • ULTRA-iOS
-                </div>
-
+                <span class="coming">Coming Soon</span>
             </div>
 
-            <span class="coming">
-                Coming Soon
-            </span>
-
-        </div>
-
-        <!-- TAIWAN -->
-
-        <div class="app-card">
-
-            <img
-                src="pubg-icon.png"
-                class="app-icon"
-                alt="PUBG Mobile"
-            >
-
-            <div class="app-info">
-
-                <div class="app-name">
-                    PUBG MOBILE
+            <!-- TAIWAN -->
+            <div class="app-card">
+                <img src="pubg-icon.png" class="app-icon" alt="PUBG Mobile">
+                <div class="app-info">
+                    <div class="app-name">PUBG MOBILE</div>
+                    <div class="app-region">🇹🇼 Taiwan • ULTRA-iOS</div>
                 </div>
-
-                <div class="app-region">
-                    🇹🇼 Taiwan • ULTRA-iOS
-                </div>
-
+                <span class="coming">Coming Soon</span>
             </div>
 
-            <span class="coming">
-                Coming Soon
-            </span>
-
-        </div>
-
-        <!-- GLOBAL -->
-
-        <div class="app-card">
-
-            <img
-                src="pubg-icon.png"
-                class="app-icon"
-                alt="PUBG Mobile"
-            >
-
-            <div class="app-info">
-
-                <div class="app-name">
-                    PUBG MOBILE
+            <!-- GLOBAL -->
+            <div class="app-card">
+                <img src="pubg-icon.png" class="app-icon" alt="PUBG Mobile">
+                <div class="app-info">
+                    <div class="app-name">PUBG MOBILE</div>
+                    <div class="app-region">🌎 Global • ULTRA-iOS</div>
                 </div>
-
-                <div class="app-region">
-                    🌎 Global • ULTRA-iOS
-                </div>
-
+                <span class="coming">Coming Soon</span>
             </div>
-
-            <span class="coming">
-                Coming Soon
-            </span>
-
         </div>
+    </section>
 
-    </div>
-
-</section>
-
-<footer>
-    ULTRA-iOS • FUTURE IS NOW
-</footer>
-
+    <footer>
+        ULTRA-iOS • FUTURE IS NOW
+    </footer>
 </div>
 
 <script>
+    const particles = document.querySelector(".particles");
+    for(let i = 0; i < 45; i++){
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDuration = (5 + Math.random() * 12) + "s";
+        p.style.animationDelay = (-Math.random() * 15) + "s";
+        const size = 1 + Math.random() * 3;
+        p.style.width = size + "px";
+        p.style.height = size + "px";
+        particles.appendChild(p);
+    }
 
-const particles =
-    document.querySelector(".particles");
+    const rocket = document.getElementById("rocketLaunch");
+    const flash = document.getElementById("launchFlash");
 
-for(let i=0;i<45;i++){
+    function launchRocket(){
+        rocket.classList.remove("active");
+        flash.classList.remove("active");
+        void rocket.offsetWidth;
+        void flash.offsetWidth;
+        rocket.classList.add("active");
+        flash.classList.add("active");
+    }
 
-    const p=document.createElement("div");
-
-    p.className="particle";
-
-    p.style.left=
-        Math.random()*100+"%";
-
-    p.style.animationDuration=
-        (5+Math.random()*12)+"s";
-
-    p.style.animationDelay=
-        (-Math.random()*15)+"s";
-
-    const size=
-        1+Math.random()*3;
-
-    p.style.width=size+"px";
-    p.style.height=size+"px";
-
-    particles.appendChild(p);
-}
-
-
-const rocket =
-    document.getElementById("rocketLaunch");
-
-const flash =
-    document.getElementById("launchFlash");
-
-
-function launchRocket(){
-
-    rocket.classList.remove("active");
-    flash.classList.remove("active");
-
-    void rocket.offsetWidth;
-    void flash.offsetWidth;
-
-    rocket.classList.add("active");
-    flash.classList.add("active");
-
-}
-
-
-document
-.querySelectorAll(".install-trigger")
-.forEach(button=>{
-
-    button.addEventListener("click",function(event){
-
-        event.preventDefault();
-
-        const destination=
-            this.getAttribute("href");
-
-        launchRocket();
-
-        this.animate(
-            [
-                {
-                    transform:"scale(1)"
-                },
-                {
-                    transform:"scale(.96)"
-                },
-                {
-                    transform:"scale(1)"
-                }
-            ],
-            {
-                duration:300
-            }
-        );
-
-        setTimeout(()=>{
-
-            window.location.href=
-                destination;
-
-        },1050);
-
+    document.querySelectorAll(".install-trigger").forEach(button => {
+        button.addEventListener("click", function(event){
+            event.preventDefault();
+            const destination = this.getAttribute("href");
+            launchRocket();
+            this.animate([
+                { transform: "scale(1)" },
+                { transform: "scale(.96)" },
+                { transform: "scale(1)" }
+            ], {
+                duration: 300
+            });
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 1050);
+        });
     });
 
-});
-
-
-document.addEventListener(
-    "pointerdown",
-    function(e){
-
-        const target=
-            e.target.closest(
-                ".button,.app-card"
-            );
-
+    document.addEventListener("pointerdown", function(e){
+        const target = e.target.closest(".button,.app-card");
         if(!target) return;
-
-        const ripple=
-            document.createElement("div");
-
-        ripple.className="ripple";
-
-        ripple.style.left=
-            e.clientX+"px";
-
-        ripple.style.top=
-            e.clientY+"px";
-
+        const ripple = document.createElement("div");
+        ripple.className = "ripple";
+        ripple.style.left = e.clientX + "px";
+        ripple.style.top = e.clientY + "px";
         document.body.appendChild(ripple);
-
-        setTimeout(()=>{
+        setTimeout(() => {
             ripple.remove();
-        },1000);
-
-    }
-);
-
+        }, 1000);
+    });
 </script>
-
 </body>
 </html>
