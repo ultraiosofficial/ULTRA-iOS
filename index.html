@@ -27,6 +27,72 @@
             overflow-x: hidden;
             perspective: 1000px;
         }
+
+        /* --- PRELOADER SCREEN --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: #050008;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .spinner-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .circle-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #d000ff;
+            border-right-color: #00f0ff;
+            animation: ringSpin 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+        .circle-ring-inner {
+            position: absolute;
+            inset: 15px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-bottom-color: #ff00c8;
+            border-left-color: #7200ff;
+            animation: ringSpinReverse 1s linear infinite;
+        }
+        @keyframes ringSpin {
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes ringSpinReverse {
+            100% { transform: rotate(-360deg); }
+        }
+        .loader-text {
+            margin-top: 25px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #ff00e6, #fff, #bd43ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textGlow 1.5s infinite alternate;
+        }
+        @keyframes textGlow {
+            0% { opacity: 0.5; text-shadow: 0 0 5px rgba(220,0,255,0.2); }
+            100% { opacity: 1; text-shadow: 0 0 20px rgba(220,0,255,0.8); }
+        }
+
+        /* --- BACKGROUND & GRID ANIMATIONS --- */
         body::before {
             content: "";
             position: fixed;
@@ -127,6 +193,8 @@
             from { top: -5%; }
             to { top: 105%; }
         }
+
+        /* --- UI COMPONENTS --- */
         .page {
             position: relative;
             z-index: 5;
@@ -582,6 +650,8 @@
             background: rgba(140,0,255,.1);
             box-shadow: 0 0 15px rgba(150,0,255,.12);
         }
+
+        /* --- ROCKET LAUNCH EFFECTS --- */
         .rocket-launch {
             position: fixed;
             left: -160px;
@@ -791,6 +861,15 @@
 </head>
 <body>
 
+<!-- PRELOADER SCREEN -->
+<div id="loader">
+    <div class="spinner-box">
+        <div class="circle-ring"></div>
+        <div class="circle-ring-inner"></div>
+    </div>
+    <div class="loader-text">INITIALIZING SYSTEM...</div>
+</div>
+
 <div class="glow one"></div>
 <div class="glow two"></div>
 <div class="scanline"></div>
@@ -908,6 +987,15 @@
 </div>
 
 <script>
+    // PRELOADER DISMISSAL
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('loader');
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+        }, 500);
+    });
+
+    // PARTICLE GENERATION
     const particles = document.querySelector(".particles");
     for(let i = 0; i < 45; i++){
         const p = document.createElement("div");
@@ -921,6 +1009,7 @@
         particles.appendChild(p);
     }
 
+    // ROCKET LAUNCH FUNCTION
     const rocket = document.getElementById("rocketLaunch");
     const flash = document.getElementById("launchFlash");
 
@@ -951,6 +1040,7 @@
         });
     });
 
+    // RIPPLE EFFECT ON TOUCH
     document.addEventListener("pointerdown", function(e){
         const target = e.target.closest(".button,.app-card");
         if(!target) return;
@@ -964,7 +1054,7 @@
         }, 800);
     });
 
-    // 3D Card Tilt Effect on Mousemove
+    // 3D TILT EFFECT
     document.querySelectorAll('.section, .app-card').forEach(card => {
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
