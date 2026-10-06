@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#090012">
+<meta name="theme-color" content="#08000f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -17,10 +17,11 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
     min-height:100%;
-    background:#090012;
+    background:#08000f;
     color:#fff;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
 }
@@ -30,43 +31,138 @@ body{
     position:relative;
 }
 
+/* =========================
+   PURPLE BACKGROUND
+========================= */
+
 body::before{
     content:"";
     position:fixed;
-    inset:0;
+    inset:-20%;
     pointer-events:none;
-    background:
-        radial-gradient(circle at 50% 0%,rgba(155,0,255,.20),transparent 35%),
-        radial-gradient(circle at 10% 80%,rgba(80,0,255,.12),transparent 30%),
-        radial-gradient(circle at 90% 60%,rgba(180,0,255,.10),transparent 30%);
     z-index:0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(173,0,255,.32),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 0% 45%,
+            rgba(103,0,255,.20),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 100% 65%,
+            rgba(194,0,255,.18),
+            transparent 32%
+        );
+
+    animation:bgGlow 8s ease-in-out infinite alternate;
 }
+
+@keyframes bgGlow{
+    0%{
+        transform:scale(1);
+        opacity:.75;
+    }
+
+    100%{
+        transform:scale(1.12);
+        opacity:1;
+    }
+}
+
+/* PURPLE MOVING LIGHT */
+
+body::after{
+    content:"";
+    position:fixed;
+    width:420px;
+    height:420px;
+    left:50%;
+    top:20%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+
+    background:radial-gradient(
+        circle,
+        rgba(143,0,255,.14),
+        transparent 68%
+    );
+
+    filter:blur(25px);
+    animation:purpleOrb 10s ease-in-out infinite alternate;
+}
+
+@keyframes purpleOrb{
+    0%{
+        transform:translate(-65%,-45%) scale(.85);
+    }
+
+    50%{
+        transform:translate(-35%,-55%) scale(1.15);
+    }
+
+    100%{
+        transform:translate(-50%,-35%) scale(.95);
+    }
+}
+
+/* =========================
+   CONTAINER
+========================= */
 
 .container{
-    width:100%;
-    max-width:520px;
-    margin:0 auto;
-    padding:28px 18px 50px;
     position:relative;
     z-index:2;
+
+    width:100%;
+    max-width:520px;
+
+    margin:0 auto;
+
+    padding:
+        25px
+        18px
+        55px;
 }
 
-/* LOGO */
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    text-align:center;
+    margin-bottom:30px;
+}
 
 .logo-wrap{
     width:108px;
     height:108px;
-    margin:15px auto 20px;
+
+    margin:10px auto 20px;
+
     border-radius:28px;
+    overflow:hidden;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(190,80,255,.35);
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid rgba(198,77,255,.38);
+
     box-shadow:
-        0 0 25px rgba(160,0,255,.25),
-        inset 0 0 20px rgba(255,255,255,.03);
-    overflow:hidden;
+        0 0 25px rgba(159,0,255,.35),
+        0 0 65px rgba(112,0,255,.12),
+        inset 0 0 25px rgba(255,255,255,.035);
+
+    animation:logoFloat 4s ease-in-out infinite;
 }
 
 .logo{
@@ -75,72 +171,179 @@ body::before{
     object-fit:cover;
 }
 
-/* HERO */
+@keyframes logoFloat{
+    0%,
+    100%{
+        transform:translateY(0);
+        box-shadow:
+            0 0 25px rgba(159,0,255,.35),
+            0 0 65px rgba(112,0,255,.12);
+    }
 
-.hero{
-    text-align:center;
-    margin-bottom:30px;
+    50%{
+        transform:translateY(-5px);
+        box-shadow:
+            0 0 38px rgba(181,0,255,.48),
+            0 0 80px rgba(112,0,255,.18);
+    }
 }
 
 .hero h1{
-    font-size:34px;
-    font-weight:900;
-    letter-spacing:-1.5px;
-    background:linear-gradient(90deg,#fff,#d47cff,#fff);
+    font-size:35px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-1.7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff 0%,
+            #d66dff 45%,
+            #ffffff 100%
+        );
+
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+
+    background-size:200% auto;
+
+    animation:titleShine 4s linear infinite;
+}
+
+@keyframes titleShine{
+    to{
+        background-position:200% center;
+    }
 }
 
 .hero p{
-    margin-top:7px;
-    color:#a99bb5;
-    font-size:14px;
+    margin-top:9px;
+
+    color:#a99bad;
+
+    font-size:13px;
+    font-weight:500;
 }
 
-/* SECTION */
+/* =========================
+   SECTION TITLE
+========================= */
 
 .section-title{
     display:flex;
     align-items:center;
-    gap:9px;
-    margin:25px 3px 12px;
-    font-size:13px;
-    font-weight:800;
-    color:#d7c9df;
+
+    gap:8px;
+
+    margin:
+        25px
+        3px
+        12px;
+
+    color:#d9cce0;
+
+    font-size:12px;
+    font-weight:850;
+
     text-transform:uppercase;
-    letter-spacing:.7px;
+    letter-spacing:.8px;
 }
 
-/* PROFILE CARD */
+/* =========================
+   PROFILE
+========================= */
 
 .profile-card{
-    background:linear-gradient(
-        145deg,
-        rgba(140,0,255,.17),
-        rgba(255,255,255,.035)
-    );
-    border:1px solid rgba(180,80,255,.28);
-    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+
     padding:18px;
-    box-shadow:0 10px 35px rgba(0,0,0,.3);
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(145,0,255,.20),
+            rgba(255,255,255,.035)
+        );
+
+    border:1px solid rgba(190,75,255,.30);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.35),
+        0 0 30px rgba(115,0,255,.07);
+
+    animation:cardGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow{
+    from{
+        box-shadow:
+            0 12px 40px rgba(0,0,0,.35),
+            0 0 25px rgba(115,0,255,.06);
+    }
+
+    to{
+        box-shadow:
+            0 12px 40px rgba(0,0,0,.35),
+            0 0 40px rgba(153,0,255,.13);
+    }
+}
+
+.profile-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-80px;
+    top:-100px;
+
+    border-radius:50%;
+
+    background:rgba(176,0,255,.12);
+
+    filter:blur(25px);
+
+    pointer-events:none;
 }
 
 .profile-top{
+    position:relative;
+    z-index:1;
+
     display:flex;
     align-items:center;
+
     gap:14px;
 }
 
 .profile-icon{
     width:54px;
     height:54px;
-    border-radius:15px;
+
+    flex-shrink:0;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
+    border-radius:16px;
+
     font-size:26px;
-    background:linear-gradient(135deg,#8b00ff,#4500a8);
-    box-shadow:0 0 20px rgba(145,0,255,.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            #9b00ff,
+            #4c00aa
+        );
+
+    box-shadow:
+        0 0 22px rgba(143,0,255,.38);
 }
 
 .profile-info{
@@ -153,54 +356,111 @@ body::before{
 }
 
 .profile-sub{
-    color:#9d91a8;
-    font-size:12px;
     margin-top:4px;
+
+    color:#988ba1;
+
+    font-size:11px;
 }
 
 .profile-status{
-    margin-top:15px;
+    position:relative;
+    z-index:1;
+
     display:flex;
     align-items:center;
+
     gap:7px;
-    font-size:11px;
-    color:#aee8c1;
+
+    margin-top:15px;
+
+    color:#a8e9bd;
+
+    font-size:10px;
+    font-weight:700;
 }
 
 .status-dot{
     width:7px;
     height:7px;
+
     border-radius:50%;
-    background:#43e77b;
-    box-shadow:0 0 9px #43e77b;
+
+    background:#45eb7c;
+
+    box-shadow:
+        0 0 8px #45eb7c;
+
+    animation:statusPulse 1.7s ease-in-out infinite;
+}
+
+@keyframes statusPulse{
+    0%,
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    50%{
+        transform:scale(.65);
+        opacity:.6;
+    }
 }
 
 .profile-buttons{
+    position:relative;
+    z-index:1;
+
     display:flex;
+
     gap:10px;
+
     margin-top:15px;
 }
 
 .profile-btn{
     flex:1;
-    text-decoration:none;
-    text-align:center;
+
     padding:13px 10px;
-    border-radius:13px;
-    font-size:12px;
-    font-weight:800;
+
+    text-align:center;
+    text-decoration:none;
+
     color:#fff;
-    background:linear-gradient(135deg,#8d00ff,#5600c8);
+
+    font-size:11px;
+    font-weight:850;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9400ff,
+            #5700c9
+        );
+
     border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 7px 20px rgba(105,0,255,.22);
-    transition:.2s ease;
+
+    box-shadow:
+        0 7px 22px rgba(105,0,255,.25);
+
+    transition:
+        transform .2s ease,
+        filter .2s ease;
+}
+
+.profile-btn:hover{
+    filter:brightness(1.12);
 }
 
 .profile-btn:active{
     transform:scale(.97);
 }
 
-/* APPS */
+/* =========================
+   APPS
+========================= */
 
 .apps{
     display:flex;
@@ -210,28 +470,81 @@ body::before{
 
 .app-card{
     position:relative;
+    overflow:hidden;
+
     display:flex;
     align-items:center;
+
     gap:13px;
+
     padding:13px;
-    text-decoration:none;
+
     color:#fff;
-    border-radius:18px;
-    background:linear-gradient(
-        145deg,
-        rgba(255,255,255,.065),
-        rgba(255,255,255,.025)
-    );
+    text-decoration:none;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.022)
+        );
+
     border:1px solid rgba(255,255,255,.09);
-    box-shadow:0 8px 25px rgba(0,0,0,.24);
-    overflow:hidden;
-    transition:.2s ease;
+
+    box-shadow:
+        0 8px 28px rgba(0,0,0,.28);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+
+.app-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.07),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    animation:cardShine 5s ease-in-out infinite;
+}
+
+@keyframes cardShine{
+    0%{
+        left:-120%;
+    }
+
+    25%,
+    100%{
+        left:150%;
+    }
 }
 
 .app-card:hover{
-    border-color:rgba(190,70,255,.45);
     transform:translateY(-2px);
-    box-shadow:0 12px 30px rgba(100,0,180,.20);
+
+    border-color:
+        rgba(193,75,255,.42);
+
+    box-shadow:
+        0 12px 35px rgba(105,0,180,.18);
 }
 
 .app-card:active{
@@ -239,83 +552,155 @@ body::before{
 }
 
 .app-icon{
+    position:relative;
+    z-index:1;
+
     width:58px;
     height:58px;
-    border-radius:15px;
-    object-fit:cover;
+
     flex-shrink:0;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
     border:1px solid rgba(255,255,255,.10);
-    box-shadow:0 4px 15px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.38);
 }
 
 .app-info{
+    position:relative;
+    z-index:1;
+
     flex:1;
     min-width:0;
 }
 
 .app-name{
     font-size:15px;
-    font-weight:850;
-    letter-spacing:.1px;
+    font-weight:900;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .app-region{
     margin-top:5px;
-    color:#94879e;
-    font-size:11px;
+
+    color:#96899e;
+
+    font-size:10px;
 }
 
 .install-small{
-    font-size:11px;
-    font-weight:800;
+    position:relative;
+    z-index:1;
+
+    flex-shrink:0;
+
     padding:8px 10px;
+
     border-radius:10px;
+
     color:#fff;
-    background:rgba(135,0,255,.18);
-    border:1px solid rgba(180,60,255,.25);
-}
 
-/* FOOTER */
-
-.footer{
-    text-align:center;
-    margin-top:32px;
-    color:#675c70;
     font-size:10px;
-    letter-spacing:.5px;
+    font-weight:850;
+
+    background:
+        rgba(139,0,255,.18);
+
+    border:
+        1px solid rgba(181,63,255,.25);
 }
 
-/* PARTICLES */
+/* =========================
+   FLOATING PARTICLES
+========================= */
 
 .particle{
     position:fixed;
+
     width:2px;
     height:2px;
+
     border-radius:50%;
-    background:#c56cff;
-    opacity:.55;
+
+    background:#d06cff;
+
     pointer-events:none;
+
     z-index:1;
-    animation:floatParticle linear infinite;
+
+    box-shadow:
+        0 0 6px rgba(201,77,255,.8);
+
+    animation:
+        floatParticle linear infinite;
 }
 
 @keyframes floatParticle{
-    from{
-        transform:translateY(110vh);
+    0%{
+        transform:
+            translate3d(0,110vh,0)
+            scale(.5);
+
+        opacity:0;
     }
-    to{
-        transform:translateY(-10vh);
+
+    10%{
+        opacity:.65;
+    }
+
+    50%{
+        opacity:.9;
+    }
+
+    90%{
+        opacity:.35;
+    }
+
+    100%{
+        transform:
+            translate3d(30px,-10vh,0)
+            scale(1.2);
+
+        opacity:0;
     }
 }
 
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:32px;
+
+    text-align:center;
+
+    color:#66596e;
+
+    font-size:9px;
+
+    letter-spacing:.6px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:380px){
+
     .container{
         padding-left:14px;
         padding-right:14px;
     }
 
     .hero h1{
-        font-size:30px;
+        font-size:31px;
     }
 
     .app-name{
@@ -333,20 +718,33 @@ body::before{
 
 <div class="container">
 
-    <!-- HERO -->
+    <!-- =====================
+         HERO
+    ====================== -->
+
     <div class="hero">
 
         <div class="logo-wrap">
-            <img src="ultra-logo.png" class="logo" alt="ULTRA-iOS">
+            <img
+                src="ultra-logo.png"
+                class="logo"
+                alt="ULTRA-iOS"
+            >
         </div>
 
         <h1>ULTRA-iOS</h1>
-        <p>Next Generation iOS Installation Hub</p>
+
+        <p>
+            Next Generation iOS Installation Hub
+        </p>
 
     </div>
 
 
-    <!-- PROFILE -->
+    <!-- =====================
+         CONFIGURATION PROFILE
+    ====================== -->
+
     <div class="section-title">
         ⚡ Configuration Profile
     </div>
@@ -360,6 +758,7 @@ body::before{
             </div>
 
             <div class="profile-info">
+
                 <div class="profile-name">
                     ULTRA Anti-Revoke
                 </div>
@@ -367,13 +766,17 @@ body::before{
                 <div class="profile-sub">
                     iOS / iPadOS
                 </div>
+
             </div>
 
         </div>
 
         <div class="profile-status">
+
             <span class="status-dot"></span>
+
             Configuration Available
+
         </div>
 
         <div class="profile-buttons">
@@ -390,26 +793,34 @@ body::before{
     </div>
 
 
-    <!-- APPS -->
+    <!-- =====================
+         APPLICATIONS
+    ====================== -->
+
     <div class="section-title">
         📱 Applications
     </div>
 
     <div class="apps">
 
-        <!-- INDIA -->
-        <a href="bgmi.html" class="app-card">
+
+        <!-- V1 INDIA -->
+
+        <a
+            href="bgmi.html"
+            class="app-card"
+        >
 
             <img
                 src="bgmi-icon.png"
                 class="app-icon"
-                alt="ULTRA iOS INJ V1"
+                alt="ULTRA iOS INJECTOR V1"
             >
 
             <div class="app-info">
 
                 <div class="app-name">
-                    ULTRA iOS INJ V1
+                    ULTRA iOS INJECTOR V1
                 </div>
 
                 <div class="app-region">
@@ -425,19 +836,23 @@ body::before{
         </a>
 
 
-        <!-- VIETNAM -->
-        <a href="#" class="app-card">
+        <!-- V2 VIETNAM -->
+
+        <a
+            href="#"
+            class="app-card"
+        >
 
             <img
                 src="pubg-icon.png"
                 class="app-icon"
-                alt="ULTRA iOS INJ V2"
+                alt="ULTRA iOS INJECTOR V2"
             >
 
             <div class="app-info">
 
                 <div class="app-name">
-                    ULTRA iOS INJ V2
+                    ULTRA iOS INJECTOR V2
                 </div>
 
                 <div class="app-region">
@@ -453,19 +868,23 @@ body::before{
         </a>
 
 
-        <!-- KOREA -->
-        <a href="#" class="app-card">
+        <!-- V3 KOREA -->
+
+        <a
+            href="#"
+            class="app-card"
+        >
 
             <img
                 src="pubg-icon.png"
                 class="app-icon"
-                alt="ULTRA iOS INJ V3"
+                alt="ULTRA iOS INJECTOR V3"
             >
 
             <div class="app-info">
 
                 <div class="app-name">
-                    ULTRA iOS INJ V3
+                    ULTRA iOS INJECTOR V3
                 </div>
 
                 <div class="app-region">
@@ -481,19 +900,23 @@ body::before{
         </a>
 
 
-        <!-- TAIWAN -->
-        <a href="#" class="app-card">
+        <!-- V4 TAIWAN -->
+
+        <a
+            href="#"
+            class="app-card"
+        >
 
             <img
                 src="pubg-icon.png"
                 class="app-icon"
-                alt="ULTRA iOS INJ V4"
+                alt="ULTRA iOS INJECTOR V4"
             >
 
             <div class="app-info">
 
                 <div class="app-name">
-                    ULTRA iOS INJ V4
+                    ULTRA iOS INJECTOR V4
                 </div>
 
                 <div class="app-region">
@@ -509,19 +932,23 @@ body::before{
         </a>
 
 
-        <!-- GLOBAL -->
-        <a href="#" class="app-card">
+        <!-- V5 GLOBAL -->
+
+        <a
+            href="#"
+            class="app-card"
+        >
 
             <img
                 src="pubg-icon.png"
                 class="app-icon"
-                alt="ULTRA iOS INJ V5"
+                alt="ULTRA iOS INJECTOR V5"
             >
 
             <div class="app-info">
 
                 <div class="app-name">
-                    ULTRA iOS INJ V5
+                    ULTRA iOS INJECTOR V5
                 </div>
 
                 <div class="app-region">
@@ -539,6 +966,8 @@ body::before{
     </div>
 
 
+    <!-- FOOTER -->
+
     <div class="footer">
         ULTRA-iOS • Secure Installation Hub
     </div>
@@ -548,27 +977,34 @@ body::before{
 
 <script>
 
-/* PARTICLES */
+/* =========================
+   FLOATING PARTICLES
+   (RIPPLE ANIMATION REMOVED)
+========================= */
 
-for(let i = 0; i < 35; i++){
+for(let i = 0; i < 45; i++){
 
-    const particle = document.createElement("div");
+    const particle =
+        document.createElement("div");
 
-    particle.className = "particle";
+    particle.className =
+        "particle";
 
     particle.style.left =
         Math.random() * 100 + "%";
 
     particle.style.animationDuration =
-        (8 + Math.random() * 12) + "s";
+        (8 + Math.random() * 14) + "s";
 
     particle.style.animationDelay =
-        (-Math.random() * 15) + "s";
+        (-Math.random() * 18) + "s";
 
     particle.style.opacity =
-        (0.15 + Math.random() * 0.5);
+        0.2 + Math.random() * 0.6;
 
-    document.body.appendChild(particle);
+    document.body.appendChild(
+        particle
+    );
 }
 
 </script>
