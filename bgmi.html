@@ -2,722 +2,333 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#07000d">
-<title>ULTRA iOS Injector • ULTRA-iOS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090012">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>ULTRA iOS INJECTOR V1 • ULTRA-iOS</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html {
-    scroll-behavior: smooth;
+html,body{
+    width:100%;
+    min-height:100%;
+    background:#090012;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
 }
 
-body {
-    min-height: 100vh;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+}
 
+/* BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
     background:
-        radial-gradient(circle at 50% -10%, rgba(210,0,255,.35), transparent 35%),
-        radial-gradient(circle at 0% 40%, rgba(100,0,255,.20), transparent 35%),
-        radial-gradient(circle at 100% 80%, rgba(255,0,220,.16), transparent 35%),
-        #050008;
-
-    overflow-x: hidden;
-}
-
-/* BACKGROUND GRID */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    opacity: .16;
-
-    background-image:
-        linear-gradient(rgba(190,0,255,.22) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(190,0,255,.22) 1px, transparent 1px);
-
-    background-size: 45px 45px;
-
-    animation: gridMove 10s linear infinite;
-}
-
-@keyframes gridMove {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(45px);
-    }
-}
-
-/* AMBIENT GLOW */
-
-.glow {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-
-    border-radius: 50%;
-    filter: blur(110px);
-
-    pointer-events: none;
-    z-index: 0;
-
-    animation: ambient 8s ease-in-out infinite alternate;
-}
-
-.glow.one {
-    left: -160px;
-    top: -150px;
-    background: rgba(170,0,255,.22);
-}
-
-.glow.two {
-    right: -180px;
-    bottom: -150px;
-
-    background: rgba(255,0,220,.16);
-
-    animation-delay: 2s;
-}
-
-@keyframes ambient {
-    from {
-        transform: translate(0,0) scale(1);
-    }
-
-    to {
-        transform: translate(80px,50px) scale(1.25);
-    }
-}
-
-/* PARTICLES */
-
-.particles {
-    position: fixed;
-    inset: 0;
-
-    overflow: hidden;
-    pointer-events: none;
-
-    z-index: 1;
-}
-
-.particle {
-    position: absolute;
-
-    width: 2px;
-    height: 2px;
-
-    border-radius: 50%;
-
-    background: #fff;
-
-    box-shadow:
-        0 0 6px #fff,
-        0 0 15px #d000ff;
-
-    animation: starFall linear infinite;
-}
-
-@keyframes starFall {
-    0% {
-        transform:
-            translate3d(0,110vh,0)
-            scale(.3);
-
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    85% {
-        opacity: 1;
-    }
-
-    100% {
-        transform:
-            translate3d(40px,-10vh,0)
-            scale(1.2);
-
-        opacity: 0;
-    }
-}
-
-/* GLOBAL SCAN */
-
-.scanline {
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    top: -5%;
-
-    height: 2px;
-
-    z-index: 3;
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #ff00ff,
-            #fff,
-            #ff00ff,
-            transparent
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(155,0,255,.22),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 0% 75%,
+            rgba(75,0,255,.12),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 100% 60%,
+            rgba(190,0,255,.10),
+            transparent 30%
         );
-
-    box-shadow:
-        0 0 12px #ff00ff,
-        0 0 30px #b000ff;
-
-    opacity: .45;
-
-    animation: globalScan 7s linear infinite;
+    z-index:0;
 }
 
-@keyframes globalScan {
-    from {
-        top: -5%;
-    }
+/* CONTAINER */
 
-    to {
-        top: 105%;
-    }
-}
-
-/* PAGE */
-
-.page {
-    position: relative;
-    z-index: 5;
-
-    width: min(900px, 94%);
-    margin: auto;
-
-    padding: 28px 0 70px;
+.container{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:520px;
+    margin:0 auto;
+    padding:20px 18px 45px;
 }
 
 /* BACK BUTTON */
 
-.back {
-    display: inline-flex;
-
-    align-items: center;
-    gap: 8px;
-
-    padding: 11px 18px;
-    margin-bottom: 20px;
-
-    color: #e9b5ff;
-
-    text-decoration: none;
-
-    border: 1px solid rgba(210,0,255,.55);
-    border-radius: 30px;
-
-    background: rgba(70,0,90,.22);
-
-    box-shadow:
-        0 0 18px rgba(190,0,255,.18);
-
-    transition: .3s;
-
-    font-size: 14px;
-    font-weight: 700;
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 13px;
+    margin-bottom:20px;
+    color:#cdbbd7;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+    border-radius:12px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.08);
+    transition:.2s ease;
 }
 
-.back:hover {
-    transform: translateX(-5px);
+.back:hover{
+    color:#fff;
+    border-color:rgba(190,70,255,.35);
+}
 
-    box-shadow:
-        0 0 30px rgba(220,0,255,.5);
+.back:active{
+    transform:scale(.97);
 }
 
 /* MAIN CARD */
 
-.card {
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 42px 28px;
-
-    border-radius: 32px;
-
-    border: 1px solid rgba(220,0,255,.55);
-
+.main-card{
+    padding:22px 18px 20px;
+    border-radius:25px;
     background:
         linear-gradient(
             145deg,
-            rgba(40,0,55,.82),
-            rgba(8,0,15,.95)
+            rgba(145,0,255,.17),
+            rgba(255,255,255,.035)
         );
-
+    border:1px solid rgba(185,70,255,.28);
     box-shadow:
-        0 0 35px rgba(180,0,255,.18),
-        inset 0 0 35px rgba(150,0,255,.07);
-
-    backdrop-filter: blur(20px);
-
-    animation:
-        cardIn .9s cubic-bezier(.2,.8,.2,1) both;
-}
-
-@keyframes cardIn {
-    from {
-        opacity: 0;
-        transform:
-            translateY(40px)
-            scale(.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-/* CARD SCAN */
-
-.card::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    top: -100px;
-
-    height: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #ff00ff,
-            #fff,
-            #ff00ff,
-            transparent
-        );
-
-    box-shadow:
-        0 0 15px #ff00ff;
-
-    animation:
-        scanCard 5s linear infinite;
-}
-
-@keyframes scanCard {
-    from {
-        top: -100px;
-    }
-
-    to {
-        top: 110%;
-    }
+        0 15px 45px rgba(0,0,0,.38),
+        inset 0 0 30px rgba(160,0,255,.035);
 }
 
 /* ICON */
 
-.icon-wrap {
-    position: relative;
-
-    width: 130px;
-    height: 130px;
-
-    margin: 0 auto 23px;
-}
-
-.icon-wrap::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -12px;
-
-    border-radius: 36px;
-
-    border: 1px solid rgba(220,0,255,.45);
-
+.icon-wrap{
+    width:100px;
+    height:100px;
+    margin:2px auto 18px;
+    border-radius:25px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.12);
     box-shadow:
-        0 0 25px rgba(210,0,255,.3);
-
-    animation:
-        iconRing 3s ease-in-out infinite;
+        0 0 28px rgba(145,0,255,.30),
+        0 10px 25px rgba(0,0,0,.35);
 }
 
-.icon-wrap::after {
-    content: "";
-
-    position: absolute;
-
-    inset: -23px;
-
-    border: 1px dashed rgba(190,0,255,.25);
-
-    border-radius: 50%;
-
-    animation:
-        orbit 8s linear infinite;
-}
-
-@keyframes iconRing {
-    0%,100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
-}
-
-@keyframes orbit {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.app-icon {
-    width: 130px;
-    height: 130px;
-
-    display: block;
-
-    object-fit: cover;
-
-    border-radius: 30px;
-
-    border: 2px solid rgba(255,255,255,.3);
-
-    box-shadow:
-        0 0 20px rgba(180,0,255,.55),
-        0 0 55px rgba(180,0,255,.25);
-
-    animation:
-        iconFloat 4s ease-in-out infinite;
-}
-
-@keyframes iconFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-9px)
-            rotate(1deg);
-    }
+.app-icon{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
 /* TITLE */
 
-h1 {
-    text-align: center;
-
-    font-size: clamp(29px, 7vw, 55px);
-
-    font-weight: 950;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #e99aff,
-            #ff00ff,
-            #fff
-        );
-
-    background-size: 250%;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-
-    animation:
-        titleShine 4s linear infinite;
+.title{
+    text-align:center;
 }
 
-@keyframes titleShine {
-    to {
-        background-position: 250%;
-    }
+.title h1{
+    font-size:25px;
+    line-height:1.15;
+    font-weight:900;
+    letter-spacing:-.7px;
+    background:linear-gradient(
+        90deg,
+        #ffffff,
+        #d77cff,
+        #ffffff
+    );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-.subtitle {
-    text-align: center;
-
-    margin-top: 9px;
-
-    color: #c9a9d4;
-
-    font-size: 14px;
-
-    letter-spacing: 3px;
+.subtitle{
+    margin-top:8px;
+    color:#9e91aa;
+    font-size:12px;
+    font-weight:600;
 }
 
 /* STATUS */
 
-.status {
-    width: max-content;
-
-    margin: 21px auto 28px;
-
-    padding: 9px 18px;
-
-    border-radius: 30px;
-
-    color: #cfff76;
-
-    border: 1px solid #9dff00;
-
-    background: rgba(100,255,0,.06);
-
-    box-shadow:
-        0 0 20px rgba(150,255,0,.18);
-
-    font-size: 12px;
-
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
+.status{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin-top:14px;
+    color:#9ceab7;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.3px;
 }
 
-.status span {
-    display: inline-block;
-
-    width: 8px;
-    height: 8px;
-
-    margin-right: 8px;
-
-    border-radius: 50%;
-
-    background: #aaff00;
-
-    box-shadow:
-        0 0 12px #aaff00;
-
-    animation:
-        statusPulse 1s infinite;
-}
-
-@keyframes statusPulse {
-    50% {
-        opacity: .3;
-        transform: scale(.7);
-    }
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#45e878;
+    box-shadow:0 0 10px rgba(69,232,120,.8);
 }
 
 /* BUTTONS */
 
-.buttons {
-    display: grid;
-    gap: 14px;
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:22px;
 }
 
-.btn {
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-height: 63px;
-
-    border-radius: 20px;
-
-    text-decoration: none;
-
-    font-size: 18px;
-    font-weight: 900;
-
-    overflow: hidden;
-
-    transition: .3s;
-}
-
-/* INSTALL BUTTON */
-
-.btn-install {
-    color: #fff;
-
-    background:
-        linear-gradient(
-            90deg,
-            #7200ff,
-            #e000ff,
-            #ff00cc,
-            #8200ff
-        );
-
-    background-size: 300%;
-
+.btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:48px;
+    padding:13px 15px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#fff;
+    font-size:13px;
+    font-weight:850;
+    letter-spacing:.2px;
+    background:linear-gradient(
+        135deg,
+        #9200ff,
+        #5600c9
+    );
+    border:1px solid rgba(255,255,255,.12);
     box-shadow:
-        0 0 25px rgba(210,0,255,.45),
-        0 0 60px rgba(150,0,255,.18);
-
-    animation:
-        buttonGradient 4s linear infinite;
+        0 9px 24px rgba(105,0,255,.24),
+        inset 0 1px 0 rgba(255,255,255,.12);
+    transition:.2s ease;
 }
 
-@keyframes buttonGradient {
-    to {
-        background-position: 300%;
-    }
+.btn:hover{
+    filter:brightness(1.08);
 }
 
-.btn-install::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: -100%;
-
-    width: 55%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.4),
-            transparent
-        );
-
-    transform: skewX(-20deg);
-
-    animation:
-        buttonShine 3s infinite;
+.btn:active{
+    transform:scale(.98);
 }
 
-@keyframes buttonShine {
-    0% {
-        left: -100%;
-    }
-
-    50%,100% {
-        left: 150%;
-    }
+.btn.secondary{
+    background:rgba(255,255,255,.055);
+    border-color:rgba(255,255,255,.10);
+    box-shadow:none;
+    color:#d8ccdf;
 }
 
-/* DOWNLOAD */
+/* INFORMATION */
 
-.btn-download {
-    color: #ead5f2;
-
-    border:
-        1px solid rgba(210,60,255,.45);
-
-    background:
-        rgba(75,0,100,.22);
+.info-title{
+    margin:23px 2px 11px;
+    font-size:12px;
+    font-weight:850;
+    color:#cfc0d8;
+    text-transform:uppercase;
+    letter-spacing:.7px;
 }
 
-.btn:active {
-    transform: scale(.97);
+.info-box{
+    border-radius:17px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.035);
 }
 
-/* INFO */
-
-.info {
-    margin-top: 24px;
-
-    padding: 12px 18px;
-
-    border-radius: 22px;
-
-    border:
-        1px solid rgba(210,0,255,.3);
-
-    background:
-        rgba(20,0,28,.6);
+.info-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:14px 15px;
+    border-bottom:1px solid rgba(255,255,255,.065);
 }
 
-.row {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    min-height: 48px;
-
-    border-bottom:
-        1px solid rgba(210,0,255,.12);
+.info-row:last-child{
+    border-bottom:none;
 }
 
-.row:last-child {
-    border-bottom: none;
+.info-label{
+    color:#887b92;
+    font-size:11px;
+    font-weight:600;
 }
 
-.row-label {
-    color: #9882a1;
-
-    font-size: 13px;
-
-    font-weight: 600;
-}
-
-.row-val {
-    color: #fff;
-
-    font-size: 14px;
-
-    font-weight: 800;
+.info-value{
+    color:#eee8f1;
+    font-size:11px;
+    font-weight:800;
+    text-align:right;
 }
 
 /* FOOTER */
 
-footer {
-    text-align: center;
-
-    margin-top: 30px;
-
-    color: #715d78;
-
-    font-size: 12px;
-
-    letter-spacing: 2px;
+.footer{
+    margin-top:20px;
+    text-align:center;
+    color:#675b70;
+    font-size:9px;
+    letter-spacing:.5px;
 }
 
-/* MOBILE */
+/* PARTICLES */
 
-@media(max-width:650px) {
+.particle{
+    position:fixed;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#c66cff;
+    opacity:.45;
+    pointer-events:none;
+    z-index:1;
+    animation:floatParticle linear infinite;
+}
 
-    .page {
-        width: 93%;
+@keyframes floatParticle{
+    from{
+        transform:translateY(110vh);
     }
 
-    .card {
-        padding: 28px 18px;
-        border-radius: 26px;
+    to{
+        transform:translateY(-10vh);
+    }
+}
+
+@media(max-width:380px){
+
+    .container{
+        padding-left:14px;
+        padding-right:14px;
     }
 
-    .icon-wrap,
-    .app-icon {
-        width: 100px;
-        height: 100px;
+    .main-card{
+        padding-left:15px;
+        padding-right:15px;
     }
 
-    .btn {
-        min-height: 55px;
-        font-size: 16px;
+    .title h1{
+        font-size:22px;
+    }
+
+    .icon-wrap{
+        width:90px;
+        height:90px;
     }
 }
 </style>
@@ -725,172 +336,155 @@ footer {
 
 <body>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
+<div class="container">
 
-<div class="scanline"></div>
-
-<div class="particles"></div>
-
-
-<div class="page">
-
+    <!-- BACK -->
     <a href="index.html" class="back">
-        ← Back to Hub
+        ← Back
     </a>
 
 
-    <main class="card">
+    <!-- MAIN -->
+    <div class="main-card">
 
+        <!-- ICON -->
         <div class="icon-wrap">
-
             <img
                 src="bgmi-icon.png"
-                alt="ULTRA iOS Injector"
+                alt="ULTRA iOS INJECTOR V1"
                 class="app-icon"
             >
+        </div>
+
+
+        <!-- TITLE -->
+        <div class="title">
+
+            <h1>
+                ULTRA iOS INJECTOR V1
+            </h1>
+
+            <div class="subtitle">
+                🇮🇳 INDIA EDITION • ULTRA-iOS
+            </div>
 
         </div>
 
 
-        <h1>
-            ULTRA iOS INJECTOR
-        </h1>
-
-
-        <p class="subtitle">
-            🇮🇳 INDIA EDITION • ULTRA-iOS
-        </p>
-
-
+        <!-- STATUS -->
         <div class="status">
-
-            <span></span>
-
-            ONLINE & WORKING
-
+            <span class="status-dot"></span>
+            ONLINE &amp; WORKING
         </div>
 
 
+        <!-- BUTTONS -->
         <div class="buttons">
 
             <a
+                class="btn"
                 href="itms-services://?action=download-manifest&url=https://cloudsigner.me/downloads/409bb036-927/manifest.plist"
-                class="btn btn-install"
             >
-                Direct OTA Install
+                ↓ Install on iOS
             </a>
 
-
             <a
+                class="btn secondary"
                 href="bgmi.ipa"
-                class="btn btn-download"
-                download
             >
-                Download IPA Package
+                Download IPA
             </a>
 
         </div>
 
 
-        <div class="info">
+        <!-- INFORMATION -->
+        <div class="info-title">
+            Application Information
+        </div>
 
-            <div class="row">
+        <div class="info-box">
 
-                <span class="row-label">
+            <div class="info-row">
+                <span class="info-label">
                     Version
                 </span>
 
-                <span class="row-val">
-                    4.5.0
+                <span class="info-value">
+                    4.6.0
                 </span>
-
             </div>
 
 
-            <div class="row">
-
-                <span class="row-label">
+            <div class="info-row">
+                <span class="info-label">
                     Platform
                 </span>
 
-                <span class="row-val">
+                <span class="info-value">
                     iOS / iPadOS
                 </span>
-
             </div>
 
 
-            <div class="row">
-
-                <span class="row-label">
+            <div class="info-row">
+                <span class="info-label">
                     Size
                 </span>
 
-                <span class="row-val">
-                    3.5 GB
+                <span class="info-value">
+                    1MB
                 </span>
-
             </div>
 
 
-            <div class="row">
-
-                <span class="row-label">
+            <div class="info-row">
+                <span class="info-label">
                     Certificate
                 </span>
 
-                <span class="row-val">
+                <span class="info-value">
                     ULTRA iOS Signed
                 </span>
-
             </div>
 
         </div>
 
-    </main>
+    </div>
 
 
-    <footer>
-        ULTRA-iOS • FUTURE IS NOW
-    </footer>
+    <!-- FOOTER -->
+    <div class="footer">
+        ULTRA-iOS • iOS Installation Hub
+    </div>
 
 </div>
 
 
 <script>
 
-/* PARTICLES */
+/* FLOATING PARTICLES ONLY
+   No ripple / bubble tap animation */
 
-const particles =
-    document.querySelector(".particles");
+for(let i = 0; i < 35; i++){
 
-for(let i = 0; i < 45; i++){
+    const particle = document.createElement("div");
 
-    const p =
-        document.createElement("div");
+    particle.className = "particle";
 
-    p.className = "particle";
-
-    p.style.left =
+    particle.style.left =
         Math.random() * 100 + "%";
 
-    p.style.animationDuration =
-        (5 + Math.random() * 12) + "s";
+    particle.style.animationDuration =
+        (8 + Math.random() * 12) + "s";
 
-    p.style.animationDelay =
+    particle.style.animationDelay =
         (-Math.random() * 15) + "s";
 
-    const size =
-        1 + Math.random() * 3;
+    particle.style.opacity =
+        (0.15 + Math.random() * 0.5);
 
-    p.style.width =
-        size + "px";
-
-    p.style.height =
-        size + "px";
-
-    particles.appendChild(p);
+    document.body.appendChild(particle);
 }
 
 </script>
