@@ -1,58 +1,887 @@
-<div class="apps-grid">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07000d">
+<title>ULTRA-iOS</title>
 
-    <a href="bgmi.html?region=india" class="app-card">
-        <div class="app-icon">
-            <img src="bgmi-icon.png" alt="ULTRA iOS INJ v1">
-        </div>
-        <div class="app-info">
-            <h3>ULTRA iOS INJ v1</h3>
-            <p>ULTRA-iOS</p>
-        </div>
-        <div class="app-arrow">›</div>
-    </a>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    <a href="bgmi.html?region=vietnam" class="app-card">
-        <div class="app-icon">
-            <img src="pubg-icon.png" alt="ULTRA iOS INJ v2">
-        </div>
-        <div class="app-info">
-            <h3>ULTRA iOS INJ v2</h3>
-            <p>ULTRA-iOS</p>
-        </div>
-        <div class="app-arrow">›</div>
-    </a>
+html {
+    min-height: 100%;
+    background: #07000d;
+}
 
-    <a href="bgmi.html?region=korea" class="app-card">
-        <div class="app-icon">
-            <img src="pubg-icon.png" alt="ULTRA iOS INJ v3">
-        </div>
-        <div class="app-info">
-            <h3>ULTRA iOS INJ v3</h3>
-            <p>ULTRA-iOS</p>
-        </div>
-        <div class="app-arrow">›</div>
-    </a>
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(153, 0, 255, .16), transparent 32%),
+        radial-gradient(circle at 10% 80%, rgba(0, 180, 255, .08), transparent 28%),
+        #07000d;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Inter, Arial, sans-serif;
+}
 
-    <a href="bgmi.html?region=taiwan" class="app-card">
-        <div class="app-icon">
-            <img src="pubg-icon.png" alt="ULTRA iOS INJ v4">
-        </div>
-        <div class="app-info">
-            <h3>ULTRA iOS INJ v4</h3>
-            <p>ULTRA-iOS</p>
-        </div>
-        <div class="app-arrow">›</div>
-    </a>
+/* =========================
+   LOADER
+========================= */
 
-    <a href="bgmi.html?region=global" class="app-card">
-        <div class="app-icon">
-            <img src="pubg-icon.png" alt="ULTRA iOS INJ v5">
-        </div>
-        <div class="app-info">
-            <h3>ULTRA iOS INJ v5</h3>
-            <p>ULTRA-iOS</p>
-        </div>
-        <div class="app-arrow">›</div>
-    </a>
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #07000d;
+    transition: opacity .6s ease, visibility .6s ease;
+}
 
+#loader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-box {
+    text-align: center;
+}
+
+.loader-logo {
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    object-fit: cover;
+    box-shadow:
+        0 0 25px rgba(174, 0, 255, .55),
+        0 0 70px rgba(174, 0, 255, .18);
+    animation: loaderPulse 1.5s ease-in-out infinite;
+}
+
+.loader-text {
+    margin-top: 18px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    color: rgba(255,255,255,.72);
+}
+
+.loader-line {
+    width: 120px;
+    height: 2px;
+    margin: 16px auto 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255,255,255,.08);
+}
+
+.loader-line::after {
+    content: "";
+    display: block;
+    width: 45%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #a100ff, #00d9ff);
+    animation: loaderLine 1.2s ease-in-out infinite;
+}
+
+@keyframes loaderPulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@keyframes loaderLine {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(280%); }
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.glow {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .13;
+}
+
+.glow.one {
+    top: -160px;
+    left: -130px;
+    background: #9b00ff;
+}
+
+.glow.two {
+    right: -170px;
+    top: 30%;
+    background: #00cfff;
+}
+
+.glow.three {
+    bottom: -180px;
+    left: 25%;
+    background: #7800ff;
+}
+
+.grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .18;
+    background-image:
+        linear-gradient(rgba(174,0,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(174,0,255,.12) 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 80%, transparent);
+}
+
+.scanline {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -20%;
+    height: 1px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(157,0,255,.8),
+        rgba(0,217,255,.8),
+        transparent
+    );
+    box-shadow:
+        0 0 15px rgba(157,0,255,.7),
+        0 0 25px rgba(0,217,255,.5);
+    animation: scan 7s linear infinite;
+}
+
+@keyframes scan {
+    from { transform: translateY(0); }
+    to { transform: translateY(140vh); }
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: min(94%, 760px);
+    margin: 0 auto;
+    padding: 55px 0 60px;
+}
+
+.hero {
+    text-align: center;
+    padding: 20px 10px 38px;
+}
+
+.hero-logo {
+    width: 108px;
+    height: 108px;
+    object-fit: cover;
+    border-radius: 28px;
+    box-shadow:
+        0 0 25px rgba(174,0,255,.5),
+        0 0 70px rgba(174,0,255,.16);
+    animation: heroFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.hero h1 {
+    margin-top: 24px;
+    font-size: clamp(35px, 9vw, 64px);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -2px;
+    background: linear-gradient(
+        100deg,
+        #ffffff 15%,
+        #c45aff 48%,
+        #00d9ff 85%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 35px rgba(174,0,255,.18);
+}
+
+.hero p {
+    margin-top: 13px;
+    color: rgba(255,255,255,.52);
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 8px 14px;
+    border: 1px solid rgba(0,255,180,.18);
+    border-radius: 100px;
+    background: rgba(0,255,180,.05);
+    color: rgba(190,255,235,.85);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00ffad;
+    box-shadow: 0 0 10px #00ffad;
+    animation: statusPulse 1.5s infinite;
+}
+
+@keyframes statusPulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: .4; }
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section {
+    margin-top: 22px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 3px 13px;
+    color: rgba(255,255,255,.78);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(174,0,255,.3),
+        transparent
+    );
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 15px 50px rgba(0,0,0,.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(174,0,255,.13),
+            transparent 35%
+        );
+}
+
+.profile-card {
+    padding: 20px;
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: linear-gradient(
+        145deg,
+        rgba(162,0,255,.18),
+        rgba(0,210,255,.08)
+    );
+    border: 1px solid rgba(174,0,255,.2);
+    font-size: 22px;
+    box-shadow: 0 0 25px rgba(174,0,255,.12);
+}
+
+.profile-info {
+    min-width: 0;
+}
+
+.profile-info h3 {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.profile-info p {
+    margin-top: 4px;
+    color: rgba(255,255,255,.42);
+    font-size: 12px;
+}
+
+.profile-arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,.3);
+    font-size: 26px;
+}
+
+.profile-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================
+   APP GRID
+========================= */
+
+.apps-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.app-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 82px;
+    padding: 13px;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 21px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.035),
+        0 12px 35px rgba(0,0,0,.16);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.app-card::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: -80px;
+    left: -80px;
+    border-radius: 50%;
+    background: rgba(165,0,255,.15);
+    filter: blur(35px);
+    pointer-events: none;
+}
+
+.app-card:active {
+    transform: scale(.975);
+}
+
+@media (hover:hover) {
+    .app-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(174,0,255,.25);
+        background:
+            linear-gradient(
+                145deg,
+                rgba(174,0,255,.08),
+                rgba(255,255,255,.025)
+            );
+        box-shadow:
+            0 15px 45px rgba(0,0,0,.2),
+            0 0 30px rgba(174,0,255,.07);
+    }
+}
+
+.app-icon {
+    position: relative;
+    width: 57px;
+    height: 57px;
+    flex: 0 0 57px;
+}
+
+.app-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow:
+        0 7px 20px rgba(0,0,0,.35),
+        0 0 20px rgba(174,0,255,.12);
+}
+
+.app-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.app-info h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 850;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-info p {
+    margin-top: 6px;
+    color: rgba(255,255,255,.38);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.app-arrow {
+    width: 31px;
+    height: 31px;
+    flex: 0 0 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: rgba(255,255,255,.45);
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.055);
+    font-size: 22px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    padding: 38px 0 10px;
+    text-align: center;
+    color: rgba(255,255,255,.25);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 500px) {
+    .container {
+        width: min(92%, 760px);
+        padding-top: 35px;
+    }
+
+    .hero {
+        padding-bottom: 30px;
+    }
+
+    .hero-logo {
+        width: 92px;
+        height: 92px;
+        border-radius: 24px;
+    }
+
+    .hero h1 {
+        margin-top: 20px;
+        font-size: 40px;
+    }
+
+    .hero p {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+
+    .app-card {
+        min-height: 78px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-box">
+        <img src="ultra-logo.png" class="loader-logo" alt="ULTRA-iOS">
+        <div class="loader-text">ULTRA-iOS</div>
+        <div class="loader-line"></div>
+    </div>
 </div>
+
+<!-- BACKGROUND -->
+<div class="bg-glow">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
+</div>
+
+<div class="grid"></div>
+<div class="scanline"></div>
+<canvas id="particles"></canvas>
+
+<main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <img
+            src="ultra-logo.png"
+            class="hero-logo"
+            alt="ULTRA-iOS"
+        >
+
+        <h1>ULTRA-iOS</h1>
+
+        <p>PREMIUM iOS INSTALLATION HUB</p>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+
+    </section>
+
+    <!-- CONFIGURATION -->
+    <section class="section">
+
+        <div class="section-title">
+            Configuration Profile
+        </div>
+
+        <a
+            href="ULTRA_iOS_AntiRevoke.mobileconfig"
+            class="profile-link"
+        >
+            <div class="card profile-card">
+
+                <div class="profile-row">
+
+                    <div class="profile-icon">
+                        ⚙️
+                    </div>
+
+                    <div class="profile-info">
+                        <h3>ULTRA iOS Anti-Revoke</h3>
+                        <p>Install Configuration Profile</p>
+                    </div>
+
+                    <div class="profile-arrow">
+                        ›
+                    </div>
+
+                </div>
+
+            </div>
+        </a>
+
+    </section>
+
+    <!-- APPS -->
+    <section class="section">
+
+        <div class="section-title">
+            ULTRA Apps
+        </div>
+
+        <div class="apps-grid">
+
+            <!-- v1 -->
+            <a
+                href="bgmi.html?region=india"
+                class="app-card"
+            >
+                <div class="app-icon">
+                    <img
+                        src="bgmi-icon.png"
+                        alt="ULTRA iOS INJ v1"
+                    >
+                </div>
+
+                <div class="app-info">
+                    <h3>ULTRA iOS INJ v1</h3>
+                    <p>ULTRA-iOS</p>
+                </div>
+
+                <div class="app-arrow">
+                    ›
+                </div>
+            </a>
+
+            <!-- v2 -->
+            <a
+                href="bgmi.html?region=vietnam"
+                class="app-card"
+            >
+                <div class="app-icon">
+                    <img
+                        src="pubg-icon.png"
+                        alt="ULTRA iOS INJ v2"
+                    >
+                </div>
+
+                <div class="app-info">
+                    <h3>ULTRA iOS INJ v2</h3>
+                    <p>ULTRA-iOS</p>
+                </div>
+
+                <div class="app-arrow">
+                    ›
+                </div>
+            </a>
+
+            <!-- v3 -->
+            <a
+                href="bgmi.html?region=korea"
+                class="app-card"
+            >
+                <div class="app-icon">
+                    <img
+                        src="pubg-icon.png"
+                        alt="ULTRA iOS INJ v3"
+                    >
+                </div>
+
+                <div class="app-info">
+                    <h3>ULTRA iOS INJ v3</h3>
+                    <p>ULTRA-iOS</p>
+                </div>
+
+                <div class="app-arrow">
+                    ›
+                </div>
+            </a>
+
+            <!-- v4 -->
+            <a
+                href="bgmi.html?region=taiwan"
+                class="app-card"
+            >
+                <div class="app-icon">
+                    <img
+                        src="pubg-icon.png"
+                        alt="ULTRA iOS INJ v4"
+                    >
+                </div>
+
+                <div class="app-info">
+                    <h3>ULTRA iOS INJ v4</h3>
+                    <p>ULTRA-iOS</p>
+                </div>
+
+                <div class="app-arrow">
+                    ›
+                </div>
+            </a>
+
+            <!-- v5 -->
+            <a
+                href="bgmi.html?region=global"
+                class="app-card"
+            >
+                <div class="app-icon">
+                    <img
+                        src="pubg-icon.png"
+                        alt="ULTRA iOS INJ v5"
+                    >
+                </div>
+
+                <div class="app-info">
+                    <h3>ULTRA iOS INJ v5</h3>
+                    <p>ULTRA-iOS</p>
+                </div>
+
+                <div class="app-arrow">
+                    ›
+                </div>
+            </a>
+
+        </div>
+
+    </section>
+
+    <div class="footer">
+        © 2026 ULTRA-iOS • ALL SYSTEMS OPERATIONAL
+    </div>
+
+</main>
+
+<script>
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.getElementById("loader").classList.add("hide");
+    }, 700);
+});
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+let width = 0;
+let height = 0;
+
+function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+
+function createParticles() {
+
+    particles = [];
+
+    const count = Math.min(
+        75,
+        Math.max(30, Math.floor(window.innerWidth / 6))
+    );
+
+    for (let i = 0; i < count; i++) {
+
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 1.7 + .4,
+            speed: Math.random() * .35 + .08,
+            drift: (Math.random() - .5) * .25,
+            alpha: Math.random() * .55 + .1
+        });
+
+    }
+}
+
+function drawParticles() {
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+
+        p.y -= p.speed;
+        p.x += p.drift;
+
+        if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+        }
+
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+
+        ctx.fillStyle =
+            `rgba(190,120,255,${p.alpha})`;
+
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = "rgba(170,0,255,.7)";
+        ctx.fill();
+    }
+
+    requestAnimationFrame(drawParticles);
+}
+
+resizeCanvas();
+createParticles();
+drawParticles();
+
+window.addEventListener("resize", () => {
+    resizeCanvas();
+    createParticles();
+});
+</script>
+
+</body>
+</html>
