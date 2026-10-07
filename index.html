@@ -2,1677 +2,469 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#07000d">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ULTRA-iOS</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html {
-    scroll-behavior: smooth;
+html,body{
+    width:100%;
+    min-height:100%;
 }
 
-body {
-    min-height: 100vh;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-        "Segoe UI", sans-serif;
-
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+    color:#fff;
     background:
-        radial-gradient(circle at 50% -10%, rgba(210,0,255,.38), transparent 40%),
-        radial-gradient(circle at 0% 35%, rgba(100,0,255,.20), transparent 40%),
-        radial-gradient(circle at 100% 75%, rgba(255,0,220,.15), transparent 40%),
-        #050008;
-
-    overflow-x: hidden;
-    perspective: 1000px;
+        radial-gradient(circle at 50% -10%,rgba(168,85,247,.32),transparent 35%),
+        radial-gradient(circle at 10% 30%,rgba(124,58,237,.18),transparent 30%),
+        radial-gradient(circle at 90% 70%,rgba(192,132,252,.12),transparent 30%),
+        #05010b;
+    overflow-x:hidden;
 }
 
-/* =========================================================
-   PRELOADER
-========================================================= */
-
-#loader {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-
-    background:
-        radial-gradient(circle, rgba(150,0,255,.12), transparent 50%),
-        #050008;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    transition: opacity .6s ease, visibility .6s ease;
-}
-
-#loader.fade-out {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.spinner-box {
-    position: relative;
-    width: 100px;
-    height: 100px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.spinner-box::before {
-    content: "";
-    position: absolute;
-    inset: -25px;
-
-    border-radius: 50%;
-    border: 1px solid rgba(220,0,255,.15);
-
-    box-shadow:
-        0 0 25px rgba(200,0,255,.12),
-        inset 0 0 20px rgba(200,0,255,.08);
-
-    animation: bootPulse 2s ease-in-out infinite;
-}
-
-.spinner-box::after {
-    content: "";
-    position: absolute;
-    inset: -42px;
-
-    border-radius: 50%;
-    border: 1px dashed rgba(190,0,255,.18);
-
-    animation: bootOrbit 7s linear infinite;
-}
-
-.circle-ring {
-    position: absolute;
-    inset: 0;
-
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #d000ff;
-    border-right-color: #00f0ff;
-
-    animation:
-        ringSpin 1.5s linear infinite,
-        ringGlow 1.5s ease-in-out infinite alternate;
-}
-
-.circle-ring-inner {
-    position: absolute;
-    inset: 13px;
-
-    border-radius: 50%;
-    border: 2px solid transparent;
-    border-bottom-color: #ff00c8;
-    border-left-color: #7200ff;
-
-    animation: ringSpinReverse 1s linear infinite;
-}
-
-@keyframes ringSpin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes ringSpinReverse {
-    100% {
-        transform: rotate(-360deg);
-    }
-}
-
-@keyframes ringGlow {
-    from {
-        filter: drop-shadow(0 0 3px #d000ff);
-    }
-
-    to {
-        filter: drop-shadow(0 0 12px #d000ff);
-    }
-}
-
-@keyframes bootPulse {
-    50% {
-        transform: scale(1.1);
-        opacity: .35;
-    }
-}
-
-@keyframes bootOrbit {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.loader-text {
-    margin-top: 22px;
-
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 3px;
-
-    background: linear-gradient(
-        90deg,
-        #ff00e6,
-        #fff,
-        #00f0ff,
-        #bd43ff
-    );
-
-    background-size: 250%;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-
-    animation:
-        textGlow 2s infinite alternate,
-        loaderTextMove 3s linear infinite;
-}
-
-@keyframes textGlow {
-    0% {
-        opacity: .6;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes loaderTextMove {
-    to {
-        background-position: 250%;
-    }
-}
-
-/* =========================================================
-   FUTURISTIC BACKGROUND
-========================================================= */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-    z-index: 0;
-
-    opacity: .12;
-
+/* GRID */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.18;
     background-image:
-        linear-gradient(rgba(190,0,255,.22) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(190,0,255,.22) 1px, transparent 1px);
-
-    background-size: 50px 50px;
-
-    animation: gridMove 12s linear infinite;
+        linear-gradient(rgba(168,85,247,.16) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(168,85,247,.16) 1px,transparent 1px);
+    background-size:45px 45px;
+    mask-image:linear-gradient(to bottom,black,transparent 85%);
 }
 
-@keyframes gridMove {
-    0% {
-        transform:
-            translateY(0)
-            perspective(700px)
-            rotateX(10deg);
-    }
-
-    100% {
-        transform:
-            translateY(50px)
-            perspective(700px)
-            rotateX(10deg);
-    }
-}
-
-/* =========================================================
-   HUD
-========================================================= */
-
-body::after {
-    content: "";
-
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-    z-index: 2;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 7px,
-            rgba(255,0,255,.012) 8px,
-            transparent 9px
-        );
-
-    opacity: .35;
-}
-
-/* =========================================================
-   AMBIENT GLOW
-========================================================= */
-
-.glow {
-    position: fixed;
-
-    width: 320px;
-    height: 320px;
-
-    border-radius: 50%;
-
-    filter: blur(90px);
-    pointer-events: none;
-    z-index: 0;
-
-    opacity: .55;
-
-    animation: ambient 10s ease-in-out infinite alternate;
-}
-
-.glow.one {
-    background: rgba(170,0,255,.25);
-
-    left: -120px;
-    top: -100px;
-}
-
-.glow.two {
-    background: rgba(255,0,220,.16);
-
-    right: -130px;
-    bottom: -100px;
-
-    animation-delay: 3s;
-}
-
-@keyframes ambient {
-    0% {
-        transform: translate(0,0) scale(1);
-    }
-
-    100% {
-        transform: translate(45px,25px) scale(1.12);
-    }
-}
-
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-.particles {
-    position: fixed;
-    inset: 0;
-
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.particle {
-    position: absolute;
-
-    width: 2px;
-    height: 2px;
-
-    border-radius: 50%;
-
-    background: #fff;
-
-    box-shadow:
-        0 0 5px #fff,
-        0 0 10px #d000ff;
-
-    animation: starFall linear infinite;
-}
-
-@keyframes starFall {
-    0% {
-        transform:
-            translate3d(0,110vh,0)
-            scale(.3);
-
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    85% {
-        opacity: 1;
-    }
-
-    100% {
-        transform:
-            translate3d(40px,-10vh,0)
-            scale(1.2);
-
-        opacity: 0;
-    }
-}
-
-/* =========================================================
-   SCANLINE
-========================================================= */
-
-.scanline {
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    top: -5%;
-
-    height: 2px;
-
-    z-index: 3;
-    pointer-events: none;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,0,255,.7),
-        #fff,
-        rgba(255,0,255,.7),
-        transparent
+/* SCANLINE */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255,255,255,.025) 50%,
+        transparent 100%
     );
+    background-size:100% 6px;
+    opacity:.18;
+}
 
+/* PARTICLES */
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#c084fc;
+    box-shadow:0 0 12px #a855f7;
+    animation:floatParticle linear infinite;
+}
+
+@keyframes floatParticle{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    10%{opacity:1;}
+    90%{opacity:1;}
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* PRELOADER */
+#preloader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#05010b;
+    transition:.6s ease;
+}
+
+.loader-box{
+    text-align:center;
+}
+
+.loader-logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    border-radius:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#a855f7,#4c1d95);
     box-shadow:
-        0 0 10px #ff00ff,
-        0 0 20px #b000ff;
-
-    opacity: .35;
-
-    animation: globalScan 8s linear infinite;
+        0 0 30px rgba(168,85,247,.45),
+        inset 0 0 25px rgba(255,255,255,.1);
+    animation:pulseLogo 1.5s infinite;
 }
 
-@keyframes globalScan {
-    from {
-        top: -5%;
-    }
-
-    to {
-        top: 105%;
-    }
+.loader-logo span{
+    font-size:26px;
+    font-weight:900;
 }
 
-/* =========================================================
-   PAGE
-========================================================= */
-
-.page {
-    position: relative;
-    z-index: 5;
-
-    width: min(950px,94%);
-    margin: auto;
-
-    padding: 28px 0 70px;
+.loader-text{
+    margin-top:18px;
+    font-size:12px;
+    letter-spacing:4px;
+    color:#c4b5fd;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero {
-    text-align: center;
-
-    padding: 20px 10px 38px;
-
-    animation:
-        heroIn 1s cubic-bezier(.16,1,.3,1),
-        heroFloat 6s ease-in-out infinite 1s;
+.loader-line{
+    width:160px;
+    height:3px;
+    margin:18px auto 0;
+    border-radius:10px;
+    overflow:hidden;
+    background:rgba(255,255,255,.08);
 }
 
-@keyframes heroIn {
-    from {
-        opacity: 0;
+.loader-line::after{
+    content:"";
+    display:block;
+    width:50%;
+    height:100%;
+    background:#a855f7;
+    box-shadow:0 0 15px #a855f7;
+    animation:loader 1s infinite;
+}
 
-        transform:
-            translateY(-35px)
-            scale(.94);
-    }
+@keyframes loader{
+    from{transform:translateX(-100%);}
+    to{transform:translateX(220%);}
+}
 
-    to {
-        opacity: 1;
-        transform: none;
+@keyframes pulseLogo{
+    50%{
+        transform:scale(1.05);
+        box-shadow:0 0 50px rgba(168,85,247,.65);
     }
 }
 
-@keyframes heroFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3px);
-    }
+/* MAIN */
+.main{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:55px 20px 80px;
 }
 
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo-wrap {
-    position: relative;
-
-    width: 130px;
-    height: 130px;
-
-    margin: auto;
+/* HERO */
+.hero{
+    text-align:center;
+    margin-bottom:45px;
 }
 
-.logo-wrap::before {
-    content: "";
-
-    position: absolute;
-    inset: -10px;
-
-    border-radius: 34px;
-
-    border: 1px solid rgba(230,0,255,.45);
-
-    box-shadow:
-        0 0 20px rgba(220,0,255,.3),
-        inset 0 0 15px rgba(220,0,255,.15);
-
-    animation: logoRing 3s ease-in-out infinite alternate;
-}
-
-.logo-wrap::after {
-    content: "";
-
-    position: absolute;
-    inset: -18px;
-
-    border-radius: 42px;
-
-    border: 1px dashed rgba(190,0,255,.25);
-
-    animation: logoOrbit 8s linear infinite;
-}
-
-@keyframes logoRing {
-    0% {
-        transform: scale(.98);
-        opacity: .5;
-    }
-
-    100% {
-        transform: scale(1.08);
-        opacity: .9;
-    }
-}
-
-@keyframes logoOrbit {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.logo {
-    width: 130px;
-    height: 130px;
-
-    object-fit: cover;
-
-    border-radius: 31px;
-
-    border: 2px solid rgba(230,80,255,.7);
-
-    box-shadow:
-        0 0 20px #a000ff,
-        0 0 45px rgba(190,0,255,.35);
-
-    animation: logoFloat 4s ease-in-out infinite;
-}
-
-@keyframes logoFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-7px)
-            scale(1.015);
-    }
-}
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.title {
-    margin-top: 24px;
-
-    font-size: clamp(40px,9vw,70px);
-
-    font-weight: 950;
-
-    letter-spacing: 4px;
-
-    background: linear-gradient(
-        90deg,
-        #fff,
-        #d96cff,
-        #ff00e6,
-        #00f0ff,
-        #fff,
-        #bd43ff
-    );
-
-    background-size: 350%;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-
-    animation: titleShine 6s linear infinite;
-
-    filter:
-        drop-shadow(0 0 14px rgba(220,0,255,.3));
-}
-
-@keyframes titleShine {
-    to {
-        background-position: 350%;
-    }
-}
-
-.subtitle {
-    margin-top: 8px;
-
-    color: #bda7c6;
-    font-size: 15px;
-
-    animation:
-        pulseGlow 4s ease-in-out infinite alternate;
-}
-
-@keyframes pulseGlow {
-    0% {
-        opacity: .7;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status {
-    position: relative;
-
-    display: inline-flex;
-
-    align-items: center;
-    gap: 10px;
-
-    margin-top: 20px;
-    padding: 10px 20px;
-
-    border-radius: 30px;
-
-    border: 1px solid rgba(220,0,255,.6);
-
-    background: rgba(100,0,130,.18);
-
-    box-shadow:
-        0 0 15px rgba(190,0,255,.16);
-
-    font-size: 11px;
-    font-weight: 900;
-
-    letter-spacing: 3px;
-
-    overflow: hidden;
-}
-
-.status::before {
-    content: "";
-
-    position: absolute;
-
-    left: -100%;
-    top: 0;
-
-    width: 70%;
-    height: 100%;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.25),
-        transparent
-    );
-
-    transform: skewX(-20deg);
-
-    animation: statusScan 4s linear infinite;
-}
-
-@keyframes statusScan {
-    to {
-        left: 150%;
-    }
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #e000ff;
-
-    box-shadow:
-        0 0 7px #e000ff,
-        0 0 14px #e000ff;
-
-    animation: statusPulse 1.6s infinite;
-}
-
-@keyframes statusPulse {
-    50% {
-        transform: scale(1.5);
-        opacity: .4;
-    }
-}
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-.section {
-    position: relative;
-    overflow: hidden;
-
-    margin-top: 24px;
-
-    padding: 28px;
-
-    border-radius: 30px;
-
-    border: 1px solid rgba(205,45,255,.45);
-
+.logo{
+    width:92px;
+    height:92px;
+    margin:0 auto 22px;
+    border-radius:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     background:
-        linear-gradient(
-            145deg,
-            rgba(36,0,52,.75),
-            rgba(8,0,14,.92)
-        );
-
+        linear-gradient(145deg,rgba(168,85,247,.95),rgba(76,29,149,.95));
+    border:1px solid rgba(255,255,255,.15);
     box-shadow:
-        0 0 25px rgba(170,0,255,.10),
-        inset 0 0 25px rgba(150,0,255,.04);
-
-    animation: sectionIn .7s ease both;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
+        0 0 45px rgba(168,85,247,.35),
+        inset 0 0 30px rgba(255,255,255,.08);
 }
 
-.section::after {
-    content: "";
+.logo span{
+    font-size:27px;
+    font-weight:950;
+    letter-spacing:-2px;
+}
 
-    position: absolute;
-    inset: 0;
+.hero h1{
+    font-size:clamp(38px,8vw,72px);
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-4px;
+    background:linear-gradient(90deg,#fff,#d8b4fe,#a855f7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
-    border-radius: inherit;
+.hero p{
+    margin-top:15px;
+    color:#a78bfa;
+    font-size:13px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
 
-    padding: 1px;
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:20px;
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid rgba(168,85,247,.25);
+    background:rgba(168,85,247,.07);
+    color:#d8b4fe;
+    font-size:11px;
+    letter-spacing:2px;
+}
 
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#a855f7;
+    box-shadow:0 0 12px #a855f7;
+}
+
+/* PROFILE */
+.profile{
+    max-width:700px;
+    margin:0 auto 45px;
+    padding:22px;
+    border:1px solid rgba(168,85,247,.2);
+    border-radius:24px;
+    background:rgba(255,255,255,.025);
+    box-shadow:0 15px 60px rgba(0,0,0,.25);
+}
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.profile-icon{
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    background:linear-gradient(145deg,#a855f7,#4c1d95);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    box-shadow:0 0 25px rgba(168,85,247,.3);
+}
+
+.profile-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.profile-sub{
+    margin-top:4px;
+    color:#8b7ba8;
+    font-size:12px;
+}
+
+.profile-tag{
+    margin-left:auto;
+    padding:7px 10px;
+    border-radius:10px;
+    font-size:9px;
+    letter-spacing:1.5px;
+    color:#d8b4fe;
+    background:rgba(168,85,247,.08);
+    border:1px solid rgba(168,85,247,.18);
+}
+
+.profile-file{
+    margin-top:16px;
+    padding:12px 14px;
+    border-radius:13px;
+    background:rgba(0,0,0,.2);
+    color:#a78bfa;
+    font-size:11px;
+    font-family:monospace;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* APPS */
+.section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-size:13px;
+    letter-spacing:3px;
+    color:#c4b5fd;
+    text-transform:uppercase;
+}
+
+.section-count{
+    color:#6d5b85;
+    font-size:11px;
+}
+
+.apps{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.app-card{
+    position:relative;
+    overflow:hidden;
+    padding:20px;
+    min-height:180px;
+    border-radius:25px;
+    border:1px solid rgba(168,85,247,.18);
     background:
-        linear-gradient(
-            120deg,
-            transparent,
-            rgba(255,0,255,.55),
-            transparent,
-            rgba(0,240,255,.4),
-            transparent
-        );
-
-    background-size: 250% 250%;
-
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    pointer-events: none;
-
-    animation: borderFlow 7s linear infinite;
-}
-
-@keyframes borderFlow {
-    to {
-        background-position: 250% 250%;
-    }
-}
-
-.section::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: -100%;
-
-    width: 60%;
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #fff,
-            #d000ff,
-            #00f0ff,
-            transparent
-        );
-
+        linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
     box-shadow:
-        0 0 10px #d000ff;
-
-    animation: sectionBeam 5s linear infinite;
+        0 15px 50px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.035);
+    transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
 }
 
-@keyframes sectionBeam {
-    0% {
-        left: -100%;
-    }
-
-    100% {
-        left: 150%;
-    }
-}
-
-@keyframes sectionIn {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-.section h2 {
-    font-size: 28px;
-    font-weight: 950;
-
-    text-shadow:
-        0 0 12px rgba(210,0,255,.22);
-}
-
-.description {
-    margin-top: 8px;
-    margin-bottom: 22px;
-
-    color: #ae9ab5;
-}
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 14px;
-}
-
-.info-box {
-    position: relative;
-    overflow: hidden;
-
-    padding: 20px;
-
-    border-radius: 19px;
-
-    border: 1px solid rgba(200,50,255,.3);
-
-    background: rgba(5,0,10,.6);
-
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.info-box::before {
-    content: "";
-
-    position: absolute;
-
-    left: -100%;
-    top: 0;
-
-    width: 70%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(220,0,255,.08),
-            transparent
-        );
-
-    transform: skewX(-20deg);
-
-    animation: infoScan 7s linear infinite;
-}
-
-@keyframes infoScan {
-    0% {
-        left: -100%;
-    }
-
-    65%,100% {
-        left: 150%;
-    }
-}
-
-.info-box:hover {
-    transform: translateY(-4px);
-
-    border-color: #df4cff;
-
+.app-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(168,85,247,.45);
     box-shadow:
-        0 8px 25px rgba(200,0,255,.2);
+        0 20px 65px rgba(0,0,0,.3),
+        0 0 30px rgba(168,85,247,.08);
 }
 
-.info-label {
-    color: #8d7795;
-
-    font-size: 11px;
-    letter-spacing: 2px;
+.app-top{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-.info-value {
-    margin-top: 8px;
-
-    font-size: 18px;
-    font-weight: 850;
+.app-icon{
+    width:64px;
+    height:64px;
+    flex:none;
+    border-radius:18px;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
 }
 
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.button {
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    min-height: 62px;
-
-    margin-top: 16px;
-
-    border-radius: 19px;
-
-    color: #fff;
-
-    text-decoration: none;
-
-    font-size: 18px;
-    font-weight: 900;
-
-    overflow: hidden;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+.app-name{
+    font-size:15px;
+    font-weight:850;
+    letter-spacing:.2px;
 }
 
-.button::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: -100%;
-
-    width: 50%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.4),
-            transparent
-        );
-
-    transform: skewX(-20deg);
-
-    animation: buttonShine 4s infinite;
+.app-region{
+    margin-top:5px;
+    color:#7c6a96;
+    font-size:10px;
 }
 
-@keyframes buttonShine {
-    0% {
-        left: -100%;
+.app-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:24px;
+}
+
+.app-version{
+    color:#6d5b85;
+    font-size:10px;
+}
+
+.install-btn{
+    border:0;
+    cursor:pointer;
+    padding:10px 17px;
+    border-radius:12px;
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.5px;
+    background:linear-gradient(135deg,#a855f7,#7c3aed);
+    box-shadow:0 8px 22px rgba(124,58,237,.28);
+    transition:.2s ease;
+}
+
+.install-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(124,58,237,.4);
+}
+
+.install-btn:active{
+    transform:scale(.97);
+}
+
+.install-btn.disabled{
+    cursor:default;
+    color:#756685;
+    background:rgba(255,255,255,.06);
+    box-shadow:none;
+}
+
+.install-btn.disabled:hover{
+    transform:none;
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin-top:55px;
+    color:#514363;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+@media(max-width:700px){
+    .main{
+        padding:40px 15px 60px;
     }
 
-    50%,100% {
-        left: 150%;
+    .apps{
+        grid-template-columns:1fr;
     }
-}
 
-.primary {
-    background:
-        linear-gradient(
-            90deg,
-            #7200ff,
-            #e000ff,
-            #ff00cc,
-            #00c8ff,
-            #8200ff
-        );
+    .hero h1{
+        letter-spacing:-2.5px;
+    }
 
-    background-size: 350%;
-
-    box-shadow:
-        0 0 20px rgba(210,0,255,.3);
-
-    animation: buttonGradient 6s linear infinite;
-}
-
-@keyframes buttonGradient {
-    to {
-        background-position: 350%;
+    .profile{
+        padding:18px;
     }
 }
 
-.primary:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 0 30px rgba(230,0,255,.55);
-}
-
-.secondary {
-    background: rgba(75,0,100,.22);
-
-    border: 1px solid rgba(210,60,255,.4);
-}
-
-.secondary:hover {
-    background: rgba(100,0,140,.35);
-
-    border-color: rgba(230,100,255,.7);
-
-    box-shadow:
-        0 0 18px rgba(210,60,255,.25);
-
-    transform: translateY(-2px);
-}
-
-.button:active {
-    transform: scale(.97) !important;
-}
-
-/* =========================================================
-   APP CARDS
-========================================================= */
-
-.apps {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 15px;
-}
-
-.app-card {
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 17px;
-
-    min-height: 110px;
-
-    padding: 13px;
-
-    border-radius: 22px;
-
-    border: 1px solid rgba(195,35,255,.4);
-
-    background:
-        linear-gradient(
-            110deg,
-            rgba(12,0,20,.8),
-            rgba(30,0,40,.6),
-            rgba(12,0,20,.8)
-        );
-
-    color: #fff;
-
-    text-decoration: none;
-
-    overflow: hidden;
-
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.app-card::before {
-    content: "";
-
-    position: absolute;
-
-    left: -100%;
-    top: 0;
-
-    width: 55%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(220,0,255,.10),
-            rgba(0,240,255,.07),
-            transparent
-        );
-
-    transform: skewX(-20deg);
-
-    animation: cardScan 6s linear infinite;
-}
-
-.app-card::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    border: 1px solid transparent;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,0,255,.55),
-            transparent,
-            rgba(0,240,255,.45),
-            transparent
-        ) border-box;
-
-    background-size: 250% 100%;
-
-    -webkit-mask:
-        linear-gradient(#000 0 0) padding-box,
-        linear-gradient(#000 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    animation: cardBorder 7s linear infinite;
-
-    pointer-events: none;
-}
-
-@keyframes cardScan {
-    0% {
-        left: -100%;
-    }
-
-    60%,100% {
-        left: 150%;
-    }
-}
-
-@keyframes cardBorder {
-    to {
-        background-position: 250% 0;
-    }
-}
-
-.app-card:hover {
-    transform:
-        translateY(-4px)
-        scale(1.01);
-
-    border-color: #e04cff;
-
-    box-shadow:
-        0 8px 25px rgba(200,0,255,.25),
-        inset 0 0 15px rgba(190,0,255,.10);
-}
-
-.app-icon {
-    width: 82px;
-    height: 82px;
-
-    flex: 0 0 82px;
-
-    object-fit: cover;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 0 15px rgba(180,0,255,.3);
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-.app-card:hover .app-icon {
-    transform:
-        rotate(-4deg)
-        scale(1.06);
-
-    box-shadow:
-        0 0 25px rgba(210,0,255,.55);
-}
-
-.app-info {
-    flex: 1;
-
-    min-width: 0;
-}
-
-.app-name {
-    font-size: 20px;
-
-    font-weight: 900;
-}
-
-.app-region {
-    margin-top: 6px;
-
-    color: #a896af;
-
-    font-size: 14px;
-}
-
-.install-small,
-.coming {
-    flex-shrink: 0;
-
-    padding: 11px 15px;
-
-    border-radius: 14px;
-
-    font-size: 12px;
-
-    font-weight: 900;
-}
-
-.install-small {
-    color: #78ff9d;
-
-    border: 1px solid #31c86b;
-
-    background: rgba(0,100,45,.12);
-
-    box-shadow:
-        0 0 10px rgba(40,255,120,.08);
-}
-
-.coming {
-    color: #d493ff;
-
-    border: 1px solid #9c2cff;
-
-    background: rgba(140,0,255,.08);
-
-    animation: comingPulse 3s ease-in-out infinite;
-}
-
-@keyframes comingPulse {
-    50% {
-        box-shadow:
-            0 0 18px rgba(180,0,255,.22);
-    }
-}
-
-/* =========================================================
-   ROCKET
-========================================================= */
-
-.rocket-launch {
-    position: fixed;
-
-    left: -160px;
-    bottom: 8%;
-
-    width: 105px;
-    height: 105px;
-
-    z-index: 99999;
-
-    pointer-events: none;
-
-    opacity: 0;
-}
-
-.rocket-launch.active {
-    animation:
-        rocketFly 1.35s cubic-bezier(.2,.7,.15,1) forwards;
-}
-
-.rocket-body {
-    position: absolute;
-
-    left: 28px;
-    top: 15px;
-
-    width: 45px;
-    height: 70px;
-
-    border-radius: 50% 50% 45% 45%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #b8b8c4,
-            #fff,
-            #8b8b99
-        );
-
-    border: 2px solid #fff;
-
-    box-shadow:
-        0 0 8px #fff,
-        0 0 18px #d000ff;
-
-    transform: rotate(-42deg);
-}
-
-.rocket-window {
-    position: absolute;
-
-    width: 19px;
-    height: 19px;
-
-    left: 11px;
-    top: 12px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #fff,
-            #72d9ff 35%,
-            #170044 70%
-        );
-
-    border: 2px solid #ddd;
-
-    box-shadow:
-        0 0 8px #6bdcff;
-}
-
-.rocket-fin-left,
-.rocket-fin-right {
-    position: absolute;
-
-    width: 17px;
-    height: 28px;
-
-    bottom: 7px;
-
-    background: #7c00ff;
-
-    box-shadow:
-        0 0 10px #b000ff;
-}
-
-.rocket-fin-left {
-    left: -8px;
-
-    transform: skewY(25deg);
-}
-
-.rocket-fin-right {
-    right: -8px;
-
-    transform: skewY(-25deg);
-}
-
-.rocket-flame {
-    position: absolute;
-
-    left: 40px;
-    top: 72px;
-
-    width: 20px;
-    height: 55px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #fff,
-            #ffe600 20%,
-            #ff7200 48%,
-            #ff00c8 72%,
-            transparent
-        );
-
-    filter: blur(2px);
-
-    transform: rotate(-42deg);
-
-    animation:
-        rocketFlame .1s infinite alternate;
-}
-
-@keyframes rocketFlame {
-    from {
-        height: 42px;
-    }
-
-    to {
-        height: 65px;
-    }
-}
-
-@keyframes rocketFly {
-    0% {
-        left: -150px;
-        bottom: 8%;
-
-        opacity: 0;
-
-        transform:
-            scale(.55)
-            rotate(-10deg);
-    }
-
-    8% {
-        opacity: 1;
-    }
-
-    30% {
-        left: 18%;
-        bottom: 28%;
-
-        transform:
-            scale(.9)
-            rotate(-10deg);
-    }
-
-    60% {
-        left: 53%;
-        bottom: 57%;
-
-        transform:
-            scale(1.05)
-            rotate(-10deg);
-    }
-
-    82% {
-        left: 78%;
-        bottom: 78%;
-
-        transform:
-            scale(.85)
-            rotate(-10deg);
-    }
-
-    100% {
-        left: 115%;
-        bottom: 112%;
-
-        opacity: 0;
-
-        transform:
-            scale(.55)
-            rotate(-10deg);
-    }
-}
-
-.exhaust {
-    position: absolute;
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #ff00ff;
-
-    box-shadow:
-        0 0 10px #ff00ff;
-
-    animation:
-        exhaustFly .7s linear infinite;
-}
-
-.exhaust:nth-child(1) {
-    left: 35px;
-    top: 75px;
-}
-
-.exhaust:nth-child(2) {
-    left: 50px;
-    top: 82px;
-
-    animation-delay: .15s;
-}
-
-.exhaust:nth-child(3) {
-    left: 28px;
-    top: 88px;
-
-    animation-delay: .3s;
-}
-
-@keyframes exhaustFly {
-    0% {
-        transform:
-            translate(0,0)
-            scale(1);
-
-        opacity: 1;
-    }
-
-    100% {
-        transform:
-            translate(-35px,70px)
-            scale(0);
-
-        opacity: 0;
-    }
-}
-
-/* =========================================================
-   LAUNCH FLASH
-========================================================= */
-
-.launch-flash {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99980;
-
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(255,0,255,.25),
-            rgba(0,240,255,.05),
-            transparent 65%
-        );
-
-    opacity: 0;
-}
-
-.launch-flash.active {
-    animation: flash .6s ease-out;
-}
-
-@keyframes flash {
-    0% {
-        opacity: 0;
-    }
-
-    20% {
-        opacity: .8;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-    text-align: center;
-
-    margin-top: 30px;
-
-    color: #715d78;
-
-    font-size: 12px;
-
-    letter-spacing: 2px;
-
-    animation:
-        pulseGlow 5s ease-in-out infinite alternate;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:650px) {
-
-    .page {
-        width: 93%;
-        padding-top: 18px;
-    }
-
-    .section {
-        padding: 20px;
-        border-radius: 25px;
-    }
-
-    .profile-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .app-card {
-        gap: 11px;
-    }
-
-    .app-icon {
-        width: 68px;
-        height: 68px;
-
-        flex-basis: 68px;
-
-        border-radius: 17px;
-    }
-
-    .app-name {
-        font-size: 16px;
-    }
-
-    .app-region {
-        font-size: 12px;
-    }
-
-    .install-small,
-    .coming {
-        padding: 9px 10px;
-        font-size: 10px;
-    }
-
-    .rocket-launch {
-        transform: scale(.75);
-    }
-
-    .section::after,
-    .app-card::after {
-        opacity: .45;
-    }
-
-    .glow {
-        filter: blur(65px);
-        opacity: .4;
-    }
-}
-
-/* =========================================================
-   TOUCH DEVICES
-========================================================= */
-
-@media(pointer: coarse) {
-
-    .section,
-    .app-card {
-        transform: none !important;
-    }
-
-    .app-card:hover {
-        transform: none;
-    }
-}
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media(prefers-reduced-motion: reduce) {
-
+@media(prefers-reduced-motion:reduce){
     *,
     *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition:none!important;
     }
 }
 </style>
@@ -1680,545 +472,377 @@ footer {
 
 <body>
 
-<div id="loader">
-
-    <div class="spinner-box">
-        <div class="circle-ring"></div>
-        <div class="circle-ring-inner"></div>
+<div id="preloader">
+    <div class="loader-box">
+        <div class="loader-logo">
+            <span>ULTRA</span>
+        </div>
+        <div class="loader-text">ULTRA-iOS</div>
+        <div class="loader-line"></div>
     </div>
-
-    <div class="loader-text">
-        INITIALIZING SYSTEM...
-    </div>
-
 </div>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
-<div class="scanline"></div>
-<div class="particles"></div>
+<div class="particles" id="particles"></div>
 
-<div
-    class="launch-flash"
-    id="launchFlash"
-></div>
+<main class="main">
 
-<div
-    class="rocket-launch"
-    id="rocketLaunch"
->
+    <section class="hero">
 
-    <div class="rocket-body">
-
-        <div class="rocket-window"></div>
-
-        <div class="rocket-fin-left"></div>
-
-        <div class="rocket-fin-right"></div>
-
-    </div>
-
-    <div class="rocket-flame"></div>
-
-    <div class="exhaust"></div>
-    <div class="exhaust"></div>
-    <div class="exhaust"></div>
-
-</div>
-
-<div class="page">
-
-    <header class="hero">
-
-        <div class="logo-wrap">
-
-            <img
-                src="ultra-logo.png"
-                class="logo"
-                alt="ULTRA-iOS"
-                width="130"
-                height="130"
-            >
-
+        <div class="logo">
+            <span>ULTRA</span>
         </div>
 
-        <div class="title">
-            ULTRA-iOS
-        </div>
+        <h1>ULTRA-iOS</h1>
 
-        <div class="subtitle">
-            Next Generation iOS Installation Hub
-        </div>
+        <p>Next Generation iOS Experience</p>
 
         <div class="status">
-
             <span class="status-dot"></span>
-
             SYSTEM ONLINE
-
         </div>
-
-    </header>
-
-
-    <section class="section">
-
-        <h2>
-            ⚡ Configuration Profile
-        </h2>
-
-        <p class="description">
-            Install the ULTRA-iOS configuration profile directly on your iPhone or iPad.
-        </p>
-
-        <div class="profile-grid">
-
-            <div class="info-box">
-
-                <div class="info-label">
-                    PROFILE
-                </div>
-
-                <div class="info-value">
-                    ULTRA Anti-Revoke
-                </div>
-
-            </div>
-
-            <div class="info-box">
-
-                <div class="info-label">
-                    PLATFORM
-                </div>
-
-                <div class="info-value">
-                    iOS / iPadOS
-                </div>
-
-            </div>
-
-        </div>
-
-        <a
-            href="ULTRA_iOS_AntiRevoke.mobileconfig"
-            class="button primary install-trigger"
-        >
-            Install Profile
-        </a>
-
-        <a
-            href="ULTRA_iOS_AntiRevoke.mobileconfig"
-            class="button secondary"
-        >
-            View Configuration Profile
-        </a>
 
     </section>
 
 
-    <section class="section">
+    <section class="profile">
 
-        <h2>
-            📱 ULTRA Apps
-        </h2>
+        <div class="profile-top">
 
-        <p class="description">
-            Available applications and upcoming releases.
-        </p>
+            <div class="profile-icon">
+                U
+            </div>
 
-        <div class="apps">
+            <div>
+                <div class="profile-title">
+                    ULTRA Anti-Revoke
+                </div>
+
+                <div class="profile-sub">
+                    iOS / iPadOS
+                </div>
+            </div>
+
+            <div class="profile-tag">
+                ACTIVE
+            </div>
+
+        </div>
+
+        <div class="profile-file">
+            ULTRA_iOS_AntiRevoke.mobileconfig
+        </div>
+
+    </section>
 
 
-            <!-- V1 -->
+    <div class="section-head">
+        <div class="section-title">
+            Available Injectors
+        </div>
 
-            <a
-                href="bgmi.html"
-                class="app-card"
-            >
+        <div class="section-count">
+            05 APPS
+        </div>
+    </div>
+
+
+    <section class="apps">
+
+        <!-- V1 -->
+        <div class="app-card">
+
+            <div class="app-top">
 
                 <img
-                    src="bgmi-icon.png"
                     class="app-icon"
+                    src="bgmi-icon.png"
                     alt="ULTRA iOS INJ V1"
-                    width="82"
-                    height="82"
-                    loading="lazy"
-                    decoding="async"
                 >
 
-                <div class="app-info">
-
+                <div>
                     <div class="app-name">
                         ULTRA iOS INJ V1
                     </div>
 
+                    <div class="app-region">
+                        ULTRA-iOS
+                    </div>
                 </div>
 
-                <span class="install-small">
-                    ↓ Install
-                </span>
+            </div>
 
-            </a>
+            <div class="app-bottom">
+
+                <div class="app-version">
+                    VERSION 1
+                </div>
+
+                <button
+                    class="install-btn disabled"
+                    type="button"
+                    onclick="noOTA()"
+                >
+                    INSTALL
+                </button>
+
+            </div>
+
+        </div>
 
 
-            <!-- V2 -->
+        <!-- V2 -->
+        <div class="app-card">
 
-            <a
-                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/6f509b76/manifest.plist"
-                class="app-card"
-            >
+            <div class="app-top">
 
                 <img
-                    src="pubg-icon.png"
                     class="app-icon"
+                    src="pubg-icon.png"
                     alt="ULTRA iOS INJ V2"
-                    width="82"
-                    height="82"
-                    loading="lazy"
-                    decoding="async"
                 >
 
-                <div class="app-info">
-
+                <div>
                     <div class="app-name">
                         ULTRA iOS INJ V2
                     </div>
 
+                    <div class="app-region">
+                        ULTRA-iOS
+                    </div>
                 </div>
 
-                <span class="install-small">
-                    ↓ Install
-                </span>
+            </div>
 
-            </a>
+            <div class="app-bottom">
+
+                <div class="app-version">
+                    VERSION 2
+                </div>
+
+                <button
+                    class="install-btn disabled"
+                    type="button"
+                    disabled
+                >
+                    COMING SOON
+                </button>
+
+            </div>
+
+        </div>
 
 
-            <!-- V3 -->
+        <!-- V3 -->
+        <div class="app-card">
 
-            <a
-                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/9a8ca36d/manifest.plist"
-                class="app-card"
-            >
+            <div class="app-top">
 
                 <img
-                    src="pubg-icon.png"
                     class="app-icon"
+                    src="pubg-icon.png"
                     alt="ULTRA iOS INJ V3"
-                    width="82"
-                    height="82"
-                    loading="lazy"
-                    decoding="async"
                 >
 
-                <div class="app-info">
-
+                <div>
                     <div class="app-name">
                         ULTRA iOS INJ V3
                     </div>
 
+                    <div class="app-region">
+                        ULTRA-iOS
+                    </div>
                 </div>
 
-                <span class="install-small">
-                    ↓ Install
-                </span>
+            </div>
 
-            </a>
+            <div class="app-bottom">
+
+                <div class="app-version">
+                    VERSION 3
+                </div>
+
+                <button
+                    class="install-btn disabled"
+                    type="button"
+                    disabled
+                >
+                    COMING SOON
+                </button>
+
+            </div>
+
+        </div>
 
 
-            <!-- V4 -->
+        <!-- V4 -->
+        <div class="app-card">
 
-            <a
-                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/41d8ab5b/manifest.plist"
-                class="app-card"
-            >
+            <div class="app-top">
 
                 <img
-                    src="pubg-icon.png"
                     class="app-icon"
+                    src="pubg-icon.png"
                     alt="ULTRA iOS INJ V4"
-                    width="82"
-                    height="82"
-                    loading="lazy"
-                    decoding="async"
                 >
 
-                <div class="app-info">
-
+                <div>
                     <div class="app-name">
                         ULTRA iOS INJ V4
                     </div>
 
+                    <div class="app-region">
+                        ULTRA-iOS
+                    </div>
                 </div>
 
-                <span class="install-small">
-                    ↓ Install
-                </span>
+            </div>
 
-            </a>
+            <div class="app-bottom">
+
+                <div class="app-version">
+                    VERSION 4
+                </div>
+
+                <button
+                    class="install-btn disabled"
+                    type="button"
+                    disabled
+                >
+                    COMING SOON
+                </button>
+
+            </div>
+
+        </div>
 
 
-            <!-- V5 -->
+        <!-- V5 -->
+        <div class="app-card">
 
-            <a
-                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/374bb400/manifest.plist"
-                class="app-card"
-            >
+            <div class="app-top">
 
                 <img
-                    src="pubg-icon.png"
                     class="app-icon"
+                    src="pubg-icon.png"
                     alt="ULTRA iOS INJ V5"
-                    width="82"
-                    height="82"
-                    loading="lazy"
-                    decoding="async"
                 >
 
-                <div class="app-info">
-
+                <div>
                     <div class="app-name">
                         ULTRA iOS INJ V5
                     </div>
 
+                    <div class="app-region">
+                        ULTRA-iOS
+                    </div>
                 </div>
 
-                <span class="install-small">
-                    ↓ Install
-                </span>
+            </div>
 
-            </a>
+            <div class="app-bottom">
+
+                <div class="app-version">
+                    VERSION 5
+                </div>
+
+                <button
+                    class="install-btn disabled"
+                    type="button"
+                    disabled
+                >
+                    COMING SOON
+                </button>
+
+            </div>
 
         </div>
 
     </section>
 
 
-    <footer>
-        ULTRA-iOS • FUTURE IS NOW
+    <footer class="footer">
+        © 2026 ULTRA-iOS • ALL SYSTEMS RESERVED
     </footer>
 
-</div>
+</main>
 
 
 <script>
 
+/* PARTICLES */
+const particleContainer = document.getElementById("particles");
+
+for(let i = 0; i < 22; i++){
+
+    const particle = document.createElement("div");
+
+    particle.className = "particle";
+
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.animationDuration = (7 + Math.random() * 10) + "s";
+    particle.style.animationDelay = (-Math.random() * 12) + "s";
+    particle.style.opacity = .2 + Math.random() * .8;
+
+    particleContainer.appendChild(particle);
+}
+
+
 /* PRELOADER */
-
 window.addEventListener("load", () => {
-
-    const loader =
-        document.getElementById("loader");
 
     setTimeout(() => {
 
-        loader.classList.add("fade-out");
+        const preloader = document.getElementById("preloader");
 
-    }, 400);
+        preloader.style.opacity = "0";
+        preloader.style.pointerEvents = "none";
+
+        setTimeout(() => {
+            preloader.remove();
+        }, 650);
+
+    }, 700);
 
 });
 
 
-/* PARTICLES */
+/* OTA REMOVED */
+function noOTA(){
 
-const particles =
-    document.querySelector(".particles");
+    alert("OTA installation is currently unavailable.");
 
-const particleFragment =
-    document.createDocumentFragment();
-
-for(let i = 0; i < 22; i++){
-
-    const p =
-        document.createElement("div");
-
-    p.className = "particle";
-
-    p.style.left =
-        Math.random() * 100 + "%";
-
-    p.style.animationDuration =
-        (7 + Math.random() * 9) + "s";
-
-    p.style.animationDelay =
-        (-Math.random() * 15) + "s";
-
-    const size =
-        1 + Math.random() * 2;
-
-    p.style.width =
-        size + "px";
-
-    p.style.height =
-        size + "px";
-
-    particleFragment.appendChild(p);
-}
-
-particles.appendChild(particleFragment);
-
-
-/* ROCKET */
-
-const rocket =
-    document.getElementById("rocketLaunch");
-
-const flash =
-    document.getElementById("launchFlash");
-
-
-function launchRocket(){
-
-    rocket.classList.remove("active");
-
-    flash.classList.remove("active");
-
-    void rocket.offsetWidth;
-
-    void flash.offsetWidth;
-
-    rocket.classList.add("active");
-
-    flash.classList.add("active");
 }
 
 
-/* PROFILE INSTALL */
+/* DESKTOP POINTER TILT */
+if(window.matchMedia("(pointer:fine)").matches){
 
-document
-    .querySelectorAll(".install-trigger")
-    .forEach(button => {
+    document.querySelectorAll(".app-card").forEach(card => {
 
-        button.addEventListener(
-            "click",
-            function(event){
+        card.addEventListener("mousemove", e => {
 
-                event.preventDefault();
+            const rect = card.getBoundingClientRect();
 
-                const destination =
-                    this.getAttribute("href");
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-                launchRocket();
+            const rotateY = ((x / rect.width) - .5) * 4;
+            const rotateX = ((y / rect.height) - .5) * -4;
 
-                setTimeout(() => {
+            card.style.transform =
+                `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
 
-                    window.location.href =
-                        destination;
+        });
 
-                }, 1050);
+        card.addEventListener("mouseleave", () => {
 
-            }
-        );
+            card.style.transform = "";
 
-    });
-
-
-/* LIGHTWEIGHT 3D EFFECT */
-
-if (
-    window.matchMedia(
-        "(pointer: fine)"
-    ).matches
-) {
-
-    const tiltElements =
-        document.querySelectorAll(
-            ".section, .app-card"
-        );
-
-    tiltElements.forEach(card => {
-
-        let frame = null;
-
-        card.addEventListener(
-            "pointermove",
-            e => {
-
-                if(frame) return;
-
-                frame =
-                    requestAnimationFrame(() => {
-
-                        const rect =
-                            card.getBoundingClientRect();
-
-                        const x =
-                            e.clientX - rect.left;
-
-                        const y =
-                            e.clientY - rect.top;
-
-                        const centerX =
-                            rect.width / 2;
-
-                        const centerY =
-                            rect.height / 2;
-
-                        const rotateX =
-                            (y - centerY) / 45;
-
-                        const rotateY =
-                            (centerX - x) / 45;
-
-                        card.style.transform =
-                            `perspective(900px)
-                             rotateX(${rotateX}deg)
-                             rotateY(${rotateY}deg)
-                             translateZ(3px)
-                             scale(1.005)`;
-
-                        frame = null;
-
-                    });
-
-            },
-            { passive: true }
-        );
-
-
-        card.addEventListener(
-            "pointerleave",
-            () => {
-
-                if(frame) {
-
-                    cancelAnimationFrame(frame);
-
-                    frame = null;
-
-                }
-
-                card.style.transform = "";
-
-            }
-        );
+        });
 
     });
 
 }
-
-
-/* RANDOM DIGITAL GLITCH */
-
-setInterval(() => {
-
-    const title =
-        document.querySelector(".title");
-
-    if(!title) return;
-
-    title.style.transform =
-        "translateX(" +
-        (Math.random() * 2 - 1) +
-        "px)";
-
-    setTimeout(() => {
-
-        title.style.transform =
-            "translateX(0)";
-
-    }, 70);
-
-}, 9000);
 
 </script>
 
