@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#090012">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>ULTRA iOS INJECTOR V1 • ULTRA-iOS</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -18,460 +21,599 @@
 }
 
 html,body{
-    width:100%;
     min-height:100%;
-    background:#090012;
-    color:#fff;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
 }
 
 body{
     min-height:100vh;
     overflow-x:hidden;
-    position:relative;
-}
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+    color:#fff;
 
-/* BACKGROUND */
+    background:
+        radial-gradient(circle at 50% -10%,rgba(168,85,247,.34),transparent 38%),
+        radial-gradient(circle at 0% 50%,rgba(124,58,237,.16),transparent 32%),
+        radial-gradient(circle at 100% 80%,rgba(192,132,252,.12),transparent 30%),
+        #05010b;
+}
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(155,0,255,.22),
-            transparent 38%
-        ),
-        radial-gradient(
-            circle at 0% 75%,
-            rgba(75,0,255,.12),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 100% 60%,
-            rgba(190,0,255,.10),
-            transparent 30%
-        );
+    opacity:.18;
+
+    background-image:
+        linear-gradient(rgba(168,85,247,.15) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(168,85,247,.15) 1px,transparent 1px);
+
+    background-size:45px 45px;
+    mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255,255,255,.025),
+        transparent
+    );
+    background-size:100% 6px;
+    opacity:.18;
+}
+
+
+/* PARTICLES */
+
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
     z-index:0;
 }
 
-/* CONTAINER */
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#c084fc;
+    box-shadow:0 0 12px #a855f7;
 
-.container{
-    position:relative;
-    z-index:2;
-    width:100%;
-    max-width:520px;
-    margin:0 auto;
-    padding:20px 18px 45px;
+    animation:particleFloat linear infinite;
 }
 
-/* BACK BUTTON */
+@keyframes particleFloat{
+
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    90%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+
+}
+
+
+/* MAIN */
+
+.page{
+    position:relative;
+    z-index:1;
+
+    width:100%;
+    max-width:760px;
+
+    margin:auto;
+
+    padding:
+        35px
+        18px
+        70px;
+}
+
+
+/* BACK */
 
 .back{
     display:inline-flex;
     align-items:center;
     gap:7px;
-    padding:9px 13px;
-    margin-bottom:20px;
-    color:#cdbbd7;
+
+    color:#9f8bb8;
     text-decoration:none;
-    font-size:12px;
-    font-weight:700;
-    border-radius:12px;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.08);
+
+    font-size:11px;
+    letter-spacing:1.5px;
+
+    margin-bottom:30px;
+
     transition:.2s ease;
 }
 
 .back:hover{
-    color:#fff;
-    border-color:rgba(190,70,255,.35);
+    color:#d8b4fe;
 }
 
-.back:active{
-    transform:scale(.97);
-}
 
-/* MAIN CARD */
+/* APP HEADER */
 
-.main-card{
-    padding:22px 18px 20px;
-    border-radius:25px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(145,0,255,.17),
-            rgba(255,255,255,.035)
-        );
-    border:1px solid rgba(185,70,255,.28);
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.38),
-        inset 0 0 30px rgba(160,0,255,.035);
-}
-
-/* ICON */
-
-.icon-wrap{
-    width:100px;
-    height:100px;
-    margin:2px auto 18px;
-    border-radius:25px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.12);
-    box-shadow:
-        0 0 28px rgba(145,0,255,.30),
-        0 10px 25px rgba(0,0,0,.35);
-}
-
-.app-icon{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-/* TITLE */
-
-.title{
+.app-header{
     text-align:center;
 }
 
-.title h1{
-    font-size:25px;
-    line-height:1.15;
-    font-weight:900;
-    letter-spacing:-.7px;
-    background:linear-gradient(
-        90deg,
-        #ffffff,
-        #d77cff,
-        #ffffff
-    );
+.app-icon{
+    width:120px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 0 55px rgba(168,85,247,.38),
+        0 20px 45px rgba(0,0,0,.4);
+
+    margin-bottom:22px;
+}
+
+.app-title{
+    font-size:clamp(28px,7vw,46px);
+    font-weight:950;
+    letter-spacing:-2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #d8b4fe,
+            #a855f7
+        );
+
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
-.subtitle{
-    margin-top:8px;
-    color:#9e91aa;
-    font-size:12px;
-    font-weight:600;
+.app-subtitle{
+    margin-top:10px;
+
+    color:#a78bfa;
+
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
 }
+
 
 /* STATUS */
 
 .status{
-    display:flex;
+    display:inline-flex;
     align-items:center;
-    justify-content:center;
-    gap:7px;
-    margin-top:14px;
-    color:#9ceab7;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:.3px;
+    gap:8px;
+
+    margin-top:18px;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(168,85,247,.07);
+
+    border:1px solid rgba(168,85,247,.22);
+
+    color:#d8b4fe;
+
+    font-size:10px;
+    letter-spacing:2px;
 }
 
 .status-dot{
     width:7px;
     height:7px;
+
     border-radius:50%;
-    background:#45e878;
-    box-shadow:0 0 10px rgba(69,232,120,.8);
+
+    background:#a855f7;
+
+    box-shadow:0 0 12px #a855f7;
 }
 
-/* BUTTONS */
 
-.buttons{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    margin-top:22px;
+/* INSTALL BOX */
+
+.install-box{
+    margin-top:38px;
+
+    padding:22px;
+
+    border-radius:25px;
+
+    border:1px solid rgba(168,85,247,.2);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.28);
 }
 
-.btn{
+.install-title{
+    font-size:14px;
+    font-weight:850;
+}
+
+.install-description{
+    margin-top:7px;
+
+    color:#766685;
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+.install-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.install-button{
     display:flex;
     align-items:center;
     justify-content:center;
-    width:100%;
+
     min-height:48px;
-    padding:13px 15px;
+
+    border:0;
     border-radius:14px;
-    text-decoration:none;
-    color:#fff;
-    font-size:13px;
+
+    font-size:11px;
     font-weight:850;
-    letter-spacing:.2px;
-    background:linear-gradient(
-        135deg,
-        #9200ff,
-        #5600c9
-    );
-    border:1px solid rgba(255,255,255,.12);
+    letter-spacing:.6px;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a855f7,
+            #7c3aed
+        );
+
     box-shadow:
-        0 9px 24px rgba(105,0,255,.24),
-        inset 0 1px 0 rgba(255,255,255,.12);
+        0 10px 25px rgba(124,58,237,.28);
+
     transition:.2s ease;
 }
 
-.btn:hover{
-    filter:brightness(1.08);
+.install-button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 14px 32px rgba(124,58,237,.4);
 }
 
-.btn:active{
-    transform:scale(.98);
+.install-button:active{
+    transform:scale(.97);
 }
 
-.btn.secondary{
-    background:rgba(255,255,255,.055);
-    border-color:rgba(255,255,255,.10);
+.install-button.disabled{
+    cursor:default;
+
+    background:rgba(255,255,255,.06);
+
+    color:#756685;
+
     box-shadow:none;
-    color:#d8ccdf;
 }
 
-/* INFORMATION */
-
-.info-title{
-    margin:23px 2px 11px;
-    font-size:12px;
-    font-weight:850;
-    color:#cfc0d8;
-    text-transform:uppercase;
-    letter-spacing:.7px;
+.install-button.disabled:hover{
+    transform:none;
 }
 
-.info-box{
-    border-radius:17px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.035);
+
+/* INFO */
+
+.info{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:18px;
 }
 
-.info-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:14px 15px;
-    border-bottom:1px solid rgba(255,255,255,.065);
-}
+.info-card{
+    padding:18px;
 
-.info-row:last-child{
-    border-bottom:none;
+    border-radius:19px;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid rgba(168,85,247,.14);
 }
 
 .info-label{
-    color:#887b92;
-    font-size:11px;
-    font-weight:600;
+    color:#625273;
+
+    font-size:9px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
 }
 
 .info-value{
-    color:#eee8f1;
-    font-size:11px;
-    font-weight:800;
-    text-align:right;
+    margin-top:7px;
+
+    font-size:12px;
+
+    font-weight:750;
+
+    color:#d8c9e8;
 }
+
+
+/* WARNING */
+
+.notice{
+    margin-top:18px;
+
+    padding:15px 17px;
+
+    border-radius:17px;
+
+    background:rgba(168,85,247,.045);
+
+    border:1px solid rgba(168,85,247,.12);
+
+    color:#806d91;
+
+    font-size:10px;
+
+    line-height:1.6;
+
+    text-align:center;
+}
+
 
 /* FOOTER */
 
 .footer{
-    margin-top:20px;
+    margin-top:45px;
+
     text-align:center;
-    color:#675b70;
+
+    color:#514363;
+
     font-size:9px;
-    letter-spacing:.5px;
+
+    letter-spacing:2px;
 }
 
-/* PARTICLES */
 
-.particle{
-    position:fixed;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#c66cff;
-    opacity:.45;
-    pointer-events:none;
-    z-index:1;
-    animation:floatParticle linear infinite;
+@media(max-width:550px){
+
+    .page{
+        padding:
+            25px
+            14px
+            50px;
+    }
+
+    .app-icon{
+        width:105px;
+        height:105px;
+        border-radius:27px;
+    }
+
+    .install-buttons{
+        grid-template-columns:1fr;
+    }
+
+    .info{
+        grid-template-columns:1fr 1fr;
+    }
+
 }
 
-@keyframes floatParticle{
-    from{
-        transform:translateY(110vh);
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition:none!important;
     }
 
-    to{
-        transform:translateY(-10vh);
-    }
 }
 
-@media(max-width:380px){
-
-    .container{
-        padding-left:14px;
-        padding-right:14px;
-    }
-
-    .main-card{
-        padding-left:15px;
-        padding-right:15px;
-    }
-
-    .title h1{
-        font-size:22px;
-    }
-
-    .icon-wrap{
-        width:90px;
-        height:90px;
-    }
-}
 </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <a href="index.html" class="back">
-        ← Back
-    </a>
+<div class="particles" id="particles"></div>
 
 
-    <div class="main-card">
+<main class="page">
 
-        <div class="icon-wrap">
 
-            <img
-                src="bgmi-icon.png"
-                alt="ULTRA iOS INJECTOR V1"
-                class="app-icon"
-            >
+<a href="index.html" class="back">
+    ← BACK TO ULTRA-iOS
+</a>
 
+
+<section class="app-header">
+
+    <img
+        class="app-icon"
+        src="bgmi-icon.png"
+        alt="ULTRA iOS INJECTOR V1"
+    >
+
+    <h1 class="app-title">
+        ULTRA iOS INJECTOR V1
+    </h1>
+
+    <div class="app-subtitle">
+        ULTRA-iOS
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        ONLINE &amp; WORKING
+    </div>
+
+</section>
+
+
+<section class="install-box">
+
+    <div class="install-title">
+        Install ULTRA iOS INJECTOR
+    </div>
+
+    <div class="install-description">
+        OTA installation is currently unavailable.
+        Please check back later for the next release.
+    </div>
+
+
+    <div class="install-buttons">
+
+        <button
+            class="install-button disabled"
+            type="button"
+            onclick="otaUnavailable()"
+        >
+            INSTALL ON iOS
+        </button>
+
+        <button
+            class="install-button"
+            type="button"
+            onclick="downloadUnavailable()"
+        >
+            DOWNLOAD IPA
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="info">
+
+    <div class="info-card">
+
+        <div class="info-label">
+            Version
         </div>
 
-
-        <div class="title">
-
-            <h1>
-                ULTRA iOS INJECTOR V1
-            </h1>
-
-            <div class="subtitle">
-                ULTRA-iOS
-            </div>
-
-        </div>
-
-
-        <div class="status">
-
-            <span class="status-dot"></span>
-
-            ONLINE &amp; WORKING
-
-        </div>
-
-
-        <div class="buttons">
-
-            <a
-                class="btn"
-                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/5c73e9eb/manifest.plist"
-            >
-                ↓ Install on iOS
-            </a>
-
-            <a
-                class="btn secondary"
-                href="bgmi.ipa"
-            >
-                Download IPA
-            </a>
-
-        </div>
-
-
-        <div class="info-title">
-            Application Information
-        </div>
-
-        <div class="info-box">
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    Version
-                </span>
-
-                <span class="info-value">
-                    4.6.0
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    Platform
-                </span>
-
-                <span class="info-value">
-                    iOS / iPadOS
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    Size
-                </span>
-
-                <span class="info-value">
-                    1MB
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    Certificate
-                </span>
-
-                <span class="info-value">
-                    ULTRA iOS Signed
-                </span>
-
-            </div>
-
+        <div class="info-value">
+            4.6.0
         </div>
 
     </div>
 
 
-    <div class="footer">
-        ULTRA-iOS • iOS Installation Hub
+    <div class="info-card">
+
+        <div class="info-label">
+            Platform
+        </div>
+
+        <div class="info-value">
+            iOS / iPadOS
+        </div>
+
     </div>
 
+
+    <div class="info-card">
+
+        <div class="info-label">
+            Size
+        </div>
+
+        <div class="info-value">
+            1 MB
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-label">
+            Certificate
+        </div>
+
+        <div class="info-value">
+            ULTRA iOS Signed
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="notice">
+    OTA links have been removed from this version of ULTRA-iOS.
 </div>
+
+
+<footer class="footer">
+    © 2026 ULTRA-iOS • ALL SYSTEMS RESERVED
+</footer>
+
+
+</main>
 
 
 <script>
 
-/* FLOATING PARTICLES ONLY
-   No ripple / bubble tap animation */
+/* PARTICLES */
 
-for(let i = 0; i < 35; i++){
+const particles =
+    document.getElementById("particles");
+
+for(let i = 0; i < 22; i++){
 
     const particle =
         document.createElement("div");
@@ -483,19 +625,42 @@ for(let i = 0; i < 35; i++){
         Math.random() * 100 + "%";
 
     particle.style.animationDuration =
-        (8 + Math.random() * 12) + "s";
+        (7 + Math.random() * 10) + "s";
 
     particle.style.animationDelay =
-        (-Math.random() * 15) + "s";
+        (-Math.random() * 12) + "s";
 
     particle.style.opacity =
-        (0.15 + Math.random() * 0.5);
+        .2 + Math.random() * .8;
 
-    document.body.appendChild(particle);
+    particles.appendChild(particle);
+
+}
+
+
+/* OTA REMOVED */
+
+function otaUnavailable(){
+
+    alert(
+        "OTA installation is currently unavailable."
+    );
+
+}
+
+
+/* IPA DOWNLOAD REMOVED */
+
+function downloadUnavailable(){
+
+    alert(
+        "IPA download is currently unavailable."
+    );
 
 }
 
 </script>
+
 
 </body>
 </html>
