@@ -725,11 +725,6 @@ body::after {
         0 0 25px rgba(170,0,255,.10),
         inset 0 0 25px rgba(150,0,255,.04);
 
-    /*
-       Reduced blur for better iPhone performance.
-       Removed backdrop-filter.
-    */
-
     animation: sectionIn .7s ease both;
 
     transition:
@@ -1174,8 +1169,7 @@ body::after {
     }
 }
 
-.app-card:hover,
-.app-card:active {
+.app-card:hover {
     transform:
         translateY(-4px)
         scale(1.01);
@@ -1640,7 +1634,6 @@ footer {
         transform: scale(.75);
     }
 
-    /* Disable expensive visual layers on small screens */
     .section::after,
     .app-card::after {
         opacity: .45;
@@ -1687,16 +1680,11 @@ footer {
 
 <body>
 
-<!-- PRELOADER -->
-
 <div id="loader">
 
     <div class="spinner-box">
-
         <div class="circle-ring"></div>
-
         <div class="circle-ring-inner"></div>
-
     </div>
 
     <div class="loader-text">
@@ -1705,27 +1693,15 @@ footer {
 
 </div>
 
-
-<!-- AMBIENT EFFECTS -->
-
 <div class="glow one"></div>
-
 <div class="glow two"></div>
-
 <div class="scanline"></div>
-
 <div class="particles"></div>
-
-
-<!-- ROCKET FLASH -->
 
 <div
     class="launch-flash"
     id="launchFlash"
 ></div>
-
-
-<!-- ROCKET -->
 
 <div
     class="rocket-launch"
@@ -1745,15 +1721,10 @@ footer {
     <div class="rocket-flame"></div>
 
     <div class="exhaust"></div>
-
     <div class="exhaust"></div>
-
     <div class="exhaust"></div>
 
 </div>
-
-
-<!-- MAIN -->
 
 <div class="page">
 
@@ -1771,16 +1742,13 @@ footer {
 
         </div>
 
-
         <div class="title">
             ULTRA-iOS
         </div>
 
-
         <div class="subtitle">
             Next Generation iOS Installation Hub
         </div>
-
 
         <div class="status">
 
@@ -1793,19 +1761,15 @@ footer {
     </header>
 
 
-    <!-- PROFILE -->
-
     <section class="section">
 
         <h2>
             ⚡ Configuration Profile
         </h2>
 
-
         <p class="description">
             Install the ULTRA-iOS configuration profile directly on your iPhone or iPad.
         </p>
-
 
         <div class="profile-grid">
 
@@ -1821,7 +1785,6 @@ footer {
 
             </div>
 
-
             <div class="info-box">
 
                 <div class="info-label">
@@ -1836,14 +1799,12 @@ footer {
 
         </div>
 
-
         <a
             href="ULTRA_iOS_AntiRevoke.mobileconfig"
             class="button primary install-trigger"
         >
             Install Profile
         </a>
-
 
         <a
             href="ULTRA_iOS_AntiRevoke.mobileconfig"
@@ -1855,24 +1816,20 @@ footer {
     </section>
 
 
-    <!-- APPS -->
-
     <section class="section">
 
         <h2>
             📱 ULTRA Apps
         </h2>
 
-
         <p class="description">
             Available applications and upcoming releases.
         </p>
 
-
         <div class="apps">
 
 
-            <!-- INDIA -->
+            <!-- V1 -->
 
             <a
                 href="bgmi.html"
@@ -1889,20 +1846,13 @@ footer {
                     decoding="async"
                 >
 
-
                 <div class="app-info">
 
                     <div class="app-name">
                         ULTRA iOS INJ V1
                     </div>
 
-
-                    <div class="app-region">
-                        🇮🇳 India • ULTRA-iOS
-                    </div>
-
                 </div>
-
 
                 <span class="install-small">
                     ↓ Install
@@ -1911,9 +1861,12 @@ footer {
             </a>
 
 
-            <!-- VIETNAM -->
+            <!-- V2 -->
 
-            <div class="app-card">
+            <a
+                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/6f509b76/manifest.plist"
+                class="app-card"
+            >
 
                 <img
                     src="pubg-icon.png"
@@ -1925,31 +1878,27 @@ footer {
                     decoding="async"
                 >
 
-
                 <div class="app-info">
 
                     <div class="app-name">
                         ULTRA iOS INJ V2
                     </div>
 
-
-                    <div class="app-region">
-                        🇻🇳 Vietnam • ULTRA-iOS
-                    </div>
-
                 </div>
 
-
-                <span class="coming">
-                    Coming Soon
+                <span class="install-small">
+                    ↓ Install
                 </span>
 
-            </div>
+            </a>
 
 
-            <!-- KOREAN -->
+            <!-- V3 -->
 
-            <div class="app-card">
+            <a
+                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/9a8ca36d/manifest.plist"
+                class="app-card"
+            >
 
                 <img
                     src="pubg-icon.png"
@@ -1961,31 +1910,27 @@ footer {
                     decoding="async"
                 >
 
-
                 <div class="app-info">
 
                     <div class="app-name">
                         ULTRA iOS INJ V3
                     </div>
 
-
-                    <div class="app-region">
-                        🇰🇷 Korean • ULTRA-iOS
-                    </div>
-
                 </div>
 
-
-                <span class="coming">
-                    Coming Soon
+                <span class="install-small">
+                    ↓ Install
                 </span>
 
-            </div>
+            </a>
 
 
-            <!-- TAIWAN -->
+            <!-- V4 -->
 
-            <div class="app-card">
+            <a
+                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/41d8ab5b/manifest.plist"
+                class="app-card"
+            >
 
                 <img
                     src="pubg-icon.png"
@@ -1997,31 +1942,27 @@ footer {
                     decoding="async"
                 >
 
-
                 <div class="app-info">
 
                     <div class="app-name">
                         ULTRA iOS INJ V4
                     </div>
 
-
-                    <div class="app-region">
-                        🇹🇼 Taiwan • ULTRA-iOS
-                    </div>
-
                 </div>
 
-
-                <span class="coming">
-                    Coming Soon
+                <span class="install-small">
+                    ↓ Install
                 </span>
 
-            </div>
+            </a>
 
 
-            <!-- GLOBAL -->
+            <!-- V5 -->
 
-            <div class="app-card">
+            <a
+                href="itms-services://?action=download-manifest&url=https://flarestore.app/i/374bb400/manifest.plist"
+                class="app-card"
+            >
 
                 <img
                     src="pubg-icon.png"
@@ -2033,26 +1974,19 @@ footer {
                     decoding="async"
                 >
 
-
                 <div class="app-info">
 
                     <div class="app-name">
                         ULTRA iOS INJ V5
                     </div>
 
-
-                    <div class="app-region">
-                        🌎 Global • ULTRA-iOS
-                    </div>
-
                 </div>
 
-
-                <span class="coming">
-                    Coming Soon
+                <span class="install-small">
+                    ↓ Install
                 </span>
 
-            </div>
+            </a>
 
         </div>
 
@@ -2068,9 +2002,7 @@ footer {
 
 <script>
 
-/* =========================================================
-   PRELOADER
-========================================================= */
+/* PRELOADER */
 
 window.addEventListener("load", () => {
 
@@ -2086,10 +2018,7 @@ window.addEventListener("load", () => {
 });
 
 
-/* =========================================================
-   PARTICLE GENERATION
-   Reduced from 65 → 22 for better performance
-========================================================= */
+/* PARTICLES */
 
 const particles =
     document.querySelector(".particles");
@@ -2128,9 +2057,7 @@ for(let i = 0; i < 22; i++){
 particles.appendChild(particleFragment);
 
 
-/* =========================================================
-   ROCKET LAUNCH
-========================================================= */
+/* ROCKET */
 
 const rocket =
     document.getElementById("rocketLaunch");
@@ -2154,6 +2081,8 @@ function launchRocket(){
     flash.classList.add("active");
 }
 
+
+/* PROFILE INSTALL */
 
 document
     .querySelectorAll(".install-trigger")
@@ -2183,10 +2112,7 @@ document
     });
 
 
-/* =========================================================
-   LIGHTWEIGHT 3D EFFECT
-   Desktop only
-========================================================= */
+/* LIGHTWEIGHT 3D EFFECT */
 
 if (
     window.matchMedia(
@@ -2271,10 +2197,7 @@ if (
 }
 
 
-/* =========================================================
-   RANDOM DIGITAL GLITCH
-   Reduced frequency
-========================================================= */
+/* RANDOM DIGITAL GLITCH */
 
 setInterval(() => {
 
@@ -2287,7 +2210,6 @@ setInterval(() => {
         "translateX(" +
         (Math.random() * 2 - 1) +
         "px)";
-
 
     setTimeout(() => {
 
